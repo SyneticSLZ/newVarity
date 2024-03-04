@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Varity® | Luxury Futurism style clothing</title>
+    <link rel="icon" type="image/png" href="man.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
+    
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+body{
+    overflow-x: hidden;
+}
+        .row{
+            display: flex;
+            flex-direction: column;
+            text-align: center; /* Center align the text */
+            margin-top:3em;
+    /* margin-bottom: 3em; */
+        }
+.row .underLine {
+  width: 60px; /* Length of the underline */
+  height: 1px; /* Thickness of the underline */
+  background-color: #000; /* Black color for the underline */
+  margin: auto; 
+  margin-top: 1em;
+}
+.fashion-section {
+
+    margin-top:6em;
+    padding-bottom: 5em;
+    margin-left: 15em;
+    margin-right: 15em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 100%; */
+    /* border: #000 10px solid; */
+  }
+  .fashion-text {
+    margin-left: 3em;
+    width: 40%;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+/* border: #000 10px solid; */
+  }
+  .fashion-image {
+    width: 453px;
+    background: url('images/Peter.JPG') no-repeat center center/cover;
+    display: block;
+    height: 452px;
+  }
+   h1 {
+    font-size: 2.3em;
+    font-weight: 200;
+    margin-top: 0em;
+    margin-bottom: 0em;
+  }
+   .h2 {
+    font-size: 1em;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 1em;
+  }
+     .underline {
+    width: 80px;
+    height: 1px;
+    background-color: #000;
+    margin: 20px 0;
+    margin-top: 1em;
+  }
+  .fashion-text p {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2em;
+    font-weight: 200;
+    margin-bottom: 20px;
+  }
+  .fashion-text button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 20px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* width: 100%; */
+    /* margin-top: 1.3em; */
+  }
+
+  .slider img {
+    margin-left: 1em;
+    margin-right: 1em;
+    width: 200px; /* Adjust width as necessary */
+    transition: transform 0.5s ease;
+  }
+  .slider {
+    /* margin: 1em; */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    /* gap: 50px;  */
+    /* padding: 10px;
+    margin: 0;
+    margin-top: 3em;
+    margin-bottom: 3em; */
+    width: 100%;
+    position: relative;
+    /* overflow: hidden; */
+    /* border: #000 solid 5px; */
+  }
+  
+  .slide-container {
+    padding: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    transition: transform 0.5s ease-in-out;
+    width: 120%;
+    /* border: green 5px solid; */
+  }
+  .slide {
+    width: 25%; /* Each slide is 25% of the container width */
+    position: relative;
+    /* border: blue 5px solid; */
+  }
+  .slide img {
+    /* border: #f44336 solid 3px; */
+    width: 100%;
+    display: block;
+  }
+  .text-overlay {
+    font-family: 'Open Sans', sans-serif;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 500px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.781) ;
+    font-size: 20px;
+  }
+  .slide:hover .text-overlay {
+    /* display: block; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0em;
+  }
+
+  .text-overlay h1 {
+    /* align-self: center; */
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-bottom: 0em;
+    /* margin: 0.5em 0; */
+  }
+  .text-overlay .description {
+    font-size: 0.9em;
+    margin-bottom: 0.5em;
+    /* margin: 0em; */
+  }
+
+  .text-overlay h1 {
+    font-size: 1em;
+    font-weight: 300;
+    margin-bottom: 0em;
+  }
+  .text-overlay .price {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+  }
+  .shop-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: 1px solid black;
+    text-decoration: none;
+    color: black;
+    background-color: transparent;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .shop-button:hover {
+    display: block;
+    background-color: black;
+    color: white;
+  }
+
+
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .arrow.left {
+    left: 2em;
+  }
+  .arrow.right {
+    right: 2em;
+  }
+  .hero{
+    margin-top: 0em;
+    margin-left: 0em;
+    padding: 0;
+    left:0;
+    right: 0;
+    top:0;
+    /* border: #f44336 solid 4px; */
+    width: 100vw;
+    height: 100vh;
+    margin-bottom: 5em;
+    object-fit: cover;
+  }
+  .hero .img{
+    width: 100vw;
+    height: 100vh;
+  }
+
+
+
+        /* Apply styles to the <video> element to make it cover the entire screen */
+        video {
+            /* position: fixed; */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale video to fit screen size */
+        }
+
+        .hero .img{
+          /* position: fixed; */
+          display: none;
+          padding: 0;
+          margin: 0;
+          top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Scale video to fit screen size */
+        }
+
+             /* Apply styles to the container box */
+             .container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* transform: translate(-50%, -50%); */
+            background-color: rgba(0, 0, 0, 0.7);
+            /* border-radius: 20px; */
+            /* padding: 60px; */
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+  .navbar {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding-top: 50px; 
+    /* background-color: white;  */
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    color: white;
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; /* Padding around the navbar */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for depth */
+    z-index: 1000; /* Ensure the navbar is above other elements */
+  }
+  .navbar.scrolled {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.8);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+/* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
+    /* background-color: rgba(255, 255, 255, 0.87); Background color when scrolled */
+    color: black;
+    /* Add other styles for the scrolled state of the navbar */
+  }
+  .navbar a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+  .navbar .logo {
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 40px;
+    margin-left: 1em;
+    margin-top: 0.3em;
+    
+  }
+  .navbar .navbar-links {
+    display: flex;
+    align-items: center;
+  }
+  .navbar-icons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .navbar-icons i {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  .middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .navbar-links{
+    margin-top: 1em;
+  }
+  .navbar .row{
+    display: flex;
+    flex-direction: row;
+    margin-left: 2em;
+    align-items: center;
+    justify-content: center;
+  }
+  .title{
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    font-size: 6em;
+  }
+  .text{
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-size: 1em;
+    font-weight: 100px;
+  }
+          /* Apply styles to the button */
+          .button {
+            font-family: 'Open Sans', sans-serif;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: red;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+        .button:hover{
+            background-color: #f44336;
+        }
+
+        .buttoncontainer{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 5em;
+            margin-top: 3em;
+        }
+
+        .buttoncontainer .shop-button{
+            padding: 20px 30px;
+            /* color: #fff; */
+            /* background-color: #000; */
+        }
+
+        .three{
+            margin-top: 1em;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .three img{
+            width: 30%;
+            height: 800px;
+        }
+        .three div{
+          width: 30%;
+            height: 800px;
+            background-color: aqua;
+            display: flex;
+            flex-direction: column;
+        }
+        .r2{
+          width: 100%;
+            height: 33%;
+            background-color: aqua;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        .r2 img{
+            width: 50%;
+            /* height: 800px; */
+        }
+
+        .site-footer {
+          margin-top: 2em;
+    background-color: #f8f8f8; /* Change as needed */
+    color: #333; /* Change as needed */
+    padding: 20px 0;
+    font-family: 'Open Sans', sans-serif;
+}
+/*  */
+
+.footer-social-icons a {
+    margin-right: 10px;
+    color: #333; /* Change as needed */
+}
+
+.footer-social-icons a:hover {
+    color: #666; /* Change as needed */
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #ddd; /* Change as needed */
+    padding-top: 20px;
+}
+
+.footer-payment-icons i {
+    font-size: 24px; /* Adjust size as needed */
+    margin-right: 10px;
+    margin-top: 1em;
+}
+
+/* Include media queries for responsiveness */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        margin-bottom: 20px;
+    }
+}
+
+
+        @media screen and (max-width: 800px) {
+          .three{
+            display: flex;
+            flex-direction: column;
+          }
+          .three img{
+            width: 80%;
+            height: 800px;
+            margin-bottom: 2em;
+        }
+          .fashion-section{
+            display: flex;
+            flex-direction: column;
+          }
+          .slide-container{
+            flex-direction: column;
+          }
+          .slide{
+            width: 80%;
+          }
+          .fashion-text {
+    width: 150%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .fashion-text button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 20px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1.3em;
+  }
+
+
+}
+.container .arrow{
+  color: white;
+  font-size: 30px;
+}
+
+</style>
+</head>
+<body>
+    <div class="hero">
+
+        <video autoplay loop muted playsInline class="imageSlides">
+            <source src="mp4.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <img class="imageSlides img"src="images/IMG_3311.JPG" alt="">
+        <img class="imageSlides img"src="images/dad.JPG" alt="">
+        <img class="imageSlides img"src="images/bridge.JPG" alt="">
+        
+
+        </div>
+        <div class="container">
+            <h1 class="title">WELCOME TO VARITY</h1>
+            <div class="text">Exclusively On The SyneticX Platform</div>
+            <a class="button" href="https://www.syneticx.com/">Shop Now</a>
+            <div class="arrow right" onclick="showSlides()">&#10095;</div>
+            <div class="arrow left" onclick="showSlidesBack()">&#10094;</div>
+            <div class="navbar">
+                <a href="index.html" class="logo">VARITY</a>
+                <!-- <img class="img" src="man.png" alt="Watch 1"> -->
+                <!-- <div class="row">
+
+                    <span class="flag-icon flag-icon-gb flag-icon-squared"></span>
+                  <a href="#">United Kingdom</a>
+                </div> -->
+                <div class="middle">
+                    <div class="navbar-brand">
+                        <!-- <a href="#" class="logo">VARITY</a> -->
+                        
+                      </div>
+                    <div class="navbar-links">
+                    
+                        <a href="index.html">HOME</a>
+                        <a href="#highlights">HIGHLIGHTS</a>
+                        <a href="#catalogue">CLOTHING</a>
+                        <a href="https://www.syneticx.com" >STORE</a>
+                        <a href="#story">STORY</a>
+                        <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">INSTAGRAM</a>
+                        <!-- <a href="#"><i class="fas fa-search"></i></a> -->
+                      </div>
+                </div>
+
+
+                <div class="navbar-icons">
+                  <!-- <a href="#"><i class="far fa-heart"></i></a> -->
+                  <!-- <a href="#"><i class="far fa-user"></i></a> -->
+                  <a href="https://www.tiktok.com/@varity.club?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+                  <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
+                  <a href="tel:+1234567890"><i class="fas fa-phone-alt"></i></a>
+                  <a href="#"><i class="far fa-shopping-bag"></i></a>
+                </div>
+              </div>
+        </div>
+
+        </div> 
+        <!-- <img src="https://files.oaiusercontent.com/file-sX3bQePPcnHpS5ifISEcMPo2?se=2024-02-17T17%3A48%3A55Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D5c8af6c8-6e43-476b-9fb8-670a395bda93.webp&sig=eEHpZ3uGcE7uTJU%2BP2bxy3IcDF7ODmiSZKJbuj2lyMg%3D" alt="Watch 1"> -->
+    </div>
+    <div class="row" id="story">
+        <div class="h2">VARITY</div>
+        <h1>THE ARTISAN OF EMOTIONS, SINCE 1860</h1>
+        <div class="underLine"></div>
+    </div> 
+    
+    <div class="fashion-section" >
+        <div class="fashion-image"></div>
+        <div class="fashion-text">
+          <div class="h2">Iconic Design</div>
+          <h1>OUR STORY</h1>
+          <div class="underline"></div>
+          <p>
+            Designed and developed by three gentlemen representing three generations of the Scheufele family, the Alpine Eagle was inspired by their passion for the Alps and the imperious strength of the majestic eagle. Crafted in exclusive, ultra-resistant, light-reflective Lucent Steel™, it beats to the pace of a movement that is chronometer-certified by the Swiss Official Chronometer Testing Institute.
+          </p>
+          <button>DISCOVER MORE</button>
+        </div>
+        
+      </div>
+
+      <div class="row" id="catalogue">
+        <div class="h2">OUR SELECTION</div>
+        <h1>FIRST DROP</h1>
+        <div class="underLine"></div>
+    </div> 
+
+    <div class="slider">
+
+        <div class="arrow left" >&#10094;</div>
+
+        <div class="slide-container">
+          <!-- Repeat this block for each watch -->
+          <div class="slide">
+            <img src="images/ManWalking.jpg" alt="Watch 1">
+            <div class="text-overlay">
+                <h1>ALPINE EAGLE XL CHRONO</h1>
+                <div class="underline"></div>
+                <p class="description">44 mm, automatic, Lucent Steel™</p>
+                <div class="price">£30.00</div>
+                <button class="shop-button">SOLD OUT</button>
+              </div>
+          </div>
+          <div class="slide">
+            <img src="images/actual.png" alt="Watch 2">
+            <div class="text-overlay">
+                <h1>ALPINE EAGLE XL CHRONO</h1>
+                <div class="underline"></div>
+                <p class="description">44 mm, automatic, Lucent Steel™</p>
+                <div class="price">£25.00</div>
+                <button class="shop-button">Shop</button>
+              </div>
+          </div>
+          <div class="slide">
+            <img src="images/all-over-print-mens-crew-neck-t-shirt-white-back-65d11fcebad85.png" alt="Watch 1">
+            <div class="text-overlay">
+                <h1>ALPINE EAGLE XL CHRONO</h1>
+                <div class="underline"></div>
+                <p class="description">44 mm, automatic, Lucent Steel™</p>
+                <div class="price">£25.00</div>
+                <button class="shop-button">SOLD OUT</button>
+              </div>
+          </div>
+        </div>
+
+        <div class="arrow right">&#10095;</div>
+
+      </div>
+
+      <div class="buttoncontainer">
+      <button class="shop-button">DISCOVER MORE</button>
+    </div>
+
+      <div class="three" id="highlights">
+        <img class="changeableImage1" src="images/cachedImage.PNG" alt="">
+        <img class="changeableImage2" src="images/alexBack.JPG" alt="">
+        <img class="changeableImage3" src="images/chix.JPG" alt="">
+
+      </div>
+<!-- 
+      <div class="row">
+        <div class="h2">OUR SELECTION</div>
+        <h1>FIRST DROP</h1>
+        <div class="underLine"></div>
+    </div>  -->
+
+
+      <footer class="site-footer">
+        <div class="footer-bottom">
+            <p>&copy; 2024 Varity LTD - All rights reserved</p>
+            <div class="footer-payment-icons">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <!-- Add more payment icons as needed -->
+            </div>
+        </div>
+    </footer>
+    
+      <!-- <script>
+        let currentSlide = 0;
+      
+        function moveSlide(step) {
+          const slides = document.getElementsByClassName('slide');
+          const totalSlides = slides.length;
+          currentSlide = (currentSlide + step + totalSlides) % totalSlides;
+          const slideWidth = slides[0].clientWidth;
+          const container = document.querySelector('.slide-container');
+          container.style.transform = 'translateX(' + (-slideWidth * currentSlide / 4) + 'px)';
+        }
+      
+        // Automatically move to the next slide every 3 seconds
+        setInterval(function() { moveSlide(1); }, 3000);
+      </script> -->
+
+      <script>
+        // Get the image element
+        function addHoverEffect(imageSelector, hoverSrc, originalSrc) {
+  var image = document.querySelector(imageSelector);
+
+  // Preload images to ensure smooth transition
+  var hoverImage = new Image();
+  hoverImage.src = hoverSrc;
+
+  var originalImage = new Image();
+  originalImage.src = originalSrc;
+
+  // Set initial styles for transition
+  image.style.transition = 'opacity 0.5s ease-in-out';
+  image.style.opacity = '1';
+
+  // Set up the hover event listeners
+  image.addEventListener('mouseover', function() {
+    image.style.opacity = '0';
+    setTimeout(function() {
+      image.src = hoverSrc;
+      image.style.opacity = '1';
+    }, 200); // Transition duration
+  });
+
+  image.addEventListener('mouseout', function() {
+    image.style.opacity = '0';
+    setTimeout(function() {
+      image.src = originalSrc;
+      image.style.opacity = '1';
+    }, 200); // Transition duration
+  });
+}
+
+// Apply the hover effect to images
+addHoverEffect('.changeableImage1', 'images/steps.PNG', 'cachedImage.PNG');
+addHoverEffect('.changeableImage2', 'images/alexFront.JPG', 'AlexBack.JPG');
+addHoverEffect('.changeableImage3', 'images/Turkey.jpg', 'chix.JPG');
+
+let slideIndex = 0;
+// showSlides();
+
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("imageSlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex-1].style.display = "block";
+
+  // setTimeout(showSlides, 5000); // Change image every 2 seconds
+}
+function showSlidesBack() {
+  let i;
+  let slides = document.getElementsByClassName("imageSlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+
+  }
+
+  if (slideIndex > 1)
+{ slideIndex = slideIndex -1;}
+
+  if (slideIndex > slides.length) {slideIndex = 1}
+  slides[slideIndex-1].style.display = "block";
+
+  // setTimeout(showSlides, 5000); // Change image every 2 seconds
+}
+
+
+        // Get the navbar
+        var navbar = document.querySelector('.navbar');
+      
+        // Function to run when the page is scrolled
+        function onScroll() {
+          if (window.scrollY > 0) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      
+        // Attach the function to the window's scroll event
+        window.addEventListener('scroll', onScroll);
+      </script>
+</body>
+</html>

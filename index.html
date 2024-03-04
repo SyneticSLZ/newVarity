@@ -1,0 +1,1145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- <title>three.js webgl - GLTFloader</title> -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- <meta charset="UTF-8"> -->
+    <meta name="google-signin-client_id" content="73748507210-befn87uscvndhunjb21m0utaa9p12ojh.apps.googleusercontent.com.apps.googleusercontent.com">
+    <title>Varity® | Luxury Futurism style clothing</title>
+    <link rel="icon" type="image/png" href="images/man.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+	<style>
+		.top{
+			width: 50%;
+		}
+    body {
+	margin: 0;
+	background-color: #000;
+	color: #fff;
+	font-family: Monospace;
+	font-size: 13px;
+	line-height: 24px;
+	overscroll-behavior: none;
+}
+
+a {
+	color: #ff0;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+button {
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+#info {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	z-index: 1; /* TODO Solve this in HTML */
+}
+
+a, button, input, select {
+	pointer-events: auto;
+}
+
+.lil-gui {
+	z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+@media all and ( max-width: 640px ) {
+	.lil-gui.root { 
+		right: auto;
+		top: auto;
+		max-height: 50%;
+		max-width: 80%;
+		bottom: 0;
+		left: 0;
+	}
+}
+
+.navbar {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding-top: 70px; 
+    /* background-color: white;  */
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    color: white;
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; 
+
+  }
+  
+  .navbar.scrolled {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.8);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+/* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
+    /* background-color: rgba(255, 255, 255, 0.87); Background color when scrolled */
+    color: black;
+    /* Add other styles for the scrolled state of the navbar */
+  }
+  .navbar a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+  .navbar .logo {
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 40px;
+    margin-left: 0.5em;
+    margin-top: 0.3em;
+    
+  }
+  .navbar .navbar-links {
+    display: flex;
+    align-items: center;
+  }
+  .navbar-icons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .navbar-icons i {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  .middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .navbar-links{
+    margin-top: 1em;
+  }
+  .navbar .row{
+    display: flex;
+    flex-direction: row;
+    margin-left: 2em;
+    align-items: center;
+    justify-content: center;
+  }
+#overlay {
+	position: absolute;
+	font-size: 16px;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: rgba(0,0,0,0.7);
+}
+
+	#overlay button {
+		background: transparent;
+		border: 0;
+		border: 1px solid rgb(255, 255, 255);
+		border-radius: 4px;
+		color: #ffffff;
+		padding: 12px 18px;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
+
+#notSupported {
+	width: 50%;
+	margin: auto;
+	background-color: #f00;
+	margin-top: 20px;
+	padding: 10px;
+}
+
+.cart-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 350px; /* Adjust width as needed */
+  height: 100vh;
+  background: #fff; /* White background for contrast */
+  color: #000; /* Black color for text */
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  padding: 20px;
+  box-sizing: border-box;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000; /* Ensure it's above other content */
+  overflow-y: auto; /* Enable scroll for overflow */
+  font-family: 'Open Sans', sans-serif; /* Example font */
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e1e1e1;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.cart-item-image {
+  width: 100px; /* Adjust as needed */
+  height: auto;
+  margin-right: 20px;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+}
+
+.item-code {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.item-name {
+  margin-top: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.item-attributes {
+  font-size: 1em;
+  color: #333;
+}
+
+.item-price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.cart-item-actions {
+  display: flex;
+  align-items: center;
+  /* flex-direction: column; */
+  gap: 10px;
+}
+
+.quantity-label {
+  font-size: 1em;
+  margin-right: 5px;
+}
+
+.item-quantity {
+  width: 50px; /* Adjust as needed */
+  padding: 5px;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+}
+
+.remove-item-btn {
+  padding: 5px 10px;
+  background-color: #f44336;
+  border: none;
+  margin-top: 1em;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.remove-item-btn:hover {
+  background-color: #d32f2f;
+}
+
+
+.checkout-container {
+  text-align: center;
+  padding: 20px 0;
+}
+
+#checkout-button {
+  background-color: #000; /* Black button for luxury look */
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.close-cart-btn {
+  position: absolute;
+  right: 370px; /* 1em to the left of the sidebar edge */
+  top: 50%; /* Centered vertically */
+  transform: translateY(-50%); 
+   /* background-color: #000; Black button for luxury look */
+  color: #cacaca; 
+  display: none;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+/* Hidden by default */
+  opacity: 0.8;
+  transition: opacity 0.3s ease, visibility 0s 0.3s; /* Smooth transition for opacity and delayed visibility */
+}
+
+.close-cart-text {
+  margin-right: 10px; /* Space between text and icon */
+  white-space: nowrap; /* Ensure the text does not wrap */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.close-cart-btn:hover .close-cart-text {
+  opacity: 1; /* Show text on hover */
+}
+
+/* Rotate icon to an arrow and show text on hover */
+.close-cart-btn:hover .close-cart-icon:before {
+  transform: rotate(-180deg);
+  content: '\f0a8'; /* FontAwesome arrow-left icon */
+}
+
+.cart-sidebar.active .close-cart-btn {
+ /* Show only when sidebar is active */
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0s; /* Immediate visibility transition */
+}
+
+
+/* Overlay background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(9px) saturate(187%);
+    -webkit-backdrop-filter: blur(9px) saturate(187%);
+    /* background-color: rgba(17, 27, 39, 0.53); */
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  backdrop-filter: blur(10px); /* Blur effect for the background */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's above other content */
+  color: #000000;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Glassmorphism style for the form container */
+.glass {
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(9px) saturate(187%);
+    -webkit-backdrop-filter: blur(9px) saturate(187%);
+    background-color: rgba(255, 255, 255, 0.692);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  width: 400px; /* Fixed width for the form */
+}
+
+/* Style for form elements */
+.form-group input {
+  width: 100%; /* Full width of the parent container */
+  padding: 15px;
+  margin-bottom: 20px; /* Spacing between elements */
+  border-radius: 20px; /* Rounded borders */
+  border: none; /* No border */
+    backdrop-filter: blur(9px) saturate(187%);
+    -webkit-backdrop-filter: blur(9px) saturate(187%);
+    /* background-color: rgba(17, 27, 39, 0.53); */
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    color: #ff0000;
+}
+
+/* Style for the submit button */
+.btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: #000000; /* Vibrant color for the button */
+  color: white;
+  font-size: 16px;
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Transition for a hover effect */
+}
+
+.btn:hover {
+  background-color: #000000; /* Darker shade on hover */
+}
+
+/* Style for the active tab */
+.switch-form .active {
+  color: #000000; /* Vibrant text color for the active tab */
+  font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Style for the form footer */
+.form-footer {
+  text-align: center;
+  margin-top: 20px; /* Spacing from the last form element */
+  /* color: #ffffff; Dark text color for contrast */
+  color: #000000;
+}
+
+.form-footer span {
+  color: #ff0000; /* Vibrant text color for clickable actions */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+#formContent{
+  margin-top: 2em;
+  width: 100%;
+  /* background-color: #f00; */
+}
+.form-group{
+  width: 100%;
+}
+
+/* Hide the confirmPasswordGroup by default */
+#confirmPasswordGroup {
+  display: none; /* Hide the confirm password input initially */
+}
+
+/* Customize the Google Sign-in button */
+.g-signin2 {
+  width: 100%; /* Full width of the parent container */
+  margin-bottom: 20px; /* Spacing from the next element */
+}
+
+.form-tab {
+  cursor: pointer;
+  padding: 10px;
+  border-bottom: 2px solid transparent; /* Default state with no border */
+}
+
+.form-tab.active {
+  border-bottom: 2px solid #ff0015; /* Highlight the active tab with a border */
+}
+.title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.i {
+  font-size: large;
+  margin-right: 2em;
+}
+
+.buy-button {
+  position: fixed;
+  top: 500px;
+  left: 500px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff7a8513;
+    border: 2px solid #ff7a85; 
+    color: white;
+    /* border: none; */
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.login{
+  color: whitesmoke;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    font-size: 20px;
+    position: fixed; /* Fixed at the top */
+    bottom: 1em;
+    left: 1em;
+  
+}
+	</style>
+	<body>
+    <div class="login" id="login" onclick="showOverlay()">Login / Sign up</div>
+    <div class="navbar">
+      <a  class="logo">VARITY</a>
+      <!-- <img class="img" src="man.png" alt="Watch 1"> -->
+      <!-- <div class="row">
+
+          <span class="flag-icon flag-icon-gb flag-icon-squared"></span>
+        <a href="#">United Kingdom</a>
+      </div> -->
+      <div class="middle">
+          <div class="navbar-brand">
+              <!-- <a href="#" class="logo">VARITY</a> -->
+              
+            </div>
+          <div class="navbar-links">
+          
+            <a href="#">HOME</a>
+            
+            <a href="Varity.html#highlights">HIGHLIGHTS</a>
+            <a href="Varity.html#catalogue">CLOTHING</a>
+            <a href="https://www.syneticx.com">STORE</a>
+            <a href="Varity.html#story">STORY</a>
+            <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">INSTAGRAM</a>
+            <!-- <a href="#"><i class="fas fa-search"></i></a> -->
+          </div>
+    </div>
+
+
+    <div class="navbar-icons">
+      <!-- <a href="#"><i class="far fa-heart"></i></a> -->
+      <!-- <a href="#"><i class="far fa-user"></i></a> -->
+      <a href="https://www.tiktok.com/@varity.club?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a id="#show-cart" onclick="showSidebar()"><i class="fa fa-shopping-bag" ></i></a>
+      <a ><i class="far fa-shopping-bag" id="show-cart"></i></a>
+    </div>
+  </div>
+
+<!-- Form Overlay -->
+<div id="formOverlay" class="overlay">
+  <div class="form-container glass">
+    <form id="loginForm">
+      <!-- Switch between Login, Register, and Reset Password -->
+      <div class="switch-form">
+        <span id="loginTab" class="form-tab active" onclick="switchForm('login')">Login</span>
+        <span id="registerTab" class="form-tab" onclick="switchForm('register')">Register</span>
+        <span id="resetTab" class="form-tab" onclick="switchForm('reset')">Reset Password</span>
+        <span  onclick="closeForm()">close login</span>
+      </div>
+      <!-- Form Content will be populated by JavaScript -->
+      <div id="formContent">
+        <!-- Content dynamically generated by JavaScript -->
+      </div>
+      <button type="submit" class="btn" id="formButton">Login</button>
+      
+      <button class="btn" id="rformButton" onclick="register()">Sign up</button>
+      <p class="form-footer" id="formFooter">
+        Forgot password? or <span id="switchAction">Sign up</span>
+        
+      </p>
+      <div id="message"></div>
+    </form>
+  </div>
+</div>
+<script>
+
+
+
+function closeForm() {
+  const formOverlay = document.getElementById('formOverlay');
+    formOverlay.style.display = 'none';
+}
+
+  function switchForm(state) {
+  const emailGroup = `
+    <div class="form-group">
+      <input type="email" id="Email" placeholder="Email Address" required>
+    </div>`;
+  const passwordGroup = `
+    <div class="form-group">
+      <input type="password" id="Password" placeholder="Password" required>
+    </div>`;
+  const confirmPasswordGroup = `
+    <div class="form-group">
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    </div>`;
+
+  const formContent = document.getElementById('formContent');
+  const formButton = document.getElementById('formButton');
+  const registerformButton = document.getElementById('rformButton');
+  const formFooter = document.getElementById('formFooter');
+  const loginTab = document.getElementById('loginTab');
+  const registerTab = document.getElementById('registerTab');
+  const resetTab = document.getElementById('resetTab');
+
+  // Reset all tabs to inactive state
+  loginTab.classList.remove('active');
+  registerTab.classList.remove('active');
+  resetTab.classList.remove('active');
+  registerformButton.style.display = 'none';
+  formButton.style.display = 'none';
+
+  // Handle different states
+  if (state === 'login') {
+    console.log(state);
+    formButton.style.display = 'flex';
+    registerformButton.style.display = 'none';
+
+    formContent.innerHTML = emailGroup + passwordGroup;
+    formButton.innerText = 'Login';
+    formButton.type = "submit";
+    formFooter.innerHTML = 'Forgot password? or <span id="switchAction" onclick="switchForm(\'register\')">Sign up</span>';
+    loginTab.classList.add('active');
+  } else if (state === 'register') {
+    console.log(state);
+    registerformButton.style.display = 'flex';
+    formButton.style.display = 'none';
+
+    formContent.innerHTML = emailGroup + passwordGroup + confirmPasswordGroup;
+    formButton.innerText = 'Create Account';
+    formButton.type = "regiser";
+    formFooter.innerHTML = 'Already have an account? <span id="switchAction" onclick="switchForm(\'login\')">Login</span>';
+    registerTab.classList.add('active');
+  } else if (state === 'reset') {
+    console.log(state);
+    formContent.innerHTML = emailGroup;
+    formButton.innerText = 'Reset Password';
+    formButton.type = "reset";
+    formFooter.innerHTML = 'Back to <span id="switchAction" onclick="switchForm(\'login\')">Login</span>';
+    resetTab.classList.add('active');
+  }
+}
+
+// Initialize the form with the login state
+switchForm('login');
+
+</script>
+
+	<div id="close-cart-btn" class="close-cart-btn" onclick="hideSidebar()">
+		<span class="close-cart-text">Close Cart</span>
+		<i class="fas fa-times close-cart-icon"></i>
+    
+	  </div>
+<!-- Sidebar Cart -->
+<div id="cart-sidebar" class="cart-sidebar">
+<style>
+  /* .cart-sidebar .cart-item{
+    display: none;
+  } */
+  .cart-sidebar h3{
+    display: block;
+  }
+
+</style>
+<div class="title">
+  <!-- <i class="fa-solid fa-backward" ></i> -->
+  <i class="fas fa-chevron-left i" onclick="hideSidebar()"></i>
+  <h1>Your Cart</h1>
+
+</div>
+<!-- <h1>Your Cart</h1> -->
+	<!-- Cart Item 1 -->
+	<!-- <div class="cart-item" id="yourElementId">
+    <div>
+	  <img src="tee.jpeg" alt="Armani Shirt" class="cart-item-image">
+    <button class="remove-item">Remove</button>
+  </div>
+	  <div class="cart-item-details">
+		<p class="item-brand">VARITY</p>
+		<p class="item-name">Originals collective T-shirt</p>
+		<p class="item-price">£25</p>
+		<p class="item-attributes">Colour: Black<br>Size: S<br>Quantity: 1</p>
+		
+	  </div>
+	</div> -->
+  <!-- <h3 id="#h3">Cart is empty</h3> -->
+  <h3 id="empty-cart-message" style="display: none;">Your cart is empty</h3>
+	
+	<!-- Cart Item 2
+	<div class="cart-item">
+	  <img src="path/to/gucci-bag.jpg" alt="Gucci Bag" class="cart-item-image">
+	  <div class="cart-item-details">
+		<p class="item-brand">GUCCI</p>
+		<p class="item-name">JACKIE NOTTE MINI BAG</p>
+		<p class="item-price">£2,630</p>
+		<p class="item-attributes">Style: 782889 OP50G 6207<br>Quantity: 1</p>
+		<button class="remove-item">Remove</button>
+	  </div>
+	</div> -->
+
+  <div id="cartItems"></div>
+  <h4 onclick="clearCart()">Clear Cart</h4>
+	<!-- Checkout Button -->
+	<div class="checkout-container">
+	  <button id="checkout-button">CHECKOUT</button>
+	</div>
+  </div>
+  
+	  
+
+		<!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+
+      <!-- Add this inside the <body> tag -->
+<div class="content-wrapper">
+  <div id="top" class="top"></div> <!-- Container for the 3D object -->
+  <button class="buy-button" onclick="buybutton()">Buy Now</button> <!-- Buy button -->
+</div>
+
+<script>
+function clearCart() {
+  localStorage.removeItem('cart');
+displayCart();
+}
+  // Utility function to get cart from localStorage
+function getCart() {
+  const cart = localStorage.getItem('cart');
+  return cart ? JSON.parse(cart) : [];
+}
+
+// Utility function to save cart to localStorage
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Function to add an item to the cart
+function addToCart(item) {
+  const cart = getCart();
+  const index = cart.findIndex(cartItem => cartItem.id === item.id);
+  if (index !== -1) {
+    // Item already in cart, update quantity
+    cart[index].quantity += item.quantity;
+  } else {
+    // Add new item to cart
+    cart.push(item);
+  }
+  saveCart(cart);
+}
+
+function remove() {
+  removeFromCart({
+      id: "1011111",
+      name: "Varity Originals Tee",
+      price: 25,
+      quantity: 1 // Default to 1, adjust as necessary
+    });
+}
+// Function to remove an item from the cart
+function removeFromCart(item) {
+  const cart = getCart();
+  const index = cart.findIndex(cartItem => cartItem.id === item.id);
+  if (index !== -1) {
+
+
+    if(cart[index].quantity > 1)
+    {
+
+      cart[index].quantity -= 1;
+      displayCart();
+
+      if(cart[index].quantity < 1)
+      {
+        clearCart();
+      }
+
+    }
+    else{
+        clearCart();
+        displayCart();
+    }
+
+
+
+  } else {
+    // Add new item to cart
+    return;
+  }
+  saveCart(cart);
+  displayCart();
+}
+
+function buybutton() {
+    const productId = "1011111";
+    // Assuming you have a function to get product details by ID
+    // const product = getProductDetails(productId);
+
+    addToCart({
+      id: "1011111",
+      name: "Varity Originals Tee",
+      price: 25,
+      quantity: 1 // Default to 1, adjust as necessary
+    });
+    // Optionally, update the cart display here
+    showSidebar();
+  };
+
+  function displayCart() {
+  const cartItems = getCart();
+  const cartContainer = document.getElementById('cartItems');
+  const emptyCartMessage = document.getElementById('empty-cart-message');
+  cartContainer.innerHTML = ''; // Clear current cart contents
+  if (cartItems.length === 0) {
+    // If there are no cart items, show the "empty cart" message
+    emptyCartMessage.style.display = 'block';
+  } else {
+  cartItems.forEach(item => {
+    const cartItemElement = document.createElement('div');
+    cartItemElement.innerHTML = `
+   <!-- <div class="cart-item" id="yourElementId" data-id="${item.id}">
+	  <img src="tee.jpeg" alt="Armani Shirt" class="cart-item-image">
+	  <div class="cart-item-details">
+		<p class="item-brand">VARITY</p>
+		<p class="item-name">${item.name}</p>
+		<p class="item-price">£${item.price}</p>
+		<p class="item-attributes">Colour: Black<br>Size: S<br>Quantity: ${item.quantity}</p>
+		<button class="remove-item-btn" data-id="${item.id}">Remove</button>
+	  </div>
+	</div> -->
+
+  <div class="cart-item" id="yourElementId" data-id="${item.id}">
+  <img src="tee.jpeg" alt="Nice Mini Toiletry Bag" class="cart-item-image">
+  <div class="cart-item-details">
+    <p class="item-code">${item.id}</p>
+    <p class="item-name">${item.name}</p>
+    <p class="item-attributes">Colour: Red</p>
+    <p class="item-price">£${item.price}</p>
+    <div class="cart-item-actions">
+      <label for="item-quantity-${item.id}" class="quantity-label">Quantity:${item.quantity}</label>
+      
+      
+    </div>
+    <button class="remove-item-btn" onclick="remove()">Remove</button>
+  </div>
+</div>
+
+    `;
+    cartContainer.appendChild(cartItemElement);
+  });
+}
+
+}
+
+// Call displayCart to update the cart display when needed
+displayCart();
+
+document.getElementById('cart-container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('remove-item-btn')) {
+    const itemId = event.target.getAttribute('data-id');
+    removeFromCart(itemId);
+    displayCart(); // Refresh cart display
+  }
+});
+
+// Similar event listeners can be set up for quantity changes
+
+
+
+</script>
+    <script>
+var userEmail = "uninitialised";
+const userId = userEmail; // Replace with the actual user ID
+
+// function fetchCartItems(userId) {
+//     fetch(`http://localhost:3000/get-cart/${userId}`)
+//     .then(response => response.json())
+//     .then(cartItems => {
+//         const cartDiv = document.getElementById('cartItems');
+//         cartDiv.innerHTML = ''; // Clear existing cart items
+
+//         // Iterate through each cart item and append it to the div
+//         cartItems.forEach(item => {
+//             const cartItem = document.createElement('div');
+//             cartItem.className = 'cart-item';
+
+//             // Construct the inner HTML for each cart item
+//             cartItem.innerHTML = `
+//                 <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+//                 <div class="cart-item-details">
+//                     <p class="item-brand">${item.brand}</p>
+//                     <p class="item-name">${item.name}</p>
+//                     <p class="item-price">£${item.price}</p>
+//                     <p class="item-attributes">
+//                         Colour: ${item.color}<br>
+//                         Size: ${item.size}<br>
+//                         Quantity: ${item.quantity}
+//                     </p>
+//                     <button class="remove-item" onclick="removeItemFromCart('${userId}', '${item._id}')">Remove</button>
+//                 </div>
+//             `;
+
+//             cartDiv.appendChild(cartItem);
+//         });
+//     })
+//     .catch(error => console.error('Error:', error));
+// }
+
+
+
+function showSidebar() {
+  // fetchCartItems(userId)
+  displayCart();
+	console.log("// Set transform to 0% to show the sidebar")
+  document.getElementById('cart-sidebar').style.transform = 'translateX(0%)';
+  var closeCartBtn = document.getElementById('close-cart-btn');
+  closeCartBtn.style.display = 'flex'; // This will change the display to flex
+
+}
+
+function hideSidebar() {
+	console.log("// Set transform to 0% to show the sidebar")
+  document.getElementById('cart-sidebar').style.transform = 'translateX(100%)';
+  var closeCartBtn = document.getElementById('close-cart-btn');
+  closeCartBtn.style.display = 'none'; // This will change the display to flex
+}
+
+function showOverlay() {
+
+    const formOverlay = document.getElementById('formOverlay');
+    formOverlay.style.display = 'flex';
+    // Show the overlay with the form
+  }
+
+
+
+  // Login User
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('Email').value;
+    const password = document.getElementById('Password').value;
+console.log("login account clicked ", JSON.stringify({ email, password }));
+    fetch('https://dapp-synetic.onrender.com/login-varity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        alert(data);
+        userEmail = email;
+        const loginButton = document.getElementById('login');
+        console.log(data);
+        loginButton.innerText = data.walletAddress;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Login failed');
+    });
+});
+
+document.getElementById('Password').addEventListener('input', validatePassword);
+document.getElementById('confirmPassword').addEventListener('input', validatePassword);
+
+function validatePassword() {
+  const password = document.getElementById('Password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const submitBtn = document.getElementById('formButton');
+
+  if (password !== confirmPassword) {
+    submitBtn.disabled = true; // Disable the submit button
+    // Optionally, alert the user that the passwords do not match
+    document.getElementById('message').textContent = 'Passwords do not match.';
+  } else {
+    submitBtn.disabled = false; // Enable the submit button
+    document.getElementById('message').textContent = ''; // Clear the message
+  }
+}
+
+
+
+// document.getElementById('loginForm').addEventListener('regiser', function(event) {
+  function register(){
+  event.preventDefault(); // Prevent the form from submitting the traditional way
+
+  const email = document.getElementById('Email').value;
+  const password = document.getElementById('confirmPassword').value;
+
+  console.log("create account clicked ", JSON.stringify({ email, password }));
+
+  fetch('https://dapp-synetic.onrender.com/create-varity-account', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // Add your authentication headers if necessary
+    },
+    body: JSON.stringify({ email, password }) // Convert the payload to JSON
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.error) {
+      displayMessage(data.error); // Display error if the user already exists
+    } else {
+      displayMessage(`Account created for ${data.email}`);
+      userEmail = data.email;
+      const loginButton = document.getElementById('login');
+      console.log(data);
+        loginButton.innerText = data.walletAddress;
+      // You can redirect the user or update the UI as needed
+    }
+  })
+  .catch(error => {
+    displayMessage(`An error occurred: ${error.message}`);
+  });
+}
+// });
+
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  email = profile.getEmail();
+  userEmail = email;
+
+  fetch('http://localhost:3000/create-varity-account', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // Add your authentication headers if necessary
+    },
+    body: JSON.stringify({ email }) // Convert the payload to JSON
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.error) {
+      displayMessage(data.error); // Display error if the user already exists
+    } else {
+      displayMessage(`Account created for ${data.email}`);
+      // You can redirect the user or update the UI as needed
+    }
+  })
+  .catch(error => {
+    displayMessage(`An error occurred: ${error.message}`);
+  });
+
+
+}
+
+function displayMessage(message) {
+  document.getElementById('message').textContent = message;
+}
+
+
+		</script>
+		
+		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/controls/OrbitControls.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/loaders/GLTFLoader.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/loaders/RGBELoader.js"></script>
+		
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "../build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+		<script type="module">
+
+import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/GLTFLoader.js';
+    import { RGBELoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/RGBELoader.js';
+
+			let camera, scene, renderer;
+
+			init();
+			render();
+
+			function init() {
+
+				const container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
+				camera.position.set( - 1.8, 0.6, 2.7 );
+
+				scene = new THREE.Scene();
+
+				new RGBELoader()
+					.setPath( 'textures/equirectangular/' )
+					.load( 'royal_esplanade_1k.hdr', function ( texture ) {
+
+						texture.mapping = THREE.EquirectangularReflectionMapping;
+
+						scene.background = texture;
+						scene.environment = texture;
+
+						render();
+
+						// model
+
+						const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
+						loader.load( 'DamagedHelmet.gltf', function ( gltf ) {
+
+							scene.add( gltf.scene );
+
+							render();
+
+						} );
+
+					} );
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } ); 
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.toneMapping = THREE.ACESFilmicToneMapping;
+				renderer.toneMappingExposure = 1;
+				renderer.outputColorSpace = THREE.SRGBColorSpace;
+				container.appendChild( renderer.domElement );
+
+				const controls = new OrbitControls( camera, renderer.domElement );
+				controls.addEventListener( 'change', render ); // use if there is no animation loop
+				controls.minDistance = 2;
+				controls.maxDistance = 10;
+				controls.target.set( 0, 0, - 0.2 );
+				controls.update();
+
+				window.addEventListener( 'resize', onWindowResize );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				render();
+
+			}
+
+			//
+
+			function render() {
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+
+	</body>
+</html>

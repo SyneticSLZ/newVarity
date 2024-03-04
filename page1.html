@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D Model Interaction</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
+    <!-- Include GLTFLoader.js -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/controls/OrbitControls.js"></script>
+    
+
+    <style>
+      body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+#content-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+}
+
+#model-container {
+    width: 600px;
+    height: 400px;
+    border: 1px solid #fff;
+}
+
+.side-text {
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    transition: all 0.5s ease;
+}
+
+#content-wrapper:hover .side-text {
+    filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px); /* This creates the glassmorphism effect */
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#instructions {
+    display: none;
+    color: white;
+    margin-top: 20px;
+}
+
+#content-wrapper:hover #instructions {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+<div id="content-wrapper">
+    <div class="side-text left">Text on the Left</div>
+    <div id="model-container"></div>
+    <div class="side-text right">Text on the Right</div>
+</div>
+
+<div id="instructions">Use the mouse to move and rotate the 3D model</div>
+<!-- <script src="script.js"></script> Link to your JavaScript file -->
+<script>
+  let scene, camera, renderer, model;
+
+function init() {
+    const container = document.getElementById('model-container');
+
+    // Scene
+    scene = new THREE.Scene();
+    
+    // Camera
+    camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+    camera.position.set(0, 0, 5);
+
+    // Renderer
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true for transparent background
+    renderer.setSize(container.offsetWidth, container.offsetHeight);
+    // renderer.setClearColor(0x000000); // Set to black, or any visible color
+    container.appendChild(renderer.domElement);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xcccccc);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.position.set(0, 1, 1);
+scene.add(directionalLight);
+
+
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+
+    // Load Model
+    // const loader = new THREE.GLTFLoader();
+    // loader.load('./tshirt/scene.gltf', function (gltf) {
+    //     model = gltf.scene;
+    //     model.position.set(0, 0, 0);
+    //     model.scale.set(20, 20, 20); // Adjust scale as needed
+    //     scene.add(model);
+    //     console.log("added")
+    // });
+
+
+
+    // Controls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    // Animation Loop
+    const animate = function () {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    };
+
+    animate();
+}
+
+window.onload = init;
+
+</script>
+</body>
+</html>

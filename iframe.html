@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- <title>three.js webgl - GLTFloader</title> -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- <meta charset="UTF-8"> -->
+    <title>Varity® | Luxury Futurism style clothing</title>
+    <link rel="icon" type="image/png" href="images/man.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
+	</head>
+	<style>
+		.top{
+			width: 50%;
+		}
+    body {
+	margin: 0;
+	background-color: #000;
+	color: #fff;
+	font-family: Monospace;
+	font-size: 13px;
+	line-height: 24px;
+	overscroll-behavior: none;
+}
+
+a {
+	color: #ff0;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+button {
+	cursor: pointer;
+	text-transform: uppercase;
+}
+
+#info {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	z-index: 1; /* TODO Solve this in HTML */
+}
+
+a, button, input, select {
+	pointer-events: auto;
+}
+
+.lil-gui {
+	z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+@media all and ( max-width: 640px ) {
+	.lil-gui.root { 
+		right: auto;
+		top: auto;
+		max-height: 50%;
+		max-width: 80%;
+		bottom: 0;
+		left: 0;
+	}
+}
+
+.navbar {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding-top: 70px; 
+    /* background-color: white;  */
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    color: white;
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px; 
+
+  }
+  .navbar.scrolled {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.8);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+/* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
+    /* background-color: rgba(255, 255, 255, 0.87); Background color when scrolled */
+    color: black;
+    /* Add other styles for the scrolled state of the navbar */
+  }
+  .navbar a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 15px;
+  }
+  .navbar .logo {
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 40px;
+    margin-left: 0.5em;
+    margin-top: 0.3em;
+    
+  }
+  .navbar .navbar-links {
+    display: flex;
+    align-items: center;
+  }
+  .navbar-icons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .navbar-icons i {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  .middle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .navbar-links{
+    margin-top: 1em;
+  }
+  .navbar .row{
+    display: flex;
+    flex-direction: row;
+    margin-left: 2em;
+    align-items: center;
+    justify-content: center;
+  }
+  iframe {
+    position: absolute;
+	font-size: 16px;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: rgba(0,0,0,0.7);
+  }
+  .top{
+    position: absolute;
+	font-size: 16px;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: rgba(0,0,0,0.7);
+  }
+#overlay {
+	position: absolute;
+	font-size: 16px;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: rgba(0,0,0,0.7);
+}
+
+	#overlay button {
+		background: transparent;
+		border: 0;
+		border: 1px solid rgb(255, 255, 255);
+		border-radius: 4px;
+		color: #ffffff;
+		padding: 12px 18px;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
+
+#notSupported {
+	width: 50%;
+	margin: auto;
+	background-color: #f00;
+	margin-top: 20px;
+	padding: 10px;
+}
+
+	</style>
+	<body>
+    <div class="navbar">
+      <a href="#" class="logo">VARITY</a>
+      <!-- <img class="img" src="man.png" alt="Watch 1"> -->
+      <!-- <div class="row">
+
+          <span class="flag-icon flag-icon-gb flag-icon-squared"></span>
+        <a href="#">United Kingdom</a>
+      </div> -->
+      <div class="middle">
+          <div class="navbar-brand">
+              <!-- <a href="#" class="logo">VARITY</a> -->
+              
+            </div>
+          <div class="navbar-links">
+          
+            <a href="#">HOME</a>
+            <a href="Varity.html#highlights">HIGHLIGHTS</a>
+            <a href="Varity.html#catalogue">CLOTHING</a>
+            <a href="https://www.syneticx.com">STORE</a>
+            <a href="Varity.html#story">STORY</a>
+            <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">INSTAGRAM</a>
+            <!-- <a href="#"><i class="fas fa-search"></i></a> -->
+          </div>
+    </div>
+
+
+    <div class="navbar-icons">
+      <!-- <a href="#"><i class="far fa-heart"></i></a> -->
+      <!-- <a href="#"><i class="far fa-user"></i></a> -->
+      <a href="https://www.tiktok.com/@varity.club?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="tel:+1234567890"><i class="fas fa-phone-alt"></i></a>
+      <a href="#"><i class="far fa-shopping-bag"></i></a>
+    </div>
+    </div>
+
+		<!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+		<div class="top">
+            <iframe class="container " src ="http://127.0.0.1:5500/index.html" alt="" srcset="">
+
+	</div>
+
+	</body>
+</html>
