@@ -792,16 +792,6 @@ function buybutton() {
   cartItems.forEach(item => {
     const cartItemElement = document.createElement('div');
     cartItemElement.innerHTML = `
-   <!-- <div class="cart-item" id="yourElementId" data-id="${item.id}">
-	  <img src="tee.jpeg" alt="Armani Shirt" class="cart-item-image">
-	  <div class="cart-item-details">
-		<p class="item-brand">VARITY</p>
-		<p class="item-name">${item.name}</p>
-		<p class="item-price">£${item.price}</p>
-		<p class="item-attributes">Colour: Black<br>Size: S<br>Quantity: ${item.quantity}</p>
-		<button class="remove-item-btn" data-id="${item.id}">Remove</button>
-	  </div>
-	</div> -->
 
   <div class="cart-item" id="yourElementId" data-id="${item.id}">
   <img src="images/actual.png" alt="Nice Mini Toiletry Bag" class="cart-item-image">
@@ -922,7 +912,7 @@ console.log("login account clicked ", JSON.stringify({ email, password }));
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        alert(data);
+        // alert(data);
         userEmail = email;
         const loginButton = document.getElementById('login');
         console.log(data);
@@ -981,6 +971,7 @@ function validatePassword() {
     if (data.error) {
       displayMessage(data.error); // Display error if the user already exists
     } else {
+      alert(`Account created for ${data.email}`);
       displayMessage(`Account created for ${data.email}`);
       userEmail = data.email;
       const loginButton = document.getElementById('login');
