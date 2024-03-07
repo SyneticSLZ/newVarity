@@ -88,7 +88,7 @@ a, button, input, select {
     color: white;
     position: fixed; /* Fixed at the top */
     top: 0;
-    width: 100%;
+    width: 97%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -124,6 +124,7 @@ backdrop-filter: blur(16px);
   .navbar .navbar-links {
     display: flex;
     align-items: center;
+    
   }
   .navbar-icons {
     display: flex;
@@ -139,9 +140,11 @@ backdrop-filter: blur(16px);
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-right: 1em;
   }
   .navbar-links{
     margin-top: 1em;
+    margin-right: 1em;
   }
   .navbar .row{
     display: flex;
@@ -200,6 +203,7 @@ backdrop-filter: blur(16px);
   z-index: 1000; /* Ensure it's above other content */
   overflow-y: auto; /* Enable scroll for overflow */
   font-family: 'Open Sans', sans-serif; /* Example font */
+  
 }
 
 .cart-item {
@@ -264,7 +268,7 @@ backdrop-filter: blur(16px);
 
 .remove-item-btn {
   padding: 5px 10px;
-  background-color: #f44336;
+  background-color: #000000;
   border: none;
   margin-top: 1em;
   border-radius: 4px;
@@ -274,6 +278,7 @@ backdrop-filter: blur(16px);
 
 .remove-item-btn:hover {
   background-color: #d32f2f;
+  cursor: pointer;
 }
 
 
@@ -305,7 +310,7 @@ backdrop-filter: blur(16px);
   cursor: pointer;
   font-size: 20px;
 /* Hidden by default */
-  opacity: 0.8;
+  /* opacity: 0.8; */
   transition: opacity 0.3s ease, visibility 0s 0.3s; /* Smooth transition for opacity and delayed visibility */
 }
 
@@ -314,6 +319,10 @@ backdrop-filter: blur(16px);
   white-space: nowrap; /* Ensure the text does not wrap */
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+.cart-sidebar h4:hover {
+ color: #d32f2f;
+  cursor: pointer;
 }
 
 .close-cart-btn:hover .close-cart-text {
@@ -350,7 +359,7 @@ backdrop-filter: blur(16px);
   justify-content: center;
   align-items: center;
   z-index: 1000; /* Ensure it's above other content */
-  color: #000000;
+  color: #ffffff;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -360,10 +369,10 @@ backdrop-filter: blur(16px);
   border-radius: 20px;
   backdrop-filter: blur(9px) saturate(187%);
     -webkit-backdrop-filter: blur(9px) saturate(187%);
-    background-color: rgba(255, 255, 255, 0.692);
+    /* background-color: rgba(255, 255, 255, 0.692); */
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
-  width: 400px; /* Fixed width for the form */
+    /* border: 1px solid rgba(255, 255, 255, 0.125); */
+  width: 500px; /* Fixed width for the form */
 }
 
 /* Style for form elements */
@@ -376,20 +385,28 @@ backdrop-filter: blur(16px);
     backdrop-filter: blur(9px) saturate(187%);
     -webkit-backdrop-filter: blur(9px) saturate(187%);
     /* background-color: rgba(17, 27, 39, 0.53); */
-    border-radius: 12px;
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.125);
     color: #ff0000;
 }
 
+.login-form{
+  display: flex;justify-content: center;align-items: center;
+  background: #000;
+}
+
 /* Style for the submit button */
 .btn {
-  width: 100%;
+  width: 107%;
   padding: 15px;
   border-radius: 20px;
   border: none;
   background-color: #000000; /* Vibrant color for the button */
   color: white;
   font-size: 16px;
+  display: flex;
+  align-items: center;justify-content: center;
+  /* flex-direction: ; */
   cursor: pointer; /* Pointer cursor on hover */
   transition: background-color 0.3s ease; /* Transition for a hover effect */
 }
@@ -398,9 +415,13 @@ backdrop-filter: blur(16px);
   background-color: #000000; /* Darker shade on hover */
 }
 
+.switch-form{
+  font-size: larger;
+}
 /* Style for the active tab */
 .switch-form .active {
-  color: #000000; /* Vibrant text color for the active tab */
+
+  color: #ffffff; /* Vibrant text color for the active tab */
   font-weight: bold; /* Bold text for emphasis */
 }
 
@@ -409,7 +430,7 @@ backdrop-filter: blur(16px);
   text-align: center;
   margin-top: 20px; /* Spacing from the last form element */
   /* color: #ffffff; Dark text color for contrast */
-  color: #000000;
+  /* color: #ffffff; */
 }
 
 .form-footer span {
@@ -460,7 +481,7 @@ backdrop-filter: blur(16px);
 .buy-button {
   position: fixed;
   top: 500px;
-  left: 500px;
+  left: 600px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -569,6 +590,7 @@ backdrop-filter: blur(14px);
 border: 1px solid rgba(255, 255, 255, 0.14);
     transition: visibility 0s, opacity 0.5s linear;
     /* opacity: 0; */
+    font-family: 'Open Sans', sans-serif;
 }
 
 #menuOverlay ul {
@@ -587,12 +609,12 @@ font-size: 22px;
 
 #menuOverlay ul li a {
 text-decoration: none;
-color: #ffffff;
+color: whitesmoke;
 transition: color 0.3s ease;
 }
 
 #menuOverlay ul li a:hover {
-color: #0275d8;
+color: #ffffff;
 }
 
 #signInGoogle, #signInNormal {
@@ -601,6 +623,22 @@ margin-top: 20px;
 padding: 10px 15px;
 border: 1px solid #ddd;
 border-radius: 5px;
+
+
+}
+#signInGoogle:hover
+{
+  border: none;
+} #signInNormal:hover
+{
+  border: none;
+}
+
+.buttonnavmobile:hover {
+  background: rgb(131,58,180);
+background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+/* border: 1px solid  rgb(131,58,180); */
+
 }
 
 #menuToggle input:checked ~ #menuOverlay {
@@ -715,8 +753,8 @@ opacity: 1;
           <li><a href="https://www.syneticx.com">STORE</a></li>
           <li><a href="Varity.html#story">STORY</a></li>
           <li><a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">INSTAGRAM</a></li>
-            <li><a href="#signin" id="signInGoogle">Sign in with Google</a>
-              <a href="#signin" id="signInNormal">Sign in</a></li>
+            <li ><a href="#signin" id="signInGoogle" class="buttonnavmobile">Sign in with Google</a>
+              <a href="#signin" id="signInNormal" class="buttonnavmobile">Sign in</a></li>
             <!-- <li></li> -->
         </ul>
     </nav>
