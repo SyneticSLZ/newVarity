@@ -36,9 +36,67 @@
       </form>
     </div> 
 <script>
+
+
+
+let stripePromise;
+const getStripe = () => {
+  if (!stripePromise) {
+    // Ensure to replace 'your_publishable_key' with your actual Stripe public key
+    stripePromise = Stripe('pk_live_51MNx4UKJeZAyw8f4Lec7u9jtEoGifaJPvGAsW5OOUP3v943UwPN07TloLoOKJPJm85dpGPhGaufUXAU10IepmPVp00Z98Rt01D');
+  }
+  return stripePromise;
+};
+
+const redirectToCheckout = async () => {
+  console.log("Redirecting to Checkout...");
+  const stripe = getStripe();
+  
+  const cartItems = JSON.parse(localStorage.getItem('cart'));
+  const item = cartItems.map(item => ({
+    price: item.id, // Use the item's 'id' as the Stripe Price ID
+    quantity: item.quantity
+  }));
+
+  // const item = {
+  //   price: "price_1K3TfMA4B8Maa00LFZ4EFwdX",
+  //   quantity: 1
+  // };
+  
+  const checkoutOptions = {
+    lineItems: [item],
+    mode: "payment",
+    successUrl: `${window.location.origin}/success`,
+    cancelUrl: `${window.location.origin}/cancel`
+  };
+  
+  try {
+    const { error } = await stripe.redirectToCheckout(checkoutOptions);
+    if (error) {
+      console.error("Stripe checkout error", error);
+      alert(error.message);
+    }
+  } catch (error) {
+    console.error("Error redirecting to Stripe checkout", error);
+    alert("An error occurred");
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
   const stripe = Stripe('pk_live_51MNx4UKJeZAyw8f4Lec7u9jtEoGifaJPvGAsW5OOUP3v943UwPN07TloLoOKJPJm85dpGPhGaufUXAU10IepmPVp00Z98Rt01D');
 
-  async function checkout() {
+  async function checkout2() {
   try {
     console.log("sennding cart items to server")
     // document.getElementById('overlay1').style.display = 'block';
@@ -66,7 +124,7 @@
 }
 
 
-function qcheckout() {
+function qcheckout1() {
 
     console.log("sennding cart items to server")
     document.getElementById('overlay1').style.display = 'block';
@@ -486,7 +544,7 @@ switchForm('login');
   <h4 onclick="clearCart()">Clear Cart</h4>
 	<!-- Checkout Button -->
 	<div class="checkout-container">
-	  <button id="checkout-button" onclick="checkout()">CHECKOUT</button>
+	  <button id="checkout-button" onclick="redirectToCheckout()">CHECKOUT</button>
 	</div>
   </div>
   
@@ -533,7 +591,7 @@ function addToCart(item) {
 
 function remove() {
   removeFromCart({
-      id: "1011111",
+      id: "price_1NOjCxKJeZAyw8f4vRllvFVn",
       name: "Varity Originals Tee",
       price: 25,
       quantity: 1 // Default to 1, adjust as necessary
@@ -574,12 +632,12 @@ function removeFromCart(item) {
 }
 
 function buybutton() {
-    const productId = "1011111";
+    const productId = "price_1NOjCxKJeZAyw8f4vRllvFVn";
     // Assuming you have a function to get product details by ID
     // const product = getProductDetails(productId);
 
     addToCart({
-      id: "1011111",
+      id: "price_1NOjCxKJeZAyw8f4vRllvFVn",
       name: "Varity Originals Tee",
       price: 25,
       quantity: 1 // Default to 1, adjust as necessary
