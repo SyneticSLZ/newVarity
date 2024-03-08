@@ -1,7 +1,8 @@
 const stripe = Stripe('pk_test_51MNx4UKJeZAyw8f4z0YJFRQozQsqzwCBKOuzaSScWRXgDDG8GW9YH3qyrI9UZlUW1V8RXkieoHgqoaMOtIbxlLSm00QDD02K7W');
 
 function checkout() {
-    console.log("sending cart items to server")
+
+    console.log("sennding cart items to server")
     document.getElementById('overlay1').style.display = 'block';
     hideSidebar();
     // Enable the skeleton loader UI for the optimal loading experience.
