@@ -1,6 +1,5 @@
 const stripe = Stripe('pk_test_51MNx4UKJeZAyw8f4z0YJFRQozQsqzwCBKOuzaSScWRXgDDG8GW9YH3qyrI9UZlUW1V8RXkieoHgqoaMOtIbxlLSm00QDD02K7W');
 
-var a = fetch(/.well-known/apple-developer-merchantid-domain-association)
 function checkout() {
     console.log("sending cart items to server")
     document.getElementById('overlay1').style.display = 'block';
