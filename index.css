@@ -1,6 +1,8 @@
 .top{
     width: 50%;
 }
+
+
 body {
 margin: 0;
 background-color: #000;
@@ -101,11 +103,12 @@ margin-left: 0.5em;
 margin-top: 0.3em;
 
 }
+
 .navbar .navbar-links {
 display: flex;
 align-items: center;
-
 }
+
 .navbar-icons {
 display: flex;
 align-items: center;
@@ -473,6 +476,32 @@ border-radius: 15px;
 box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
+
+.buy {
+    position: fixed;
+    top: 300px;
+    right: 150px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #53535313;
+    border: 0.5px solid #e2dcdd; 
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    /* border: none; */
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.b {
+    position: fixed;
+    top: 650px;
+    right: 650px;
+}
+.titlebuy{
+    font-size: 20;
+}
+
 .login{
 color: whitesmoke;
 font-family: 'Open Sans', sans-serif;
@@ -483,6 +512,49 @@ bottom: 1em;
 left: 1em;
 z-index: 4;
 
+}
+
+#price{
+    font-size: 27px;
+    margin-top: 1em;
+
+}
+#o{
+    font-size: smaller;
+    color: #666;
+    margin-bottom: 1em;
+}
+#os{
+    font-size: smaller;
+    color: #ffffff;
+    margin-bottom: 1em;
+    text-decoration: underline;
+}
+
+
+#buybtn{
+    display: flex;
+    justify-content: 
+    center;
+    align-items: center;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff0000a2;
+    border: 0.5px solid #e2dcdd; 
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    /* border: none; */
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+#titlebuy{
+    font-size: 27px;
+}
+#buybutton:hover{
+    background-color: #9125254f;
 }
 /* 
 body {
@@ -693,3 +765,20 @@ z-index: 1000; /* Ensure it's above other content */
 color: #ffffff;
 font-family: 'Open Sans', sans-serif;
 }
+
+iframe {
+    position: absolute;
+    font-size: 16px;
+    z-index: -92;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0,0,0,0.7);
+    overflow: hidden; /* This will remove the scrollbars */
+    border: none; /* This will remove the border */
+    }

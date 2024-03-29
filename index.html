@@ -20,7 +20,7 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 	<body>
-    <div id="overlay1">
+    <!-- <div id="overlay1">
       <form id="payment-form">
         <div id="express-checkout-element"></div>
         <h3>Contact info</h3>
@@ -34,7 +34,7 @@
       
         <button id="submit">Submit</button>
       </form>
-    </div> 
+    </div>  -->
 <script>
 
 
@@ -69,7 +69,7 @@ const redirectToCheckout = async () => {
     lineItems: lineItems,
     mode: "payment",
     successUrl: `${window.location.origin}/success`,
-    cancelUrl: `${window.location.origin}/cancel`,
+    cancelUrl: `${window.location.origin}`,
     shippingAddressCollection: {
       allowedCountries: ['GB'], // Specify allowed countries here
     }
@@ -86,18 +86,6 @@ const redirectToCheckout = async () => {
     alert("An error occurred");
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
   const stripe = Stripe('pk_live_51MNx4UKJeZAyw8f4Lec7u9jtEoGifaJPvGAsW5OOUP3v943UwPN07TloLoOKJPJm85dpGPhGaufUXAU10IepmPVp00Z98Rt01D');
 
@@ -155,6 +143,8 @@ function qcheckout1() {
     
         // Create Element instances
         const expressCheckoutElement = elements.create('expressCheckout', options)
+
+
         expressCheckoutElement.mount('#express-checkout-element')
         const linkAuthenticationElement = elements.create("linkAuthentication" , {defaultValues: {email: "foo@bar.com"}});
         const addressElement = elements.create("address", {
@@ -168,7 +158,8 @@ function qcheckout1() {
                 state: 'CA',
                 postal_code: '94080',
                 country: 'US',
-        }}});
+        }
+      }});
         // Mount the Element to its corresponding DOM node
         addressElement.mount("#address-element");
     
@@ -191,8 +182,6 @@ function qcheckout1() {
         addressElement.mount("#address-element");
         paymentElement.mount("#payment-element");    
         // Render the form using the clientSecret
-
-
 
     })
     .catch(error => {
@@ -319,8 +308,6 @@ const form = document.getElementById('payment-form');
     </form>
   </div>
 </div>
-
-
 
 
 <script>
@@ -552,16 +539,47 @@ switchForm('login');
 	  <button id="checkout-button" onclick="redirectToCheckout()">CHECKOUT</button>
 	</div>
   </div>
-  
-	  
-
+<style>
+  iframe {
+    position: absolute;
+    font-size: 16px;
+    /* z-index: 2; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0,0,0,0.7);
+    overflow: hidden; /* This will remove the scrollbars */
+    border: none; /* This will remove the border */
+    }
+</style>  
 		<!-- Import maps polyfill -->
 		<!-- Remove this when import maps will be widely supported -->
 
       <!-- Add this inside the <body> tag -->
 <div class="content-wrapper">
-  <div id="top" class="top"></div> <!-- Container for the 3D object -->
-  <button class="buy-button" onclick="buybutton()">Buy Now</button> <!-- Buy button -->
+  <div id="top" class="top"></div> 
+  <!-- <iframe class="container " src ="https://syneticslz.github.io/three.js/examples/webgl_loader_gltf.html" alt="" srcset=""></iframe> -->
+  
+  <div class="buy">
+    <div id="o">ORIGINALS</div>
+    <div id="titlebuy"> VARITY ORIGINALS TEE</div>
+    <div id="price">£25</div>
+    <p>Lorem ipsum dolor sit amet consectetur <br>Ratione</p>
+    <div id="buybtn" onclick="buybutton()">Buy Now</div>
+    <div id="os">Size Chart</div>
+    
+  </div>
+  <img src="images/line.png" alt=""  class="b">
+  <!-- <div class="buy-button" onclick="buybutton()"> -->
+    <!-- Buy Now -->
+    <!-- <h1>Originals</h1> -->
+  </div> <!-- Buy button -->
+  <!-- <button class="buy-button" onclick="buybutton()">Buy Now</button> Buy button -->
 </div>
 
 <script>
@@ -868,105 +886,119 @@ function displayMessage(message) {
 
 		</script>
 		
-		<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		 <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/controls/OrbitControls.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/loaders/GLTFLoader.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/loaders/RGBELoader.js"></script>
 		
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "../build/three.module.js",
-					"three/addons/": "./jsm/"
-				}
-			}
-		</script>
-		<script type="module" src="threejs.js">
 
-// import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-// import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
-// import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/GLTFLoader.js';
-//     import { RGBELoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/RGBELoader.js';
+<script type="importmap">
+  {
+    "imports": {
+      "three": "../build/three.module.js",
+      "three/addons/": "./jsm/"
+    }
+  }
+</script>
 
-// 			let camera, scene, renderer;
+<script type="module">
 
-// 			init();
-// 			render();
+  import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.133.0-bfkaociplXnkPWzSZsbo/mode=imports,min/optimized/three.js';
+import { OrbitControls } from 'https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports,min/unoptimized/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://cdn.skypack.dev/pin/three@v0.133.0-bfkaociplXnkPWzSZsbo/mode=imports,min/unoptimized/examples/jsm/loaders/GLTFLoader.js';
+    import { RGBELoader } from 'https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports,min/unoptimized/examples/jsm/loaders/RGBELoader.js';
+	import { OBJLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/OBJLoader.js';
 
-// 			function init() {
 
-// 				const container = document.createElement( 'div' );
-// 				document.body.appendChild( container );
+  let camera, scene, renderer;
 
-// 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
-// 				camera.position.set( - 1.8, 0.6, 2.7 );
+  init();
 
-// 				scene = new THREE.Scene();
+  function init() {
 
-// 				new RGBELoader()
-// 					.setPath( 'textures/equirectangular/' )
-// 					.load( 'royal_esplanade_1k.hdr', function ( texture ) {
+    const container = document.createElement( 'div' );
+    document.body.appendChild( container );
 
-// 						texture.mapping = THREE.EquirectangularReflectionMapping;
+    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
+    camera.position.set( - 1.8, 0.6, 2.7 );
 
-// 						scene.background = texture;
-// 						scene.environment = texture;
+    scene = new THREE.Scene();
 
-// 						render();
+    new RGBELoader()
+      .setPath( 'textures/equirectangular/' )
+      .load( 'royal_esplanade_1k.hdr', function ( texture ) {
 
-// 						// model
+        texture.mapping = THREE.EquirectangularReflectionMapping;
 
-// 						const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
-// 						loader.load( 'DamagedHelmet.gltf', function ( gltf ) {
+        scene.background = texture;
+        scene.environment = texture;
 
-// 							scene.add( gltf.scene );
+        render();
 
-// 							render();
+        // model
 
-// 						} );
+        const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
+        loader.load( 'WholeFile.gltf', async function ( gltf ) {
 
-// 					} );
+          const model = gltf.scene;
+          model.traverse( function ( child ) {
+          if ( child.isMesh ) {
+          child.geometry.center(); 
+          child.rotation.y -= 1.01;
+          }
+          });
+          model.scale.set(10,10,10) // scale here	
+          // wait until the model can be added to the scene without blocking due to shader compilation
 
-// 				renderer = new THREE.WebGLRenderer( { antialias: true } ); 
-			// 	renderer.setPixelRatio( window.devicePixelRatio );
-			// 	renderer.setSize( window.innerWidth, window.innerHeight );
-			// 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-			// 	renderer.toneMappingExposure = 1;
-			// 	renderer.outputColorSpace = THREE.SRGBColorSpace;
-			// 	container.appendChild( renderer.domElement );
+          // await renderer.compileAsync( model, camera, scene );
 
-			// 	const controls = new OrbitControls( camera, renderer.domElement );
-			// 	controls.addEventListener( 'change', render ); // use if there is no animation loop
-			// 	controls.minDistance = 2;
-			// 	controls.maxDistance = 10;
-			// 	controls.target.set( 0, 0, - 0.2 );
-			// 	controls.update();
+          scene.add( model );
 
-			// 	window.addEventListener( 'resize', onWindowResize );
+          render();
 
-			// }
+        } );
 
-			// function onWindowResize() {
+      } );
 
-			// 	camera.aspect = window.innerWidth / window.innerHeight;
-			// 	camera.updateProjectionMatrix();
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1;
+    container.appendChild( renderer.domElement );
 
-			// 	renderer.setSize( window.innerWidth, window.innerHeight );
+    const controls = new OrbitControls( camera, renderer.domElement );
+    controls.addEventListener( 'change', render ); // use if there is no animation loop
+    controls.minDistance = 2;
+    controls.maxDistance = 10;
+    controls.target.set( 0, 0, - 0.2 );
+    controls.update();
 
-			// 	render();
+    window.addEventListener( 'resize', onWindowResize );
 
-			// }
+  }
 
-			// //
+  function onWindowResize() {
 
-			// function render() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
 
-			// 	renderer.render( scene, camera );
+    renderer.setSize( window.innerWidth, window.innerHeight );
 
-			// }
+    render();
 
-		</script>
+  }
 
-	</body>
+  //
+
+  function render() {
+
+    renderer.render( scene, camera );
+
+  }
+
+</script>
+
+</body>
 </html>
