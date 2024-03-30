@@ -7,16 +7,15 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <!-- <meta charset="UTF-8"> -->
-    <meta name="google-signin-client_id" content="73748507210-befn87uscvndhunjb21m0utaa9p12ojh.apps.googleusercontent.com.apps.googleusercontent.com">
+    <!-- <meta name="google-signin-client_id" content="73748507210-befn87uscvndhunjb21m0utaa9p12ojh.apps.googleusercontent.com.apps.googleusercontent.com"> -->
     <title>Varity® | Luxury Futurism style clothing</title>
     <link rel="icon" type="image/png" href="images/man.png">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
+	<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
   <link rel="preload" href="models/DamagedHelmet/glTF/DamagedHelmet.gltf" as="fetch" crossorigin="anonymous">
 </head>
 	<body>
@@ -35,6 +34,100 @@
         <button id="submit">Submit</button>
       </form>
     </div>  -->
+
+    <script type="module">
+
+      import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.133.0-bfkaociplXnkPWzSZsbo/mode=imports,min/optimized/three.js';
+    import { OrbitControls } from 'https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports,min/unoptimized/examples/jsm/controls/OrbitControls.js';
+    import { GLTFLoader } from 'https://cdn.skypack.dev/pin/three@v0.133.0-bfkaociplXnkPWzSZsbo/mode=imports,min/unoptimized/examples/jsm/loaders/GLTFLoader.js';
+        import { RGBELoader } from 'https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports,min/unoptimized/examples/jsm/loaders/RGBELoader.js';
+      import { OBJLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/OBJLoader.js';
+    
+    
+      let camera, scene, renderer;
+    
+      init();
+      var x = window.matchMedia("(max-width: 700px)")
+    
+      function init() {
+    
+        const container = document.createElement( 'div' );
+        document.body.appendChild( container );
+    
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
+        camera.position.set( - 1.8, 0.6, 2.7 );
+    
+        scene = new THREE.Scene();
+    
+        new RGBELoader()
+          .setPath( 'textures/equirectangular/' )
+          .load( 'venice_sunset_1k.hdr', function ( texture ) {
+    
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+    
+            scene.background = texture;
+            scene.environment = texture;
+    
+            render();
+    
+            // model
+    
+            const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
+            loader.load( 'WholeFile.gltf', async function ( gltf ) {
+              const model = gltf.scene;
+              if (x.matches) {
+              model.scale.set(5,5,5) // scale here
+              model.position.x = -0.1
+              }
+              else {
+                model.scale.set(10,10,10) // scale here	
+              }
+              model.rotation.y -= 1.01;
+              scene.add( model );
+              render();
+    
+            } );
+    
+          } );
+    
+        renderer = new THREE.WebGLRenderer( { antialias: true } );
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1;
+        container.appendChild( renderer.domElement );
+    
+        const controls = new OrbitControls( camera, renderer.domElement );
+        controls.addEventListener( 'change', render ); // use if there is no animation loop
+        controls.minDistance = 2;
+        controls.maxDistance = 10;
+        controls.target.set( 0, 0, - 0.2 );
+        controls.update();
+    
+        window.addEventListener( 'resize', onWindowResize );
+    
+      }
+    
+      function onWindowResize() {
+    
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+    
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    
+        render();
+    
+      }
+    
+      //
+    
+      function render() {
+    
+        renderer.render( scene, camera );
+    
+      }
+    
+    </script>
 <script>
 
 
@@ -901,100 +994,6 @@ function displayMessage(message) {
     }
   }
 </script> -->
-
-<script type="module">
-
-  import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.133.0-bfkaociplXnkPWzSZsbo/mode=imports,min/optimized/three.js';
-import { OrbitControls } from 'https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports,min/unoptimized/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://cdn.skypack.dev/pin/three@v0.133.0-bfkaociplXnkPWzSZsbo/mode=imports,min/unoptimized/examples/jsm/loaders/GLTFLoader.js';
-    import { RGBELoader } from 'https://cdn.skypack.dev/pin/three@v0.132.2-dLPTyDAYt6rc6aB18fLm/mode=imports,min/unoptimized/examples/jsm/loaders/RGBELoader.js';
-	import { OBJLoader } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/loaders/OBJLoader.js';
-
-
-  let camera, scene, renderer;
-
-  init();
-  var x = window.matchMedia("(max-width: 700px)")
-
-  function init() {
-
-    const container = document.createElement( 'div' );
-    document.body.appendChild( container );
-
-    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 20 );
-    camera.position.set( - 1.8, 0.6, 2.7 );
-
-    scene = new THREE.Scene();
-
-    new RGBELoader()
-      .setPath( 'textures/equirectangular/' )
-      .load( 'venice_sunset_1k.hdr', function ( texture ) {
-
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-
-        scene.background = texture;
-        scene.environment = texture;
-
-        render();
-
-        // model
-
-        const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
-        loader.load( 'WholeFile.gltf', async function ( gltf ) {
-          const model = gltf.scene;
-          if (x.matches) {
-					model.scale.set(5,5,5) // scale here
-          model.position.x = -0.1
-          }
-          else {
-            model.scale.set(10,10,10) // scale here	
-          }
-					model.rotation.y -= 1.01;
-          scene.add( model );
-          render();
-
-        } );
-
-      } );
-
-    renderer = new THREE.WebGLRenderer( { antialias: true } );
-    renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1;
-    container.appendChild( renderer.domElement );
-
-    const controls = new OrbitControls( camera, renderer.domElement );
-    controls.addEventListener( 'change', render ); // use if there is no animation loop
-    controls.minDistance = 2;
-    controls.maxDistance = 10;
-    controls.target.set( 0, 0, - 0.2 );
-    controls.update();
-
-    window.addEventListener( 'resize', onWindowResize );
-
-  }
-
-  function onWindowResize() {
-
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize( window.innerWidth, window.innerHeight );
-
-    render();
-
-  }
-
-  //
-
-  function render() {
-
-    renderer.render( scene, camera );
-
-  }
-
-</script>
 
 </body>
 </html>
