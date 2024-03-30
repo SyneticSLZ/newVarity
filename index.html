@@ -45,9 +45,9 @@
     
     
       let camera, scene, renderer;
-    
-      init();
       var x = window.matchMedia("(max-width: 700px)")
+      init();
+
     
       function init() {
     
@@ -62,16 +62,6 @@
         new RGBELoader()
           .setPath( 'textures/equirectangular/' )
           .load( 'venice_sunset_1k.hdr', function ( texture ) {
-    
-            texture.mapping = THREE.EquirectangularReflectionMapping;
-    
-            scene.background = texture;
-            scene.environment = texture;
-    
-            render();
-    
-            // model
-    
             const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
             loader.load( 'WholeFile.gltf', async function ( gltf ) {
               const model = gltf.scene;
@@ -87,6 +77,16 @@
               render();
     
             } );
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+    
+            scene.background = texture;
+            scene.environment = texture;
+    
+            render();
+    
+            // model
+    
+
     
           } );
     
