@@ -941,17 +941,19 @@ import { GLTFLoader } from 'https://cdn.skypack.dev/pin/three@v0.133.0-bfkaocipl
         const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
         loader.load( 'WholeFile.gltf', async function ( gltf ) {
 
-          const model = gltf.scene;
-          model.traverse( function ( child ) {
-          if ( child.isMesh ) {
-          child.geometry.center(); 
-          child.rotation.y -= 1.01;
-          }
-          });
-          model.scale.set(10,10,10) // scale here	
-          // wait until the model can be added to the scene without blocking due to shader compilation
 
-          // await renderer.compileAsync( model, camera, scene );
+          const model = gltf.scene;
+							// model.traverse( function ( child ) {
+							// if ( child.isMesh ) {
+							// child.geometry.center(); 
+							// child.rotation.y -= 1.01;
+							// }
+							// });
+							model.scale.set(10,10,10) // scale here	
+							model.rotation.y -= 1.01;
+							// // wait until the model can be added to the scene without blocking due to shader compilation
+
+							// await renderer.compileAsync( model, camera, scene );
 
           scene.add( model );
 
