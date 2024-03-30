@@ -862,14 +862,14 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
           .setPath( 'textures/equirectangular/' )
           .load( 'venice_sunset_1k.hdr', function ( texture ) {
             const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
-            loader.load( 'WholeFile.gltf', async function ( gltf ) {
+            loader.load( 'scene.gltf', async function ( gltf ) {
               const model = gltf.scene;
               if (x.matches) {
-              model.scale.set(5,5,5) // scale here
+              // model.scale.set(5,5,5) // scale here
               model.position.x = -0.1
               }
               else {
-                model.scale.set(10,10,10) // scale here	
+                // model.scale.set(10,10,10) // scale here	
               }
               model.rotation.y -= 1.01;
               scene.add( model );
