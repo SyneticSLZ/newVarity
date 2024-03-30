@@ -18,7 +18,797 @@
 	<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
   <link rel="preload" href="models/DamagedHelmet/glTF/WholeFile.gltf" as="fetch" crossorigin="anonymous">
   <link rel="modulepreload" href="https://cdn.skypack.dev/three@0.133.0">
+<style>
+  .top{
+    width: 50%;
+}
 
+
+body {
+margin: 0;
+background-color: #000;
+color: #fff;
+font-family: Monospace;
+font-size: 13px;
+line-height: 24px;
+overscroll-behavior: none;
+}
+
+a {
+color: #ff0;
+text-decoration: none;
+}
+
+a:hover {
+text-decoration: underline;
+}
+
+button {
+cursor: pointer;
+text-transform: uppercase;
+}
+
+#info {
+position: absolute;
+top: 0px;
+width: 100%;
+padding: 10px;
+box-sizing: border-box;
+text-align: center;
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+user-select: none;
+pointer-events: none;
+z-index: 1; /* TODO Solve this in HTML */
+}
+
+a, button, input, select {
+pointer-events: auto;
+}
+
+.lil-gui {
+z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+@media all and ( max-width: 640px ) {
+.lil-gui.root { 
+right: auto;
+top: auto;
+max-height: 50%;
+max-width: 80%;
+bottom: 0;
+left: 0;
+}
+}
+
+.navbar {
+font-family: 'Open Sans', sans-serif;
+margin: 0;
+padding-top: 70px; 
+/* background-color: white;  */
+/* background-color: rgba(0, 0, 0, 0.7); */
+color: white;
+position: fixed; /* Fixed at the top */
+top: 0;
+width: 97%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 20px; 
+
+}
+
+.navbar.scrolled {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.8);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+/* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
+/* background-color: rgba(255, 255, 255, 0.87); Background color when scrolled */
+color: black;
+/* Add other styles for the scrolled state of the navbar */
+}
+.navbar a {
+color: inherit;
+text-decoration: none;
+margin: 0 15px;
+}
+.navbar .logo {
+/* font-family: 'Courier New', Courier, monospace; */
+font-family: 'Open Sans', sans-serif;
+font-size: 40px;
+margin-left: 0.1em;
+margin-top: 0.3em;
+
+}
+
+.navbar .navbar-links {
+display: flex;
+align-items: center;
+}
+
+.navbar-icons {
+display: flex;
+align-items: center;
+flex-direction: row;
+}
+.navbar-icons i {
+margin-left: 10px;
+font-size: 20px;
+}
+.middle{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+margin-right: 1em;
+}
+.navbar-links{
+margin-top: 1em;
+margin-right: 1em;
+}
+.navbar .row{
+display: flex;
+flex-direction: row;
+margin-left: 2em;
+align-items: center;
+justify-content: center;
+}
+#overlay {
+position: absolute;
+font-size: 16px;
+z-index: 2;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+background: rgba(0,0,0,0.7);
+}
+
+#overlay button {
+background: transparent;
+border: 0;
+border: 1px solid rgb(255, 255, 255);
+border-radius: 4px;
+color: #ffffff;
+padding: 12px 18px;
+text-transform: uppercase;
+cursor: pointer;
+}
+
+#notSupported {
+width: 50%;
+margin: auto;
+background-color: #f00;
+margin-top: 20px;
+padding: 10px;
+}
+
+.cart-sidebar {
+position: fixed;
+right: 0;
+top: 0;
+width: 350px; /* Adjust width as needed */
+height: 100vh;
+background: #fff; /* White background for contrast */
+color: #000; /* Black color for text */
+box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+padding: 20px;
+box-sizing: border-box;
+transform: translateX(100%);
+transition: transform 0.3s ease;
+z-index: 1000; /* Ensure it's above other content */
+overflow-y: auto; /* Enable scroll for overflow */
+font-family: 'Open Sans', sans-serif; /* Example font */
+
+}
+
+.cart-item {
+display: flex;
+align-items: center;
+border: 1px solid #e1e1e1;
+padding: 10px;
+margin-bottom: 10px;
+}
+
+.cart-item-image {
+width: 100px; /* Adjust as needed */
+height: auto;
+margin-right: 20px;
+}
+
+.cart-item-details {
+flex-grow: 1;
+}
+
+.item-code {
+font-size: 0.9em;
+color: #666;
+}
+
+.item-name {
+margin-top: 0;
+font-size: 1.2em;
+font-weight: bold;
+color: #333;
+}
+
+.item-attributes {
+font-size: 1em;
+color: #333;
+}
+
+.item-price {
+font-size: 1.2em;
+font-weight: bold;
+color: #333;
+}
+
+.cart-item-actions {
+display: flex;
+align-items: center;
+/* flex-direction: column; */
+gap: 10px;
+}
+
+.quantity-label {
+font-size: 1em;
+margin-right: 5px;
+}
+
+.item-quantity {
+width: 50px; /* Adjust as needed */
+padding: 5px;
+border: 1px solid #e1e1e1;
+border-radius: 4px;
+}
+
+.remove-item-btn {
+padding: 5px 10px;
+background-color: #000000;
+border: none;
+margin-top: 1em;
+border-radius: 4px;
+color: white;
+cursor: pointer;
+}
+
+.remove-item-btn:hover {
+background-color: #d32f2f;
+cursor: pointer;
+}
+
+
+.checkout-container {
+text-align: center;
+padding: 20px 0;
+}
+
+#checkout-button {
+background-color: #000; /* Black button for luxury look */
+color: #fff;
+border: none;
+padding: 12px 30px;
+width: 100%;
+cursor: pointer;
+font-size: 16px;
+text-transform: uppercase;
+}
+
+.close-cart-btn {
+position: absolute;
+right: 370px; /* 1em to the left of the sidebar edge */
+top: 50%; /* Centered vertically */
+transform: translateY(-50%); 
+/* background-color: #000; Black button for luxury look */
+color: #cacaca; 
+display: none;
+align-items: center;
+cursor: pointer;
+font-size: 20px;
+/* Hidden by default */
+/* opacity: 0.8; */
+transition: opacity 0.3s ease, visibility 0s 0.3s; /* Smooth transition for opacity and delayed visibility */
+}
+
+.close-cart-text {
+margin-right: 10px; /* Space between text and icon */
+white-space: nowrap; /* Ensure the text does not wrap */
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.cart-sidebar h4:hover {
+color: #d32f2f;
+cursor: pointer;
+}
+
+.close-cart-btn:hover .close-cart-text {
+opacity: 1; /* Show text on hover */
+}
+
+/* Rotate icon to an arrow and show text on hover */
+.close-cart-btn:hover .close-cart-icon:before {
+transform: rotate(-180deg);
+content: '\f0a8'; /* FontAwesome arrow-left icon */
+}
+
+.cart-sidebar.active .close-cart-btn {
+/* Show only when sidebar is active */
+opacity: 1;
+transition: opacity 0.3s ease, visibility 0s; /* Immediate visibility transition */
+}
+
+
+/* Overlay background */
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(17, 27, 39, 0.53); */
+border-radius: 12px;
+border: 1px solid rgba(255, 255, 255, 0.125);
+backdrop-filter: blur(10px); /* Blur effect for the background */
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 1000; /* Ensure it's above other content */
+color: #ffffff;
+font-family: 'Open Sans', sans-serif;
+}
+
+/* Glassmorphism style for the form container */
+.glass {
+padding: 40px;
+border-radius: 20px;
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(255, 255, 255, 0.692); */
+border-radius: 12px;
+/* border: 1px solid rgba(255, 255, 255, 0.125); */
+width: 500px; /* Fixed width for the form */
+}
+
+/* Style for form elements */
+.form-group input {
+width: 100%; /* Full width of the parent container */
+padding: 15px;
+margin-bottom: 20px; /* Spacing between elements */
+border-radius: 20px; /* Rounded borders */
+border: none; /* No border */
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(17, 27, 39, 0.53); */
+border-radius: 20px;
+border: 1px solid rgba(255, 255, 255, 0.125);
+color: #ff0000;
+}
+
+.login-form{
+display: flex;justify-content: center;align-items: center;
+background: #000;
+}
+
+/* Style for the submit button */
+.btn {
+width: 107%;
+padding: 15px;
+border-radius: 20px;
+border: none;
+background-color: #000000; /* Vibrant color for the button */
+color: white;
+font-size: 16px;
+display: flex;
+align-items: center;justify-content: center;
+/* flex-direction: ; */
+cursor: pointer; /* Pointer cursor on hover */
+transition: background-color 0.3s ease; /* Transition for a hover effect */
+}
+
+.btn:hover {
+background-color: #000000; /* Darker shade on hover */
+}
+
+.switch-form{
+font-size: larger;
+}
+/* Style for the active tab */
+.switch-form .active {
+
+color: #ffffff; /* Vibrant text color for the active tab */
+font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Style for the form footer */
+.form-footer {
+text-align: center;
+margin-top: 20px; /* Spacing from the last form element */
+/* color: #ffffff; Dark text color for contrast */
+/* color: #ffffff; */
+}
+
+.form-footer span {
+color: #ff0000; /* Vibrant text color for clickable actions */
+cursor: pointer; /* Pointer cursor on hover */
+}
+#formContent{
+margin-top: 2em;
+width: 100%;
+/* background-color: #f00; */
+}
+.form-group{
+width: 100%;
+}
+
+/* Hide the confirmPasswordGroup by default */
+#confirmPasswordGroup {
+display: none; /* Hide the confirm password input initially */
+}
+
+/* Customize the Google Sign-in button */
+.g-signin2 {
+width: 100%; /* Full width of the parent container */
+margin-bottom: 20px; /* Spacing from the next element */
+}
+
+.form-tab {
+cursor: pointer;
+padding: 10px;
+border-bottom: 2px solid transparent; /* Default state with no border */
+}
+
+.form-tab.active {
+border-bottom: 2px solid #ff0015; /* Highlight the active tab with a border */
+}
+.title{
+display: flex;
+flex-direction: row;
+align-items: center;
+
+}
+
+.i {
+font-size: large;
+margin-right: 2em;
+}
+
+.buy-button {
+position: fixed;
+top: 500px;
+left: 600px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+background-color: #ff7a8513;
+border: 2px solid #ff7a85; 
+color: white;
+/* border: none; */
+border-radius: 15px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+.buy {
+    position: fixed;
+    top: 300px;
+    right: 150px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #53535313;
+    border: 0.5px solid #e2dcdd; 
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    /* border: none; */
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.b {
+    position: fixed;
+    top: 650px;
+    right: 650px;
+}
+.titlebuy{
+    font-size: 20;
+}
+
+.login{
+color: whitesmoke;
+font-family: 'Open Sans', sans-serif;
+margin: 0;
+font-size: 20px;
+position: fixed; /* Fixed at the top */
+bottom: 1em;
+left: 1em;
+z-index: 4;
+
+}
+
+#price{
+    font-size: 27px;
+    margin-top: 1em;
+
+}
+#o{
+    font-size: smaller;
+    color: #666;
+    margin-bottom: 1em;
+}
+#os{
+    font-size: smaller;
+    color: #ffffff;
+    margin-bottom: 1em;
+    text-decoration: underline;
+}
+
+
+#buybtn{
+    display: flex;
+    justify-content: 
+    center;
+    align-items: center;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff0000a2;
+    border: 0.5px solid #e2dcdd; 
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    /* border: none; */
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+#titlebuy{
+    font-size: 27px;
+}
+#buybutton:hover{
+    background-color: #9125254f;
+}
+/* 
+body {
+margin: 0;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #f0f0f0;
+} */
+
+#menuToggle {
+position: fixed;
+top: 20px;
+right: 20px;
+display: none;
+flex-direction: column;
+justify-content: space-around;
+width: 40px;
+height: 30px;
+background: transparent;
+border: none;
+cursor: pointer;
+padding: 0;
+z-index: 2;
+color: white;
+}
+
+#menuToggle input {
+display: none;
+}
+
+#menuToggle span {
+display: block;
+width: 40px;
+height: 3px;
+margin-bottom: 5px;
+position: relative;
+background: #ffffff;
+border-radius: 3px;
+z-index: 1;
+transform-origin: 4px 0px;
+transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0)
+        /* background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), */
+        /* opacity 0.55s ease; */
+}
+
+#menuToggle span:first-child {
+transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+transform-origin: 0% 100%;
+}
+
+#menuToggle input:checked ~ span {
+opacity: 1;
+transform: rotate(45deg) translate(-2px, -1px);
+background: #232323;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3) {
+opacity: 0;
+transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+transform: rotate(-45deg) translate(0, -1px);
+}
+
+#menuOverlay {
+position: fixed;
+/* visibility: hidden; */
+display: none;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.05);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
+border: 1px solid rgba(255, 255, 255, 0.14);
+transition: visibility 0s, opacity 0.5s linear;
+/* opacity: 0; */
+font-family: 'Open Sans', sans-serif;
+}
+
+#menuOverlay ul {
+position: absolute;
+top: 100px;
+width: 100vw;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#menuOverlay ul li {
+padding: 10px 0;
+font-size: 22px;
+}
+
+#menuOverlay ul li a {
+text-decoration: none;
+color: whitesmoke;
+transition: color 0.3s ease;
+}
+
+#menuOverlay ul li a:hover {
+color: #ffffff;
+}
+
+#signInGoogle, #signInNormal {
+display: inline-block;
+margin-top: 20px;
+padding: 10px 15px;
+border: 1px solid #ddd;
+border-radius: 5px;
+
+
+}
+#signInGoogle:hover
+{
+border: none;
+} #signInNormal:hover
+{
+border: none;
+}
+
+.buttonnavmobile:hover {
+background: rgb(131,58,180);
+background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+/* border: 1px solid  rgb(131,58,180); */
+
+}
+
+#menuToggle input:checked ~ #menuOverlay {
+visibility: visible;
+opacity: 1;
+}
+.mobile-icons {
+display: none;
+}
+
+@media (max-width: 600px) {
+
+#menuToggle {
+display: block;
+}
+
+.navbar .navbar-links {
+display: none;
+}
+
+.navbar .navbar-icons {
+/* top: 0; */
+/* left: 0; */
+display: none;
+}
+
+.mobile-icons {
+display: none;
+position: fixed;
+bottom: 20px;
+right: 0px;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+/* justify-content: center; */
+width: 140px;
+height: 25px;
+/* background: black; */
+border: none;
+cursor: pointer;
+/* padding: auto; */
+z-index: 2;
+/* color: white; */
+/* margin-left: 10px; */
+font-size: 22px;
+}
+
+.mobile-icons i {
+color: #e1e1e1;
+margin-right: 1em;
+}
+
+.buy {
+    display: none;
+}
+
+
+}
+
+
+#overlay1 {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(17, 27, 39, 0.53); */
+border-radius: 12px;
+border: 1px solid rgba(255, 255, 255, 0.125);
+backdrop-filter: blur(10px); /* Blur effect for the background */
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 1000; /* Ensure it's above other content */
+color: #ffffff;
+font-family: 'Open Sans', sans-serif;
+}
+
+iframe {
+    position: absolute;
+    font-size: 16px;
+    z-index: -92;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0,0,0,0.7);
+    overflow: hidden; /* This will remove the scrollbars */
+    border: none; /* This will remove the border */
+    }
+</style>
 </head>
 	<body>
     <!-- <div id="overlay1">
