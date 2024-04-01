@@ -14,7 +14,7 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" /> -->
 
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" /> -->
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
   <link rel="preload" href="models/DamagedHelmet/glTF/WholeFile.gltf" as="fetch" crossorigin="anonymous">
   <link rel="modulepreload" href="https://cdn.skypack.dev/three@0.133.0">
@@ -504,8 +504,12 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 
 .buy {
     position: fixed;
-    top: 300px;
+    /* top: 300px; */
     right: 150px;
+display: none;
+    bottom: 10%;
+    right:50%;
+    transform: translateX(50%);
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -530,11 +534,12 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 .login{
 color: whitesmoke;
 font-family: 'Open Sans', sans-serif;
+/* font-family: 'Open Sans', sans-serif; */
 margin: 0;
-font-size: 20px;
+font-size: 17px;
 position: fixed; /* Fixed at the top */
-bottom: 1em;
-left: 1em;
+bottom: 1.5em;
+left: 2em;
 z-index: 4;
 
 }
@@ -735,7 +740,9 @@ display: block;
 .navbar .navbar-links {
 display: none;
 }
-
+.login{
+  display: none;
+}
 .navbar .navbar-icons {
 /* top: 0; */
 /* left: 0; */
@@ -812,6 +819,23 @@ iframe {
     overflow: hidden; /* This will remove the scrollbars */
     border: none; /* This will remove the border */
     }
+
+      /* Style for the fixed text */
+  .fixed-bottom-middle {
+    cursor: pointer;
+    position: fixed;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* transform: translateY(-50%); */
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    /* text-decoration: underline; */
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+  }
+  
 </style>
 </head>
 	<body>
@@ -862,14 +886,15 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
           .setPath( 'textures/equirectangular/' )
           .load( 'venice_sunset_1k.hdr', function ( texture ) {
             const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
-            loader.load( 'scene.gltf', async function ( gltf ) {
+            loader.load( 'WholeFile.gltf', async function ( gltf ) {
               const model = gltf.scene;
               if (x.matches) {
-              // model.scale.set(5,5,5) // scale here
+              model.scale.set(5,5,5) // scale here
               model.position.x = -0.1
               }
               else {
-                // model.scale.set(10,10,10) // scale here	
+                model.scale.set(7,7,7) // scale here	
+                model.position.x = -0.15
               }
               model.rotation.y -= 1.01;
               scene.add( model );
@@ -1108,7 +1133,10 @@ const form = document.getElementById('payment-form');
     }
     });
 </script>
-    <div class="login" id="login" onclick="showOverlay()">Login / Sign up</div>
+    
+    <div class="fixed-bottom-middle" onclick="toggleSizeChart()" id="textsizeChart">
+      MORE DETAILS
+    </div>
     <div class="mobile-icons">
       <a href="https://www.tiktok.com/@varity.club?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
       <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -1141,7 +1169,7 @@ const form = document.getElementById('payment-form');
           </div>
     </div>
 
-
+    <div class="login" id="login" onclick="showOverlay()">LOGIN / SIGN UP</div>
     <div class="navbar-icons">
       <!-- <a href="#"><i class="far fa-heart"></i></a> -->
       <!-- <a href="#"><i class="far fa-user"></i></a> -->
@@ -1206,6 +1234,7 @@ const form = document.getElementById('payment-form');
 
     const menuToggleInput = document.querySelector('#menuToggle input');
     const menuOverlay = document.getElementById('menuOverlay');
+    // const detailsOverlay = document.getElementById('details');
     var open = false;
     // menuToggleInput.addEventListener('change', 
     function menu() {
@@ -1226,7 +1255,6 @@ const form = document.getElementById('payment-form');
 
     // 
   }
-    // );
 
 document.addEventListener('DOMContentLoaded', function() {
     // Function to switch tabs in the form
@@ -1304,7 +1332,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function closeForm() {
   const formOverlay = document.getElementById('formOverlay');
-    formOverlay.style.display = 'none';
+  formOverlay.style.display = 'none';
 }
 
   function switchForm(state) {
@@ -1456,16 +1484,26 @@ switchForm('login');
 <div class="content-wrapper">
   <div id="top" class="top"></div> 
   <!-- <iframe class="container " src ="https://syneticslz.github.io/three.js/examples/webgl_loader_gltf.html" alt="" srcset=""></iframe> -->
-  
-  <div class="buy">
+
+  <div class="buy" id="sizeChart" >
     <div id="o">ORIGINALS</div>
     <div id="titlebuy"> VARITY ORIGINALS TEE</div>
     <div id="price">£25</div>
     <p>Lorem ipsum dolor sit amet consectetur <br>Ratione</p>
     <div id="buybtn" onclick="buybutton()">Buy Now</div>
     <div id="os">Size Chart</div>
-    
   </div>
+
+  <script>
+      function toggleSizeChart() {
+    const sizeChart = document.getElementById('sizeChart');
+    const textsizeChart = document.getElementById('textsizeChart');
+    sizeChart.style.display = (sizeChart.style.display === 'block') ? 'none' : 'block';
+    textsizeChart.style.display = 'none';
+
+  }
+  </script>
+
   <!-- <img src="images/line.png" alt=""  class="b"> -->
   <!-- <div class="buy-button" onclick="buybutton()"> -->
     <!-- Buy Now -->
