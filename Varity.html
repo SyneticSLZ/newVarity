@@ -452,6 +452,196 @@ backdrop-filter: blur(16px);
     margin-top: 1em;
 }
 
+#menuToggle {
+position: fixed;
+top: 20px;
+right: 20px;
+display: none;
+flex-direction: column;
+justify-content: space-around;
+width: 40px;
+height: 30px;
+background: transparent;
+border: none;
+cursor: pointer;
+padding: 0;
+z-index: 2;
+color: white;
+}
+
+#menuToggle input {
+display: none;
+}
+
+#menuToggle span {
+display: block;
+width: 40px;
+height: 3px;
+margin-bottom: 5px;
+position: relative;
+background: #ffffff;
+border-radius: 3px;
+z-index: 1;
+transform-origin: 4px 0px;
+transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0)
+        /* background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), */
+        /* opacity 0.55s ease; */
+}
+
+#menuToggle span:first-child {
+transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+transform-origin: 0% 100%;
+}
+
+#menuToggle input:checked ~ span {
+opacity: 1;
+transform: rotate(45deg) translate(-2px, -1px);
+background: #232323;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3) {
+opacity: 0;
+transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+transform: rotate(-45deg) translate(0, -1px);
+}
+
+#menuOverlay {
+position: fixed;
+/* visibility: hidden; */
+display: none;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.05);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
+border: 1px solid rgba(255, 255, 255, 0.14);
+transition: visibility 0s, opacity 0.5s linear;
+/* opacity: 0; */
+font-family: 'Open Sans', sans-serif;
+}
+
+#menuOverlay ul {
+position: absolute;
+top: 100px;
+width: 100vw;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#menuOverlay ul li {
+padding: 10px 0;
+font-size: 22px;
+}
+
+#menuOverlay ul li a {
+text-decoration: none;
+color: whitesmoke;
+transition: color 0.3s ease;
+}
+
+#menuOverlay ul li a:hover {
+color: #ffffff;
+}
+
+#signInGoogle, #signInNormal {
+display: inline-block;
+margin-top: 20px;
+padding: 10px 15px;
+border: 1px solid #ddd;
+border-radius: 5px;
+
+
+}
+#signInGoogle:hover
+{
+border: none;
+} #signInNormal:hover
+{
+border: none;
+}
+
+.buttonnavmobile:hover {
+background: rgb(131,58,180);
+background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+/* border: 1px solid  rgb(131,58,180); */
+
+}
+
+#menuToggle input:checked ~ #menuOverlay {
+visibility: visible;
+opacity: 1;
+}
+.mobile-icons {
+display: none;
+}
+
+@media (max-width: 1000px) {
+
+  .buy{
+    width: 70%;
+  }
+#menuToggle {
+display: block;
+cursor: pointer;
+}
+
+.navbar .navbar-links {
+display: none;
+}
+.login{
+  display: none;
+}
+.navbar .navbar-icons {
+/* top: 0; */
+/* left: 0; */
+display: none;
+}
+
+.mobile-icons {
+display: none;
+position: fixed;
+bottom: 20px;
+right: 0px;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+/* justify-content: center; */
+width: 140px;
+height: 25px;
+/* background: black; */
+border: none;
+cursor: pointer;
+/* padding: auto; */
+z-index: 2;
+/* color: white; */
+/* margin-left: 10px; */
+font-size: 22px;
+}
+
+.mobile-icons i {
+color: #e1e1e1;
+margin-right: 1em;
+cursor: pointer;
+}
+
+.buy {
+    display: none;
+}
+
+
+}
 /* Include media queries for responsiveness */
 @media (max-width: 768px) {
     .footer-content {
@@ -567,6 +757,28 @@ backdrop-filter: blur(16px);
                   <a href="#"><i class="far fa-shopping-bag"></i></a>
                 </div>
               </div>
+
+              <div id="menuToggle" onclick="showSlides()">
+                <input type="checkbox" />
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div id="menuOverlay">
+                <nav id="menuNav">
+                    <ul>
+                      <li><a href="Varity.html#highlights">HIGHLIGHTS</a></li>
+                      <li><a href="Varity.html#catalogue">CLOTHING</a></li>
+                      <li><a href="https://www.syneticx.com">STORE</a></li>
+                      <li><a href="Varity.html#story">STORY</a></li>
+                      <li><a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">INSTAGRAM</a></li>
+                        <li ><a href="#signin" id="signInGoogle" class="buttonnavmobile">Sign in with Google</a>
+                          <a href="#signin" id="signInNormal" class="buttonnavmobile">Sign in</a></li>
+                        <!-- <li></li> -->
+                    </ul>
+                </nav>
+            </div>
         </div>
 
         </div> 
@@ -622,6 +834,10 @@ backdrop-filter: blur(16px);
                 <p class="description">44 mm, automatic, Lucent Steel™</p>
                 <div class="price">£25.00</div>
                 <button class="shop-button">Shop</button>
+                <div class="underline"></div>
+                
+                <p class="description">View in 3D</p>
+                
               </div>
           </div>
           <div class="slide">
@@ -688,6 +904,31 @@ backdrop-filter: blur(16px);
       </script> -->
 
       <script>
+
+        
+    const menuToggleInput = document.querySelector('#menuToggle input');
+    const menuOverlay = document.getElementById('menuOverlay');
+    // const detailsOverlay = document.getElementById('details');
+    var open = false;
+    // menuToggleInput.addEventListener('change', 
+    function menu() {
+        console.log("menu", open);
+        if(!open) {
+            // When the checkbox is checked, show the menu
+            menuOverlay.style.display = 'block';
+            menuOverlay.style.opacity = '1';
+            open = true;
+        } else {
+            // When the checkbox is not checked, hide the menu
+            menuOverlay.style.opacity = '0';
+            setTimeout(() => {
+                menuOverlay.style.display = 'none';
+            }, 500); // Corresponds to the transition duration
+            open = false;
+        }
+
+    // 
+  }
         // Get the image element
         function addHoverEffect(imageSelector, hoverSrc, originalSrc) {
   var image = document.querySelector(imageSelector);
