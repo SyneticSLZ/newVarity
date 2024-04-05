@@ -1,0 +1,2217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
+    <!-- <link rel="stylesheet" href="index.css"></link> -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="google-signin-client_id" content="73748507210-befn87uscvndhunjb21m0utaa9p12ojh.apps.googleusercontent.com.apps.googleusercontent.com"> -->
+    <title>Varity® | Luxury Futurism style clothing</title>
+    <link rel="icon" type="image/png" href="images/man.png">
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" /> -->
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-...your-sha512-here..." crossorigin="anonymous" /> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+  <link rel="preload" href="models/DamagedHelmet/glTF/WholeFile.gltf" as="fetch" crossorigin="anonymous">
+  <link rel="modulepreload" href="https://cdn.skypack.dev/three@0.133.0">
+  <link rel="preload" href="https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js" as="fetch" crossorigin="anonymous">
+
+<style>
+  .top{
+    width: 50%;
+}
+
+
+body {
+margin: 0;
+/* background-color: #000; */
+color: #fff;
+font-family: Monospace;
+font-size: 13px;
+line-height: 24px;
+overscroll-behavior: none;
+}
+
+a {
+color: #ff0;
+text-decoration: none;
+}
+
+a:hover {
+text-decoration: underline;
+}
+
+button {
+cursor: pointer;
+text-transform: uppercase;
+}
+
+#info {
+position: absolute;
+top: 0px;
+width: 100%;
+padding: 10px;
+box-sizing: border-box;
+text-align: center;
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+user-select: none;
+pointer-events: none;
+z-index: 1; /* TODO Solve this in HTML */
+}
+
+a, button, input, select {
+pointer-events: auto;
+}
+
+.lil-gui {
+z-index: 2 !important; /* TODO Solve this in HTML */
+}
+
+@media all and ( max-width: 640px ) {
+.lil-gui.root { 
+right: auto;
+top: auto;
+max-height: 50%;
+max-width: 80%;
+bottom: 0;
+left: 0;
+}
+}
+
+.navbar {
+font-family: 'Open Sans', sans-serif;
+margin: 0;
+padding-top: 70px; 
+/* background-color: white;  */
+/* background-color: rgba(0, 0, 0, 0.7); */
+color: #000;
+
+position: fixed; /* Fixed at the top */
+top: 0;
+width: 97%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 20px; 
+
+}
+
+.navbar.scrolled {
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.8);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(16px);
+-webkit-backdrop-filter: blur(16px);
+/* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
+/* background-color: rgba(255, 255, 255, 0.87); Background color when scrolled */
+color: black;
+/* Add other styles for the scrolled state of the navbar */
+}
+.navbar a {
+color: inherit;
+text-decoration: none;
+margin: 0 15px;
+}
+.navbar .logo {
+/* font-family: 'Courier New', Courier, monospace; */
+font-family: 'Open Sans', sans-serif;
+font-size: 40px;
+margin-left: 0.1em;
+margin-top: 0.3em;
+
+}
+
+.navbar .navbar-links {
+display: flex;
+align-items: center;
+}
+
+.navbar-icons {
+display: flex;
+align-items: center;
+flex-direction: row;
+}
+.navbar-icons i {
+margin-left: 10px;
+font-size: 20px;
+}
+.middle{
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+margin-right: 1em;
+}
+.navbar-links{
+margin-top: 1em;
+margin-right: 1em;
+}
+.navbar .row{
+display: flex;
+flex-direction: row;
+margin-left: 2em;
+align-items: center;
+justify-content: center;
+}
+#overlay {
+position: absolute;
+font-size: 16px;
+z-index: 2;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+background: rgba(0,0,0,0.7);
+}
+
+#overlay button {
+background: transparent;
+border: 0;
+border: 1px solid rgb(255, 255, 255);
+border-radius: 4px;
+color: #ffffff;
+padding: 12px 18px;
+text-transform: uppercase;
+cursor: pointer;
+}
+
+#notSupported {
+width: 50%;
+margin: auto;
+background-color: #f00;
+margin-top: 20px;
+padding: 10px;
+}
+
+.cart-sidebar {
+position: fixed;
+right: 0;
+top: 0;
+width: 350px; /* Adjust width as needed */
+height: 100vh;
+background: #fff; /* White background for contrast */
+color: #000; /* Black color for text */
+box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+padding: 20px;
+box-sizing: border-box;
+transform: translateX(100%);
+transition: transform 0.3s ease;
+z-index: 1000; /* Ensure it's above other content */
+overflow-y: auto; /* Enable scroll for overflow */
+font-family: 'Open Sans', sans-serif; /* Example font */
+
+}
+
+.cart-item {
+display: flex;
+align-items: center;
+border: 1px solid #e1e1e1;
+padding: 10px;
+margin-bottom: 10px;
+}
+
+.cart-item-image {
+width: 100px; /* Adjust as needed */
+height: auto;
+margin-right: 20px;
+}
+
+.cart-item-details {
+flex-grow: 1;
+}
+
+.item-code {
+font-size: 0.9em;
+color: #666;
+}
+
+.item-name {
+margin-top: 0;
+font-size: 1.2em;
+font-weight: bold;
+color: #333;
+}
+
+.item-attributes {
+font-size: 1em;
+color: #333;
+}
+
+.item-price {
+font-size: 1.2em;
+font-weight: bold;
+color: #333;
+}
+
+.cart-item-actions {
+display: flex;
+align-items: center;
+/* flex-direction: column; */
+gap: 10px;
+}
+
+.quantity-label {
+font-size: 1em;
+margin-right: 5px;
+}
+
+.item-quantity {
+width: 50px; /* Adjust as needed */
+padding: 5px;
+border: 1px solid #e1e1e1;
+border-radius: 4px;
+}
+
+.remove-item-btn {
+padding: 5px 10px;
+background-color: #000000;
+border: none;
+margin-top: 1em;
+border-radius: 4px;
+color: white;
+cursor: pointer;
+}
+
+.remove-item-btn:hover {
+background-color: #d32f2f;
+cursor: pointer;
+}
+
+
+.checkout-container {
+text-align: center;
+padding: 20px 0;
+}
+
+#checkout-button {
+background-color: #000; /* Black button for luxury look */
+color: #fff;
+border: none;
+padding: 12px 30px;
+width: 100%;
+cursor: pointer;
+font-size: 16px;
+text-transform: uppercase;
+}
+
+.close-cart-btn {
+position: absolute;
+right: 370px; /* 1em to the left of the sidebar edge */
+top: 50%; /* Centered vertically */
+transform: translateY(-50%); 
+/* background-color: #000; Black button for luxury look */
+color: #cacaca; 
+display: none;
+align-items: center;
+cursor: pointer;
+font-size: 20px;
+/* Hidden by default */
+/* opacity: 0.8; */
+transition: opacity 0.3s ease, visibility 0s 0.3s; /* Smooth transition for opacity and delayed visibility */
+}
+
+.close-cart-text {
+margin-right: 10px; /* Space between text and icon */
+white-space: nowrap; /* Ensure the text does not wrap */
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.cart-sidebar h4:hover {
+color: #d32f2f;
+cursor: pointer;
+}
+
+.close-cart-btn:hover .close-cart-text {
+opacity: 1; /* Show text on hover */
+}
+
+/* Rotate icon to an arrow and show text on hover */
+.close-cart-btn:hover .close-cart-icon:before {
+transform: rotate(-180deg);
+content: '\f0a8'; /* FontAwesome arrow-left icon */
+}
+
+.cart-sidebar.active .close-cart-btn {
+/* Show only when sidebar is active */
+opacity: 1;
+transition: opacity 0.3s ease, visibility 0s; /* Immediate visibility transition */
+}
+
+
+/* Overlay background */
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(17, 27, 39, 0.53); */
+border-radius: 12px;
+border: 1px solid rgba(255, 255, 255, 0.125);
+backdrop-filter: blur(10px); /* Blur effect for the background */
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 1000; /* Ensure it's above other content */
+color: #ffffff;
+font-family: 'Open Sans', sans-serif;
+}
+
+/* Glassmorphism style for the form container */
+.glass {
+padding: 40px;
+border-radius: 20px;
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(255, 255, 255, 0.692); */
+border-radius: 12px;
+/* border: 1px solid rgba(255, 255, 255, 0.125); */
+width: 500px; /* Fixed width for the form */
+}
+
+/* Style for form elements */
+.form-group input {
+width: 100%; /* Full width of the parent container */
+padding: 15px;
+margin-bottom: 20px; /* Spacing between elements */
+border-radius: 20px; /* Rounded borders */
+border: none; /* No border */
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(17, 27, 39, 0.53); */
+border-radius: 20px;
+border: 1px solid rgba(255, 255, 255, 0.125);
+color: #ff0000;
+}
+
+.login-form{
+display: flex;justify-content: center;align-items: center;
+background: #000;
+}
+
+/* Style for the submit button */
+.btn {
+width: 107%;
+padding: 15px;
+border-radius: 20px;
+border: none;
+background-color: #000000; /* Vibrant color for the button */
+color: white;
+font-size: 16px;
+display: flex;
+align-items: center;justify-content: center;
+/* flex-direction: ; */
+cursor: pointer; /* Pointer cursor on hover */
+transition: background-color 0.3s ease; /* Transition for a hover effect */
+}
+
+.btn:hover {
+background-color: #000000; /* Darker shade on hover */
+}
+
+.switch-form{
+font-size: larger;
+}
+/* Style for the active tab */
+.switch-form .active {
+
+color: #ffffff; /* Vibrant text color for the active tab */
+font-weight: bold; /* Bold text for emphasis */
+}
+
+/* Style for the form footer */
+.form-footer {
+text-align: center;
+margin-top: 20px; /* Spacing from the last form element */
+/* color: #ffffff; Dark text color for contrast */
+/* color: #ffffff; */
+}
+
+.form-footer span {
+color: #ff0000; /* Vibrant text color for clickable actions */
+cursor: pointer; /* Pointer cursor on hover */
+}
+#formContent{
+margin-top: 2em;
+width: 100%;
+/* background-color: #f00; */
+}
+.form-group{
+width: 100%;
+}
+
+/* Hide the confirmPasswordGroup by default */
+#confirmPasswordGroup {
+display: none; /* Hide the confirm password input initially */
+}
+
+/* Customize the Google Sign-in button */
+.g-signin2 {
+width: 100%; /* Full width of the parent container */
+margin-bottom: 20px; /* Spacing from the next element */
+}
+
+.form-tab {
+cursor: pointer;
+padding: 10px;
+border-bottom: 2px solid transparent; /* Default state with no border */
+}
+
+.form-tab.active {
+border-bottom: 2px solid #ff0015; /* Highlight the active tab with a border */
+}
+.title{
+display: flex;
+flex-direction: row;
+align-items: center;
+
+}
+
+.i {
+font-size: large;
+margin-right: 2em;
+}
+
+.buy-button {
+position: fixed;
+top: 500px;
+left: 600px;
+padding: 10px 20px;
+font-size: 16px;
+cursor: pointer;
+background-color: #ff7a8513;
+border: 2px solid #ff7a85; 
+color: white;
+/* border: none; */
+border-radius: 15px;
+box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+
+
+.b {
+    position: fixed;
+    top: 650px;
+    right: 650px;
+}
+#titlebuy{
+    font-size: 20;
+    text-align: center;
+    line-height: normal;
+    color: #000;
+}
+
+.login{
+color: rgb(0, 0, 0);
+font-family: 'Open Sans', sans-serif;
+/* font-family: 'Open Sans', sans-serif; */
+margin: 0;
+font-size: 17px;
+position: fixed; /* Fixed at the top */
+bottom: 1.5em;
+left: 2em;
+z-index: 40;
+
+}
+
+.close{
+  margin-left: 12em;
+  
+}
+
+#price{
+    font-size: 27px;
+    margin-top: 0.4em;
+    color: #000;
+}
+#o{
+  /* margin-top: 1em; */
+    font-size: smaller;
+    color: #666;
+    color: #000;
+    margin-bottom: 0.2em;
+    /* display: none; */
+}
+#os{
+    font-size: smaller;
+    color: #ffffff;
+    color: #000;
+    margin-bottom: 1em;
+    text-decoration: underline;
+}
+
+
+#buybtn{
+    display: flex;
+    justify-content: 
+    center;
+    align-items: center;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    padding: 10px 100px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4b0909;
+    border: 0.5px solid #e2dcdd; 
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    /* border: none; */
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: -10;
+    }
+#titlebuy{
+    font-size: 27px;
+}
+#buybutton:hover{
+    background-color: #9125254f;
+}
+/* 
+body {
+margin: 0;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background: #f0f0f0;
+} */
+.buy{
+  position: relative;
+  z-index: 1;
+  /* display: inline; */
+}
+#menuToggle {
+position: fixed;
+top: 20px;
+right: 20px;
+display: none;
+flex-direction: column;
+justify-content: space-around;
+width: 40px;
+height: 30px;
+background: transparent;
+border: none;
+cursor: pointer;
+padding: 0;
+z-index: 2;
+color: white;
+}
+
+#menuToggle input {
+display: none;
+}
+
+#menuToggle span {
+display: block;
+width: 40px;
+height: 3px;
+margin-bottom: 5px;
+position: relative;
+background: #ffffff;
+border-radius: 3px;
+z-index: 1;
+transform-origin: 4px 0px;
+transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0)
+        /* background 0.5s cubic-bezier(0.77,0.2,0.05,1.0), */
+        /* opacity 0.55s ease; */
+}
+
+#menuToggle span:first-child {
+transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+transform-origin: 0% 100%;
+}
+
+#menuToggle input:checked ~ span {
+opacity: 1;
+transform: rotate(45deg) translate(-2px, -1px);
+background: #232323;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3) {
+opacity: 0;
+transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2) {
+transform: rotate(-45deg) translate(0, -1px);
+}
+
+#menuOverlay {
+position: fixed;
+/* visibility: hidden; */
+display: none;
+top: 0;
+left: 0;
+bottom: 0;
+right: 0;
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.05);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
+border: 1px solid rgba(255, 255, 255, 0.14);
+transition: visibility 0s, opacity 0.5s linear;
+/* opacity: 0; */
+font-family: 'Open Sans', sans-serif;
+}
+
+#menuOverlay ul {
+position: absolute;
+top: 100px;
+width: 100vw;
+padding: 0;
+list-style-type: none;
+text-align: center;
+}
+
+#menuOverlay ul li {
+padding: 10px 0;
+font-size: 22px;
+}
+
+#menuOverlay ul li a {
+text-decoration: none;
+color: whitesmoke;
+transition: color 0.3s ease;
+}
+
+#menuOverlay ul li a:hover {
+color: #ffffff;
+}
+
+#signInGoogle, #signInNormal {
+display: inline-block;
+margin-top: 20px;
+padding: 10px 15px;
+border: 1px solid #ddd;
+border-radius: 5px;
+
+
+}
+#signInGoogle:hover
+{
+border: none;
+} #signInNormal:hover
+{
+border: none;
+}
+
+.buttonnavmobile:hover {
+background: rgb(131,58,180);
+background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+/* border: 1px solid  rgb(131,58,180); */
+
+}
+
+#menuToggle input:checked ~ #menuOverlay {
+visibility: visible;
+opacity: 1;
+}
+.mobile-icons {
+display: none;
+}
+
+@media (max-width: 1000px) {
+
+  .buy{
+    width: 70%;
+  }
+#menuToggle {
+display: block;
+}
+
+.navbar .navbar-links {
+display: none;
+}
+.login{
+  display: none;
+}
+.navbar .navbar-icons {
+/* top: 0; */
+/* left: 0; */
+display: none;
+}
+
+.mobile-icons {
+display: none;
+position: fixed;
+bottom: 20px;
+right: 0px;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+/* justify-content: center; */
+width: 140px;
+height: 25px;
+/* background: black; */
+border: none;
+cursor: pointer;
+/* padding: auto; */
+z-index: 2;
+/* color: white; */
+/* margin-left: 10px; */
+font-size: 22px;
+}
+
+.mobile-icons i {
+color: #e1e1e1;
+margin-right: 1em;
+}
+
+/* .buy {
+    display: none;
+} */
+
+.buy {
+
+position: fixed;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+/* top: 300px; */
+right: 150px;
+/* display: none; */
+bottom: 8%;
+right:50%;
+transform: translateX(50%);
+padding: 10px 20px;
+font-size: 16px;
+/* cursor: pointer; */
+/* background-color: #53535313; */
+/* border: 0.5px solid #e2dcdd;  */
+color: white;
+font-family: 'Open Sans', sans-serif;
+/* border: none; */
+border-radius: 15px;
+/* box-shadow: 0 2px 5px rgba(0,0,0,0.2); */
+}
+
+
+.fixed-bottom-middle {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* cursor: pointer; */
+    position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    transform: translateX(-50%);
+    /* transform: translateY(-50%); */
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    /* text-decoration: underline; */
+    color: white;
+    /* padding: 10px 20px; */
+    font-size: 18px;
+    border-radius: 5px;
+
+
+    display: none;
+/* width: 100%; */
+    /* From https://css.glass */
+/* background: rgba(255, 255, 255, 0.1); 
+border: white 0.09px solid;
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(8.6px);
+-webkit-backdrop-filter: blur(8.6px); */
+  }
+
+
+
+}
+@media (min-width: 1000px) {
+
+  .buy{
+    display: none;
+  }
+  .fixed-bottom-middle{
+    left: 70%;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    /* cursor: pointer; */
+    position: fixed;
+    /* bottom: 18%;
+    left: 70%; */
+    bottom: 28%;
+    /* left: 50%; */
+    transform: translateX(-50%);
+    /* transform: translateY(-50%); */
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    /* text-decoration: underline; */
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+width: 30%;
+  }
+}
+
+#overlay1 {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+backdrop-filter: blur(9px) saturate(187%);
+-webkit-backdrop-filter: blur(9px) saturate(187%);
+/* background-color: rgba(17, 27, 39, 0.53); */
+border-radius: 12px;
+border: 1px solid rgba(255, 255, 255, 0.125);
+backdrop-filter: blur(10px); /* Blur effect for the background */
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 1000; /* Ensure it's above other content */
+color: #ffffff;
+font-family: 'Open Sans', sans-serif;
+}
+
+iframe {
+    position: absolute;
+    font-size: 16px;
+    z-index: -92;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    flex-direction: column;
+    /* background: rgba(0,0,0,0.7); */
+    overflow: hidden; /* This will remove the scrollbars */
+    border: none; /* This will remove the border */
+    }
+
+      /* Style for the fixed text */
+  .fixed-bottom-middle {
+
+    /* From https://css.glass */
+/* background: rgba(255, 255, 255, 0.1); */
+/* border: white 0.09px solid; */
+/* border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(8.6px);
+-webkit-backdrop-filter: blur(8.6px); */
+  }
+    /* Style for the loading spinner */
+
+  .spinner-container {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    z-index: 1000;
+    display: none; 
+}
+/* 
+.spinner {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    animation: spin 2s cubic-bezier(0.32, 0.64, 0.45, 1) infinite;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+}
+
+.spinner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        #7638e9, 
+        #5AB9EA, 
+        #d060b4
+    );
+    z-index: -1;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-container:hover .spinner {
+    animation: spin 1.5s cubic-bezier(0.32, 0.64, 0.45, 1) infinite;
+}
+
+.spinner-container:hover .spinner::before {
+    background: conic-gradient(
+        from 0deg,
+        #df2dd0, 
+        #293ce9, 
+        #49e9e1
+    );
+} */
+
+
+
+/* HTML: <div class="loader"></div> */
+.spinner {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  white-space: pre;
+  font-size: 30px;
+  line-height: 1.2em;
+  height:1.2em;
+  overflow: hidden;
+}
+.spinner:before {
+  content:"Loading...\A⌰oading...\A⌰⍜ading...\A⌰⍜⏃ding...\A⌰⍜⏃⎅ing...\A⌰⍜⏃⎅⟟ng...\A⌰⍜⏃⎅⟟⋏g...\A⌰⍜⏃⎅⟟⋏☌...\A⌰⍜⏃⎅⟟⋏☌⟒..\A⌰⍜⏃⎅⟟⋏☌⟒⏁.\A⌰⍜⏃⎅⟟⋏☌⟒⏁⋔"; 
+  white-space: pre;
+  display: inline-block;
+  animation: l39 1s infinite steps(11) alternate;
+}
+
+@keyframes l39 {
+  100%{transform: translateY(-100%)}
+}
+
+</style>
+</head>
+	<body>
+    <!-- Loading Spinner -->
+<!-- <div class="spinner" id="spinner"></div> -->
+<div class="spinner-container" id="spinner">
+  <div class="spinner"></div>
+</div>
+    <!-- <div id="overlay1">
+      <form id="payment-form">
+        <div id="express-checkout-element"></div>
+        <h3>Contact info</h3>
+        <div id="link-authentication-element"></div>
+      
+        <h3>Shipping</h3>
+        <div id="address-element"></div>
+
+        <h3>Payment</h3>
+        <div id="payment-element"></div>
+      
+        <button id="submit">Submit</button>
+      </form>
+    </div>  -->
+    <script type="module">
+      import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
+      import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
+      import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
+      
+      let camera, scene, renderer, controls;
+      var x = window.matchMedia("(max-width: 700px)");
+      init();
+      
+      function init() {
+          const container = document.createElement('div');
+          document.body.appendChild(container);
+      
+          camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
+          camera.position.set(-1.8, 0.6, 2.7);
+      
+          scene = new THREE.Scene();
+          scene.background = new THREE.Color(0xFFFFFF); // Set background to white
+      
+          const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
+          loader.load('WholeFile.gltf', function (gltf) {
+              const model = gltf.scene;
+              let boundingBox = new THREE.Box3().setFromObject(model);
+              let center = boundingBox.getCenter(new THREE.Vector3());
+      
+              if (x.matches) {
+                  model.scale.set(5, 5, 5); // scale here
+                  // model.position.x = -0.05 + center.x;
+                  model.position.y = 0.4 + center.y;
+              } else {
+                  model.scale.set(7, 7, 7); // scale here
+                  model.position.x = -0.95 + center.x;
+                  model.position.y = 0.1 + center.y;
+              }
+              model.rotation.y -= 1.01;
+      
+              scene.add(model);
+              render();
+
+// Directional Light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(1, 1, 1); // Position the light source relative to the scene
+scene.add(directionalLight);
+
+const spotLight = new THREE.SpotLight(0xffffff);
+spotLight.position.set(1, 10, 1);
+spotLight.angle = Math.PI / 4;
+spotLight.penumbra = 0.1;
+spotLight.decay = 2;
+spotLight.distance = 200;
+
+scene.add(spotLight);
+
+// Ambient Light
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.75); // Increase intensity for more brightness
+scene.add(ambientLight);
+
+// Hemisphere Light
+const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+// First color is sky color, second color is ground color, third parameter is intensity
+scene.add(hemisphereLight);
+
+
+      
+              // Update controls to focus on model center
+              controls.target.set(center.x, center.y, center.z);
+              controls.update();
+          });
+      
+          renderer = new THREE.WebGLRenderer({ antialias: true });
+          renderer.setPixelRatio(window.devicePixelRatio);
+          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.toneMapping = THREE.ACESFilmicToneMapping;
+          renderer.toneMappingExposure = 1;
+          container.appendChild(renderer.domElement);
+      
+          controls = new OrbitControls(camera, renderer.domElement);
+          controls.addEventListener('change', render); // use if there is no animation loop
+          controls.minDistance = 2;
+          controls.maxDistance = 10;
+          // Note: No need to set controls.target here as it will be set when the model is loaded
+      
+          window.addEventListener('resize', onWindowResize);
+      }
+      
+      function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+      
+          renderer.setSize(window.innerWidth, window.innerHeight);
+      
+          render();
+      }
+      
+      function render() {
+          renderer.render(scene, camera);
+      }
+      </script>
+<script>      
+
+
+
+// Example usage: Trigger 'ArrowRight' keydown event
+
+
+let stripePromise;
+const getStripe = () => {
+  if (!stripePromise) {
+    // Ensure to replace 'your_publishable_key' with your actual Stripe public key
+    stripePromise = Stripe('pk_test_51MNx4UKJeZAyw8f4z0YJFRQozQsqzwCBKOuzaSScWRXgDDG8GW9YH3qyrI9UZlUW1V8RXkieoHgqoaMOtIbxlLSm00QDD02K7W');
+  }
+  return stripePromise;
+};
+
+const redirectToCheckout = async () => {
+  console.log("Redirecting to Checkout...");
+  const stripe = getStripe();
+  
+  // Fetch your cart from local storage
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  // Prepare lineItems from the cart object
+  const lineItems = cart.map(item => ({
+    price: item.id, // assuming id is the Stripe price ID
+    quantity: item.quantity
+  }));
+
+  const checkoutOptions = {
+    // billing_address_collection: 'auto',
+    // shipping_address_collection: {
+    //   allowed_countries: ['US', 'GBR'],
+    // },
+    lineItems: lineItems,
+    mode: "payment",
+    successUrl: `${window.location.origin}/success`,
+    cancelUrl: `${window.location.origin}`,
+    shippingAddressCollection: {
+      allowedCountries: ['GB'], // Specify allowed countries here
+    }
+  };
+  
+  try {
+    const { error } = await stripe.redirectToCheckout(checkoutOptions);
+    if (error) {
+      console.error("Stripe checkout error", error);
+      alert(error.message);
+    }
+  } catch (error) {
+    console.error("Error redirecting to Stripe checkout", error);
+    alert("An error occurred");
+  }
+};
+
+  const stripe = Stripe('pk_live_51MNx4UKJeZAyw8f4Lec7u9jtEoGifaJPvGAsW5OOUP3v943UwPN07TloLoOKJPJm85dpGPhGaufUXAU10IepmPVp00Z98Rt01D');
+
+  async function checkout2() {
+  try {
+    console.log("sennding cart items to server")
+    // document.getElementById('overlay1').style.display = 'block';
+    hideSidebar();
+    const cartItems = JSON.parse(localStorage.getItem('cart'));
+    console.log(cartItems);
+    // Call your server to create a checkout session
+    const response = await fetch('https://dapp-synetic.onrender.com/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cart: cartItems })
+    });
+
+    if (!response.ok) throw new Error('Network response was not ok.');
+
+    const session = await response.json();
+
+    // Redirect to Stripe Checkout
+    window.location.href = session.url;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+
+function qcheckout1() {
+
+    console.log("sennding cart items to server")
+    document.getElementById('overlay1').style.display = 'block';
+    hideSidebar();
+    // Enable the skeleton loader UI for the optimal loading experience.
+    const loader = 'auto';
+    // const response = await fetch('/checkout');
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    console.log(cart);
+    fetch('https://dapp-synetic.onrender.com/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cart })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        alert(data);
+        const clientSecret = response.clientSecret;
+        const appearance = { /* ... */ };
+        // Create an elements group from the Stripe instance, passing the clientSecret (obtained in step 2), loader, and appearance (optional).
+        const elements = stripe.elements({clientSecret, appearance, loader});
+    
+        // Create Element instances
+        const expressCheckoutElement = elements.create('expressCheckout', options)
+
+
+        expressCheckoutElement.mount('#express-checkout-element')
+        const linkAuthenticationElement = elements.create("linkAuthentication" , {defaultValues: {email: "foo@bar.com"}});
+        const addressElement = elements.create("address", {
+            mode: 'shipping',
+            defaultValues: {
+            name: 'Jane Doe',
+            address: {
+                line1: '354 Oyster Point Blvd',
+                line2: '',
+                city: 'South San Francisco',
+                state: 'CA',
+                postal_code: '94080',
+                country: 'US',
+        }
+      }});
+        // Mount the Element to its corresponding DOM node
+        addressElement.mount("#address-element");
+    
+        const paymentElement = elements.create('payment', {
+        defaultValues: {
+            billingDetails: {
+            name: 'John Doe',
+            phone: '888-888-8888',
+        },},});
+    
+        linkAuthenticationElement.on('change', (event) => {
+            const email = event.value.email;
+        });
+    
+        addressElement.on('change', (event) => {
+            const address = event.value;
+        })
+    
+        linkAuthenticationElement.mount("#link-authentication-element");
+        addressElement.mount("#address-element");
+        paymentElement.mount("#payment-element");    
+        // Render the form using the clientSecret
+
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('connection to payment provider failed');
+    });
+
+
+
+
+};
+
+const form = document.getElementById('payment-form');
+
+    form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const {error} = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+        return_url: "https://example.com/order/123/complete",
+        }
+    });
+
+    if (error) {
+        // Show error to your customer (for example, payment details incomplete)
+        console.log(error.message);
+    } else {
+        // Your customer will be redirected to your `return_url`. For some payment
+        // methods like iDEAL, your customer will be redirected to an intermediate
+        // site first to authorize the payment, then redirected to the `return_url`.
+    }
+    });
+</script>
+    <style>
+      .fbmt{
+        color: #000;
+        margin-top: 1em;
+        font-size: 35px;
+        font-weight: bolder;
+        /* color: #000; */
+      }
+      .fbmT {
+        color: #000;
+        margin-top: 1em;
+        font-size: medium;
+        font-weight: 600;
+      }
+      .fbmTs {
+        color: #000;
+        margin-top: 1em;
+        font-size: medium;
+        /* font-weight: 600; */
+        margin-bottom: 1em;
+      }
+      
+      .fbmP{
+        color: #000;
+        font-size: 25px;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        font-weight: bolder;
+        /* border-bottom: #e1e1e1 solid 1px; */
+      }
+      .underline{
+        color: #000;
+        height: 1px;
+  background: #000;
+      }
+      .fbmBTN{
+        background-color: #741515;
+        border: #741515 solid 2px;
+        border-radius: 12px;
+        padding: 10px 30px;
+        color: #ffffff;
+        /* color: #000; */
+        font-size: medium;
+        font-weight: bold;
+        margin-top: 1em;
+      }
+
+      .fbmBTN:hover{
+        /* border-radius: 16px; */
+        background-color: #02020234;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(8.6px);
+-webkit-backdrop-filter: blur(8.6px);
+      }
+      .fixed-bottom-middle p{
+        color: #000;
+        font-size: small;
+
+        text-decoration: underline;
+        margin-top: 1.5em;
+      }
+      .arrow {
+        color: #000;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px;
+    cursor: pointer;
+  }
+  .arrow.left {
+    left: 1em;
+  }
+  .arrow.right {
+    right: 1em;
+  }
+
+  .sizes{
+    margin-top: 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: left;
+  }
+.sizes div{
+  color: #000;
+  margin-right: 0.5em;
+  border: #000 solid 2px;
+  /* padding: 0.5em; */
+  height: 40px;
+width: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+border-radius: 5px;
+}
+
+.sizes div:hover{
+  background-color: #02020234;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(8.6px);
+-webkit-backdrop-filter: blur(8.6px);
+  color: white;
+  cursor: pointer;
+}
+
+.sizes div:active {
+  background-color: red;
+}
+
+
+@media (max-width: 1000px) {
+
+.underline{
+  display: none;
+  
+}
+
+.sizes{
+  display: none;
+}
+
+.fbmTs{
+  display: none;
+}
+.fbmT{
+  display: none;
+}
+
+.fixed-bottom-middle .p
+{
+  display: none;
+}
+.fbmt{
+  color: #000;
+        margin-top: 1em;
+        font-size: 15px;
+        font-weight: 700;
+        /* color: #000; */
+      }
+
+.fmbp{
+  color: #000;
+  font-size: 15px;
+        font-weight: 700;
+}
+
+.fbmP{
+  margin-top: 5em;
+  color: #000;
+}
+
+.arrow {
+  color: #000;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .arrow.left {
+    left: 1em;
+  }
+  .arrow.right {
+    right: 1em;
+  }
+}
+
+
+    </style>
+                <div class="arrow right" onclick="" id="myDiv">&#10095;</div>
+                <div class="arrow left" onclick="">&#10094;</div>
+    <div class="fixed-bottom-middle" onclick="toggleSizeChart()" id="textsizeChart">
+      <div class="fbmt">ORIGINALS T-SHIRT BLACK</div>
+      <div class="fbmT">A VARITY EXCLUSIVE</div>
+      <div class="fbmP">£25.00</div>
+      <!-- <div class="underline"></div> -->
+      <div class="fbmT">SIZE : </div>
+      <div class="sizes">
+        <div class="XS">XS</div>
+        <div class="S">S</div>
+        <div class="M">M</div>
+        <div class="L">L</div>
+      </div>
+
+      <p class="p">SIZE CHART</p>
+      <!-- <div class="underline"></div> -->
+
+      <!-- <div class="fbmT">DESCRIPTION</div> -->
+      <!-- <div class="fbmTs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex soluta dolores voluptate non recusandae eum consectetur nesciunt molestias, sunt minus.</div> -->
+      <button class="fbmBTN" onclick="buybutton()">BUY NOW</button>
+      <div class="fbmT">UK SHIPPING TIME : 3 - 5 BUISNESS DAYS</div>
+      <p>MORE DETAILS</p>
+    </div>
+    
+    <!-- <div class="mobile-icons">
+      <a href="https://www.tiktok.com/@varity.club?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a id="#show-cart" onclick="showSidebar()"><i class="fa fa-shopping-bag" ></i></a>
+      <a ><i class="far fa-shopping-bag" id="show-cart"></i></a>
+    </div> -->
+    <div class="navbar">
+      <a  class="logo">VARITY</a>
+
+      <div class="middle">
+          <div class="navbar-brand">
+            
+              
+            </div>
+          <div class="navbar-links">
+          
+            <a href="#">HOME</a>
+            
+            <a href="Varity.html#highlights">HIGHLIGHTS</a>
+            <a href="Varity.html#catalogue">CLOTHING</a>
+            <a href="https://www.syneticx.com">STORE</a>
+            <a href="Varity.html#story">STORY</a>
+            <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">INSTAGRAM</a>
+          </div>
+    </div>
+
+    <div class="login" id="login" onclick="showOverlay()">LOGIN / SIGN UP</div>
+    <div class="navbar-icons">
+      <a href="https://www.tiktok.com/@varity.club?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a id="#show-cart" onclick="showSidebar()"><i class="fa fa-shopping-bag" ></i></a>
+    </div>
+  </div>
+
+
+
+
+
+  <div id="menuToggle" onclick="menu()">
+    <input type="checkbox" />
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div id="menuOverlay">
+    <nav id="menuNav">
+        <ul>
+          <li><a href="Varity.html#highlights">HIGHLIGHTS</a></li>
+          <li><a href="Varity.html#catalogue">CLOTHING</a></li>
+          <li><a href="https://www.syneticx.com">STORE</a></li>
+          <li><a href="Varity.html#story">STORY</a></li>
+          <li><a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">INSTAGRAM</a></li>
+            <li ><a href="#signin" id="signInGoogle" class="buttonnavmobile">Sign in with Google</a>
+              <a href="#signin" id="signInNormal" class="buttonnavmobile">Sign in</a></li>
+            <!-- <li></li> -->
+        </ul>
+    </nav>
+</div>
+
+<!-- Form Overlay -->
+<div id="formOverlay" class="overlay">
+  <div class="form-container glass">
+    <form id="loginForm">
+      <!-- Switch between Login, Register, and Reset Password -->
+      <div class="switch-form">
+        <span id="loginTab" class="form-tab active" onclick="switchForm('login')">Login</span>
+        <span id="registerTab" class="form-tab" onclick="switchForm('register')">Register</span>
+        <span id="resetTab" class="form-tab" onclick="switchForm('reset')">Reset Password</span>
+        <span  class="close" onclick="closeForm()">X</span>
+      </div>
+      <!-- Form Content will be populated by JavaScript -->
+      <div id="formContent">
+        <!-- Content dynamically generated by JavaScript -->
+      </div>
+      <button type="submit" class="btn" id="formButton">Login</button>
+      
+      <button class="btn" id="rformButton" onclick="register()">Sign up</button>
+      <p class="form-footer" id="formFooter">
+        Forgot password? or <span id="switchAction">Sign up</span>
+        
+      </p>
+      <div id="message"></div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+
+    const menuToggleInput = document.querySelector('#menuToggle input');
+    const menuOverlay = document.getElementById('menuOverlay');
+    // const buy = document.getElementById('sizeChart');
+    // var buyElements = document.querySelectorAll('.buy');
+  
+
+    // const detailsOverlay = document.getElementById('details');
+    var open = false;
+    // menuToggleInput.addEventListener('change', 
+    function menu() {
+        console.log("menu", open)
+        if(!open) {
+            // When the checkbox is checked, show the menu
+            menuOverlay.style.display = 'block';
+            menuOverlay.style.opacity = '1';
+            // buy.style.display = 'none';   
+            toggleSizeChart();
+            open = true;
+        } else {
+            // When the checkbox is not checked, hide the menu
+            menuOverlay.style.opacity = '0';
+            setTimeout(() => {
+                menuOverlay.style.display = 'none';
+                // buy.style.display = 'block';
+                toggleSizeChart();
+            }, 500); // Corresponds to the transition duration
+            open = false;
+        }
+
+    // 
+  }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to switch tabs in the form
+    function switchForm(tab) {
+        var formTabs = document.querySelectorAll('.form-tab');
+        formTabs.forEach(function(tab) {
+            tab.classList.remove('active');
+        });
+        var tabElement = document.getElementById(tab + 'Tab');
+        tabElement.classList.add('active');
+
+        // Here you should handle the display of the respective form content
+        // for simplicity, it is not included
+    }
+
+    // Attach the switchForm function to the tabs
+    document.getElementById('loginTab').addEventListener('click', function() { switchForm('login'); });
+    document.getElementById('registerTab').addEventListener('click', function() { switchForm('register'); });
+    document.getElementById('resetTab').addEventListener('click', function() { switchForm('reset'); });
+
+    // Function to handle the form submission
+    document.getElementById('accountForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        var email = document.getElementById('email').value;
+        var privacyPolicy = document.getElementById('privacyPolicy').checked;
+        
+        // Simple email validation
+        if (!email || !validateEmail(email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        // Check if privacy policy is checked
+        if (!privacyPolicy) {
+            alert('Please agree to the privacy policy.');
+            return;
+        }
+
+        // Here, you would typically make an AJAX request to your server
+        console.log('Form submitted with:', email);
+
+        // For now, let's just close the overlay
+        closeOverlay();
+    });
+
+    // Function to validate email
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    // Function to open the overlay
+    function openOverlay() {
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    // Function to close the overlay
+    function closeOverlay() {
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Close the overlay when clicking outside the form container
+    document.getElementById('overlay').addEventListener('click', function(event) {
+        if (event.target == this) { // If the direct target of the click is the overlay background
+            closeOverlay();
+        }
+    });
+
+    // Example call to open the overlay, you can trigger this however you need
+    openOverlay();
+});
+
+
+
+function closeForm() {
+  const formOverlay = document.getElementById('formOverlay');
+  formOverlay.style.display = 'none';
+}
+
+  function switchForm(state) {
+  const emailGroup = `
+    <div class="form-group">
+      <input type="email" id="Email" placeholder="Email Address" required>
+    </div>`;
+  const passwordGroup = `
+    <div class="form-group">
+      <input type="password" id="Password" placeholder="Password" required>
+    </div>`;
+  const confirmPasswordGroup = `
+    <div class="form-group">
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    </div>`;
+
+  const formContent = document.getElementById('formContent');
+  const formButton = document.getElementById('formButton');
+  const registerformButton = document.getElementById('rformButton');
+  const formFooter = document.getElementById('formFooter');
+  const loginTab = document.getElementById('loginTab');
+  const registerTab = document.getElementById('registerTab');
+  const resetTab = document.getElementById('resetTab');
+
+  // Reset all tabs to inactive state
+  loginTab.classList.remove('active');
+  registerTab.classList.remove('active');
+  resetTab.classList.remove('active');
+  registerformButton.style.display = 'none';
+  formButton.style.display = 'none';
+
+  // Handle different states
+  if (state === 'login') {
+    console.log(state);
+    formButton.style.display = 'flex';
+    registerformButton.style.display = 'none';
+
+    formContent.innerHTML = emailGroup + passwordGroup;
+    formButton.innerText = 'Login';
+    formButton.type = "submit";
+    formFooter.innerHTML = 'Forgot password? or <span id="switchAction" onclick="switchForm(\'register\')">Sign up</span>';
+    loginTab.classList.add('active');
+  } else if (state === 'register') {
+    console.log(state);
+    registerformButton.style.display = 'flex';
+    formButton.style.display = 'none';
+
+    formContent.innerHTML = emailGroup + passwordGroup + confirmPasswordGroup;
+    formButton.innerText = 'Create Account';
+    formButton.type = "regiser";
+    formFooter.innerHTML = 'Already have an account? <span id="switchAction" onclick="switchForm(\'login\')">Login</span>';
+    registerTab.classList.add('active');
+  } else if (state === 'reset') {
+    console.log(state);
+    formContent.innerHTML = emailGroup;
+    formButton.innerText = 'Reset Password';
+    formButton.type = "reset";
+    formFooter.innerHTML = 'Back to <span id="switchAction" onclick="switchForm(\'login\')">Login</span>';
+    resetTab.classList.add('active');
+  }
+}
+
+// Initialize the form with the login state
+switchForm('login');
+
+</script>
+
+	<div id="close-cart-btn" class="close-cart-btn" onclick="hideSidebar()">
+		<span class="close-cart-text">Close Cart</span>
+		<i class="fas fa-times close-cart-icon"></i>
+    
+	  </div>
+<!-- Sidebar Cart -->
+<div id="cart-sidebar" class="cart-sidebar">
+<style>
+  /* .cart-sidebar .cart-item{
+    display: none;
+  } */
+  .cart-sidebar h3{
+    display: block;
+  }
+
+</style>
+<div class="title">
+  <!-- <i class="fa-solid fa-backward" ></i> -->
+  <i class="fas fa-chevron-left i" onclick="hideSidebar()"></i>
+  <h1>Your Cart</h1>
+
+</div>
+<!-- <h1>Your Cart</h1> -->
+	<!-- Cart Item 1 -->
+	<!-- <div class="cart-item" id="yourElementId">
+    <div>
+	  <img src="tee.jpeg" alt="Armani Shirt" class="cart-item-image">
+    <button class="remove-item">Remove</button>
+  </div>
+	  <div class="cart-item-details">
+		<p class="item-brand">VARITY</p>
+		<p class="item-name">Originals collective T-shirt</p>
+		<p class="item-price">£25</p>
+		<p class="item-attributes">Colour: Black<br>Size: S<br>Quantity: 1</p>
+		
+	  </div>
+	</div> -->
+  <!-- <h3 id="#h3">Cart is empty</h3> -->
+  <h3 id="empty-cart-message" style="display: none;">Your cart is empty</h3>
+	
+	<!-- Cart Item 2
+	<div class="cart-item">
+	  <img src="path/to/gucci-bag.jpg" alt="Gucci Bag" class="cart-item-image">
+	  <div class="cart-item-details">
+		<p class="item-brand">GUCCI</p>
+		<p class="item-name">JACKIE NOTTE MINI BAG</p>
+		<p class="item-price">£2,630</p>
+		<p class="item-attributes">Style: 782889 OP50G 6207<br>Quantity: 1</p>
+		<button class="remove-item">Remove</button>
+	  </div>
+	</div> -->
+
+  <div id="cartItems"></div>
+  <h4 onclick="clearCart()">Clear Cart</h4>
+	<!-- Checkout Button -->
+	<div class="checkout-container">
+	  <button id="checkout-button" onclick="redirectToCheckout()">CHECKOUT</button>
+	</div>
+  </div>
+<style>
+  iframe {
+    position: absolute;
+    font-size: 16px;
+    /* z-index: 2; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0,0,0,0.7);
+    overflow: hidden; /* This will remove the scrollbars */
+    border: none; /* This will remove the border */
+    }
+</style>  
+		<!-- Import maps polyfill -->
+		<!-- Remove this when import maps will be widely supported -->
+
+      <!-- Add this inside the <body> tag -->
+<div class="content-wrapper">
+  <div id="top" class="top"></div> 
+  <!-- <iframe class="container " src ="https://syneticslz.github.io/three.js/examples/webgl_loader_gltf.html" alt="" srcset=""></iframe> -->
+
+  <div class="buy" id="sizeChart" >
+    <!-- <div id="o">ORIGINALS</div> -->
+    <div id="titlebuy"> VARITY ORIGINALS TEE</div>
+    <div id="price">£25</div>
+    <!-- <p>Lorem ipsum dolor sit amet consectetur <br>Ratione</p> -->
+    <div id="buybtn" onclick="buybutton()">Buy Now</div>
+    <div id="os">MORE DETAILS</div>
+  </div>
+
+  <script>
+      function toggleSizeChart() {
+      const sizeChart = document.getElementById('sizeChart');
+    // const textsizeChart = document.getElementById('textsizeChart');
+    sizeChart.style.display = (sizeChart.style.display === 'none') ? 'flex' : 'none';
+    
+    var x = window.matchMedia("(max-width: 700px)")
+              if (x.matches) {
+console.log("mobile")
+              }
+              else {
+                sizeChart.style.display = (sizeChart.style.display === 'none') ? 'none' : 'none';
+                sizeChart.style.display = (sizeChart.style.display === 'flex') ? 'none' : 'none';
+              }
+    // textsizeChart.style.display = 'none';
+
+  }
+  </script>
+
+  <!-- <img src="images/line.png" alt=""  class="b"> -->
+  <!-- <div class="buy-button" onclick="buybutton()"> -->
+    <!-- Buy Now -->
+    <!-- <h1>Originals</h1> -->
+  </div> <!-- Buy button -->
+  <!-- <button class="buy-button" onclick="buybutton()">Buy Now</button> Buy button -->
+</div>
+
+<script>
+function clearCart() {
+  localStorage.removeItem('cart');
+displayCart();
+}
+  // Utility function to get cart from localStorage
+function getCart() {
+  const cart = localStorage.getItem('cart');
+  return cart ? JSON.parse(cart) : [];
+}
+
+// Utility function to save cart to localStorage
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Function to add an item to the cart
+function addToCart(item) {
+  const cart = getCart();
+  const index = cart.findIndex(cartItem => cartItem.id === item.id);
+  if (index !== -1) {
+    // Item already in cart, update quantity
+    cart[index].quantity += item.quantity;
+  } else {
+    // Add new item to cart
+    cart.push(item);
+  }
+  saveCart(cart);
+}
+
+function remove() {
+  removeFromCart({
+      id: "price_1NOjCxKJeZAyw8f4vRllvFVn",
+      name: "Varity Originals Tee",
+      price: 25,
+      quantity: 1 // Default to 1, adjust as necessary
+    });
+}
+// Function to remove an item from the cart
+function removeFromCart(item) {
+  const cart = getCart();
+  const index = cart.findIndex(cartItem => cartItem.id === item.id);
+  if (index !== -1) {
+
+
+    if(cart[index].quantity > 1)
+    {
+
+      cart[index].quantity -= 1;
+      displayCart();
+
+      if(cart[index].quantity < 1)
+      {
+        clearCart();
+      }
+
+    }
+    else{
+        clearCart();
+        displayCart();
+    }
+
+
+
+  } else {
+    // Add new item to cart
+    return;
+  }
+  saveCart(cart);
+  displayCart();
+}
+
+function buybutton() {
+    const productId = "price_1NOjCxKJeZAyw8f4vRllvFVn";
+    // Assuming you have a function to get product details by ID
+    // const product = getProductDetails(productId);
+
+    addToCart({
+      id: "price_1NOjCxKJeZAyw8f4vRllvFVn",
+      name: "Varity Originals Tee",
+      price: 25,
+      quantity: 1 // Default to 1, adjust as necessary
+    });
+    // Optionally, update the cart display here
+    showSidebar();
+  };
+
+  function displayCart() {
+  const cartItems = getCart();
+  const cartContainer = document.getElementById('cartItems');
+  const emptyCartMessage = document.getElementById('empty-cart-message');
+  cartContainer.innerHTML = ''; // Clear current cart contents
+  if (cartItems.length === 0) {
+    // If there are no cart items, show the "empty cart" message
+    emptyCartMessage.style.display = 'block';
+  } else {
+  cartItems.forEach(item => {
+    const cartItemElement = document.createElement('div');
+    cartItemElement.innerHTML = `
+
+  <div class="cart-item" id="yourElementId" data-id="${item.id}">
+  <img src="images/actual.png" alt="Nice Mini Toiletry Bag" class="cart-item-image">
+  <div class="cart-item-details">
+    <p class="item-code">${item.id}</p>
+    <p class="item-name">${item.name}</p>
+    <p class="item-attributes">Colour: Red</p>
+    <p class="item-price">£${item.price}</p>
+    <div class="cart-item-actions">
+      <label for="item-quantity-${item.id}" class="quantity-label">Quantity:${item.quantity}</label>
+      
+      
+    </div>
+    <button class="remove-item-btn" onclick="remove()">Remove</button>
+  </div>
+</div>
+
+    `;
+    cartContainer.appendChild(cartItemElement);
+  });
+}
+
+}
+
+// Call displayCart to update the cart display when needed
+displayCart();
+
+document.getElementById('cart-container').addEventListener('click', function(event) {
+  if (event.target.classList.contains('remove-item-btn')) {
+    const itemId = event.target.getAttribute('data-id');
+    removeFromCart(itemId);
+    displayCart(); // Refresh cart display
+  }
+});
+
+// Similar event listeners can be set up for quantity changes
+
+
+
+</script>
+    <script>
+var userEmail = "uninitialised";
+const userId = userEmail; // Replace with the actual user ID
+
+function showSidebar() {
+  // fetchCartItems(userId)
+  displayCart();
+	console.log("// Set transform to 0% to show the sidebar")
+  document.getElementById('cart-sidebar').style.transform = 'translateX(0%)';
+  var closeCartBtn = document.getElementById('close-cart-btn');
+  closeCartBtn.style.display = 'flex'; // This will change the display to flex
+
+}
+
+
+function hideSidebar() {
+	console.log("// Set transform to 0% to show the sidebar")
+  document.getElementById('cart-sidebar').style.transform = 'translateX(100%)';
+  var closeCartBtn = document.getElementById('close-cart-btn');
+  closeCartBtn.style.display = 'none'; // This will change the display to flex
+}
+
+function showOverlay() {
+
+    const formOverlay = document.getElementById('formOverlay');
+    formOverlay.style.display = 'flex';
+    // Show the overlay with the form
+  }
+
+
+
+  // Login User
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('Email').value;
+    const password = document.getElementById('Password').value;
+console.log("login account clicked ", JSON.stringify({ email, password }));
+    fetch('https://dapp-synetic.onrender.com/login-varity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // alert(data);
+        userEmail = email;
+        const loginButton = document.getElementById('login');
+        console.log(data);
+        loginButton.innerText = data.walletAddress;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Login failed');
+    });
+});
+
+document.getElementById('Password').addEventListener('input', validatePassword);
+document.getElementById('confirmPassword').addEventListener('input', validatePassword);
+
+function validatePassword() {
+  const password = document.getElementById('Password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const submitBtn = document.getElementById('formButton');
+
+  if (password !== confirmPassword) {
+    submitBtn.disabled = true; // Disable the submit button
+    // Optionally, alert the user that the passwords do not match
+    document.getElementById('message').textContent = 'Passwords do not match.';
+  } else {
+    submitBtn.disabled = false; // Enable the submit button
+    document.getElementById('message').textContent = ''; // Clear the message
+  }
+}
+
+
+
+// document.getElementById('loginForm').addEventListener('regiser', function(event) {
+  function register(){
+  event.preventDefault(); // Prevent the form from submitting the traditional way
+
+  const email = document.getElementById('Email').value;
+  const password = document.getElementById('confirmPassword').value;
+
+  console.log("create account clicked ", JSON.stringify({ email, password }));
+
+  fetch('https://dapp-synetic.onrender.com/create-varity-account', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // Add your authentication headers if necessary
+    },
+    body: JSON.stringify({ email, password }) // Convert the payload to JSON
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.error) {
+      displayMessage(data.error); // Display error if the user already exists
+    } else {
+      alert(`Account created for ${data.email}`);
+      displayMessage(`Account created for ${data.email}`);
+      userEmail = data.email;
+      const loginButton = document.getElementById('login');
+      console.log(data);
+        loginButton.innerText = data.walletAddress;
+      // You can redirect the user or update the UI as needed
+    }
+  })
+  .catch(error => {
+    displayMessage(`An error occurred: ${error.message}`);
+  });
+}
+// });
+
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  email = profile.getEmail();
+  userEmail = email;
+
+  fetch('http://localhost:3000/create-varity-account', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // Add your authentication headers if necessary
+    },
+    body: JSON.stringify({ email }) // Convert the payload to JSON
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    if (data.error) {
+      displayMessage(data.error); // Display error if the user already exists
+    } else {
+      displayMessage(`Account created for ${data.email}`);
+      // You can redirect the user or update the UI as needed
+    }
+  })
+  .catch(error => {
+    displayMessage(`An error occurred: ${error.message}`);
+  });
+
+
+}
+
+function displayMessage(message) {
+  document.getElementById('message').textContent = message;
+}
+
+
+		</script>
+		
+		 <!-- <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/build/three.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/controls/OrbitControls.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/loaders/GLTFLoader.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/three@0.137.0/examples/js/loaders/RGBELoader.js"></script> -->
+		
+
+<!-- <script type="importmap">
+  {
+    "imports": {
+      "three": "../build/three.module.js",
+      "three/addons/": "./jsm/"
+    }
+  }
+</script> -->
+
+</body>
+</html>

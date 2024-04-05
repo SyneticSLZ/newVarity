@@ -30,7 +30,7 @@
 
 body {
 margin: 0;
-background-color: #000;
+/* background-color: #000; */
 color: #fff;
 font-family: Monospace;
 font-size: 13px;
@@ -898,7 +898,7 @@ iframe {
     height: 100%;
 
     flex-direction: column;
-    background: rgba(0,0,0,0.7);
+    /* background: rgba(0,0,0,0.7); */
     overflow: hidden; /* This will remove the scrollbars */
     border: none; /* This will remove the border */
     }
@@ -1057,7 +1057,7 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
     
         new RGBELoader()
           .setPath( 'textures/equirectangular/' )
-          .load( 'venice_sunset_1k.hdr', function ( texture ) {
+          .load( 'qwe.hdr', function ( texture ) {
             const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
             loader.load( 'WholeFile.gltf', async function ( gltf ) {
               const model = gltf.scene;
