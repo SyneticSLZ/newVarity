@@ -526,6 +526,10 @@ z-index: 4;
 
 }
 
+.close{
+  margin-left: 12em;
+}
+
 #price{
     font-size: 27px;
     margin-top: 1em;
@@ -1049,6 +1053,7 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
             const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
             loader.load( 'WholeFile.gltf', async function ( gltf ) {
               const model = gltf.scene;
+              
               if (x.matches) {
               model.scale.set(5,5,5) // scale here
               model.position.x = -0.1
@@ -1058,7 +1063,7 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
                 model.scale.set(7,7,7) // scale here	
                 // model.position.x = -0.15
                 model.position.x = -0.95
-                // model.position.y = 0.3
+                model.position.y = 0.1
               }
               model.rotation.y -= 1.01;
 
@@ -1066,6 +1071,19 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
               render();
               hideSpinner();
     
+
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'ArrowRight') {
+    model.position.x -= 5; // Move model
+
+  } else if (event.key === 'ArrowLeft') {
+    model.position.x -= 5; // Move model
+
+  }
+});
+
+
             } );
             texture.mapping = THREE.EquirectangularReflectionMapping;
     
@@ -1099,7 +1117,7 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
       }
     
       function onWindowResize() {
-    
+        // init();
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
     
@@ -1127,6 +1145,23 @@ function hideSpinner() {
     </script>
 <script>
 
+function triggerKeydown(keyCode) {
+  // Create a new event
+  var event = new KeyboardEvent('keydown', {
+    key: keyCode,
+    keyCode: keyCode, // Deprecated, but might be needed for compatibility
+    code: keyCode,
+    which: keyCode,
+    shiftKey: false,
+    ctrlKey: false,
+    metaKey: false
+  });
+
+  // Dispatch the event on the document or another suitable element
+  document.dispatchEvent(event);
+}
+
+// Example usage: Trigger 'ArrowRight' keydown event
 
 
 let stripePromise;
@@ -1436,8 +1471,8 @@ border-radius: 5px;
 
 
     </style>
-                <div class="arrow right" onclick="showSlides()">&#10095;</div>
-                <div class="arrow left" onclick="showSlidesBack()">&#10094;</div>
+                <div class="arrow right" onclick="">&#10095;</div>
+                <div class="arrow left" onclick="">&#10094;</div>
     <div class="fixed-bottom-middle" onclick="toggleSizeChart()" id="textsizeChart">
       <div class="fbmt">ORIGINALS TSHIRT BLACK</div>
       <div class="fbmT">HEAVYWEIGHT : 400GSM</div>
@@ -1455,7 +1490,7 @@ border-radius: 5px;
 
       <div class="fbmT">DESCRIPTION</div>
       <div class="fbmTs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex soluta dolores voluptate non recusandae eum consectetur nesciunt molestias, sunt minus.</div>
-      <button class="fbmBTN">BUY NOW</button>
+      <button class="fbmBTN" onclick="buybutton()">BUY NOW</button>
       <p>MORE DETAILS</p>
     </div>
     
@@ -1528,7 +1563,7 @@ border-radius: 5px;
         <span id="loginTab" class="form-tab active" onclick="switchForm('login')">Login</span>
         <span id="registerTab" class="form-tab" onclick="switchForm('register')">Register</span>
         <span id="resetTab" class="form-tab" onclick="switchForm('reset')">Reset Password</span>
-        <span  onclick="closeForm()">close login</span>
+        <span  class="close" onclick="closeForm()">X</span>
       </div>
       <!-- Form Content will be populated by JavaScript -->
       <div id="formContent">
