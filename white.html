@@ -1108,6 +1108,7 @@ scene.add(spotLight);
           controls.addEventListener('change', render); // use if there is no animation loop
           controls.minDistance = 2;
           controls.maxDistance = 10;
+          
           // Note: No need to set controls.target here as it will be set when the model is loaded
       
           window.addEventListener('resize', onWindowResize);
@@ -1468,19 +1469,26 @@ backdrop-filter: blur(8.6px);
     transform: translateY(-50%);
     font-size: 20px;
     cursor: pointer;
+    border-radius: 50%;
   }
   .arrow.left {
     left: 1em;
+    border-radius: 50%;
   }
   .arrow.right {
     right: 1em;
+    border-radius: 50%;
   }
 }
 
 
     </style>
                 <div class="arrow right" onclick="" id="myDiv">&#10095;</div>
+                <!-- <div class="arrow right" onclick=""><i class="fa-solid fa-chevron-right"></i></i></div> -->
+
                 <div class="arrow left" onclick="">&#10094;</div>
+                <!-- <div class="arrow left" onclick=""><i class="fa-solid fa-chevron-left"></i></div> -->
+
     <div class="fixed-bottom-middle" onclick="toggleSizeChart()" id="textsizeChart">
       <div class="fbmt">ORIGINALS T-SHIRT BLACK</div>
       <div class="fbmT">A VARITY EXCLUSIVE</div>
