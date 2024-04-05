@@ -583,7 +583,10 @@ justify-content: center;
 align-items: center;
 background: #f0f0f0;
 } */
-
+.buy{
+  z-index: 0;
+  /* display: inline; */
+}
 #menuToggle {
 position: fixed;
 top: 20px;
@@ -1070,18 +1073,6 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
               scene.add( model );
               render();
               hideSpinner();
-    
-
-
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'ArrowRight') {
-    model.position.x -= 5; // Move model
-
-  } else if (event.key === 'ArrowLeft') {
-    model.position.x -= 5; // Move model
-
-  }
-});
 
 
             } );
@@ -1145,21 +1136,7 @@ function hideSpinner() {
     </script>
 <script>
 
-function triggerKeydown(keyCode) {
-  // Create a new event
-  var event = new KeyboardEvent('keydown', {
-    key: keyCode,
-    keyCode: keyCode, // Deprecated, but might be needed for compatibility
-    code: keyCode,
-    which: keyCode,
-    shiftKey: false,
-    ctrlKey: false,
-    metaKey: false
-  });
 
-  // Dispatch the event on the document or another suitable element
-  document.dispatchEvent(event);
-}
 
 // Example usage: Trigger 'ArrowRight' keydown event
 
@@ -1586,6 +1563,7 @@ border-radius: 5px;
 
     const menuToggleInput = document.querySelector('#menuToggle input');
     const menuOverlay = document.getElementById('menuOverlay');
+    const buy = document.getElementById('sizeChart');
     // const detailsOverlay = document.getElementById('details');
     var open = false;
     // menuToggleInput.addEventListener('change', 
@@ -1595,12 +1573,14 @@ border-radius: 5px;
             // When the checkbox is checked, show the menu
             menuOverlay.style.display = 'block';
             menuOverlay.style.opacity = '1';
+            // buy.style.display = 'none';   
             open = true;
         } else {
             // When the checkbox is not checked, hide the menu
             menuOverlay.style.opacity = '0';
             setTimeout(() => {
                 menuOverlay.style.display = 'none';
+                // buy.style.display = 'block';
             }, 500); // Corresponds to the transition duration
             open = false;
         }
