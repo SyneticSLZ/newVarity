@@ -1088,14 +1088,17 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
               render();
               hideSpinner();
 // Directional Light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-directionalLight.position.set(-1, -1, -15); // Position the light source relative to the scene
+// Directional Light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight.position.set(-1, 1, -4); // Position the light source relative to the scene
 scene.add(directionalLight);
 
 
-const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
-directionalLight2.position.set(-1,1, 1); // Position the light source relative to the scene
-scene.add(directionalLight2);
+// Directional Light
+const directionalLight3 = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight3.position.set(-1, 1, 4); // Position the light source relative to the scene
+scene.add(directionalLight3);
+
 
 
 const spotLight = new THREE.SpotLight(0xffffff);
@@ -1108,7 +1111,9 @@ spotLight.distance = 200;
 scene.add(spotLight);
 
 
-
+              // Update controls to focus on model center
+              controls.target.set(center.x, center.y, center.z);
+              controls.update();
       
 
             } );

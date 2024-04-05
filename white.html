@@ -1060,7 +1060,7 @@ backdrop-filter: blur(8.6px);
                   // model.position.x = -0.05 + center.x;
                   model.position.y = 0.4 + center.y;
               } else {
-                  model.scale.set(7, 7, 7); // scale here
+                  model.scale.set(6, 6, 6); // scale here
                   model.position.x = -0.95 + center.x;
                   model.position.y = 0.1 + center.y;
               }
@@ -1070,14 +1070,20 @@ backdrop-filter: blur(8.6px);
               render();
 
 // Directional Light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-directionalLight.position.set(-1, -1, -15); // Position the light source relative to the scene
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight.position.set(-1, 1, -4); // Position the light source relative to the scene
 scene.add(directionalLight);
 
 
-const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
-directionalLight2.position.set(-1,1, 1); // Position the light source relative to the scene
-scene.add(directionalLight2);
+// Directional Light
+const directionalLight3 = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight3.position.set(-1, 1, 4); // Position the light source relative to the scene
+scene.add(directionalLight3);
+
+
+// const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
+// directionalLight2.position.set(-1,-1, 1); // Position the light source relative to the scene
+// scene.add(directionalLight2);
 
 
 const spotLight = new THREE.SpotLight(0xffffff);
