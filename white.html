@@ -1070,9 +1070,15 @@ backdrop-filter: blur(8.6px);
               render();
 
 // Directional Light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(1, 1, 1); // Position the light source relative to the scene
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+directionalLight.position.set(-1, -1, -15); // Position the light source relative to the scene
 scene.add(directionalLight);
+
+
+const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight2.position.set(-1,1, 1); // Position the light source relative to the scene
+scene.add(directionalLight2);
+
 
 const spotLight = new THREE.SpotLight(0xffffff);
 spotLight.position.set(1, 10, 1);
@@ -1083,14 +1089,6 @@ spotLight.distance = 200;
 
 scene.add(spotLight);
 
-// Ambient Light
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.75); // Increase intensity for more brightness
-scene.add(ambientLight);
-
-// Hemisphere Light
-const hemisphereLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-// First color is sky color, second color is ground color, third parameter is intensity
-scene.add(hemisphereLight);
 
 
       

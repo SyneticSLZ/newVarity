@@ -1087,7 +1087,29 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
               scene.add( model );
               render();
               hideSpinner();
+// Directional Light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+directionalLight.position.set(-1, -1, -15); // Position the light source relative to the scene
+scene.add(directionalLight);
 
+
+const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight2.position.set(-1,1, 1); // Position the light source relative to the scene
+scene.add(directionalLight2);
+
+
+const spotLight = new THREE.SpotLight(0xffffff);
+spotLight.position.set(1, 10, 1);
+spotLight.angle = Math.PI / 4;
+spotLight.penumbra = 0.1;
+spotLight.decay = 2;
+spotLight.distance = 200;
+
+scene.add(spotLight);
+
+
+
+      
 
             } );
             texture.mapping = THREE.EquirectangularReflectionMapping;
