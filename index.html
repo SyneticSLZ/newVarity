@@ -1155,88 +1155,6 @@ scene.add(spotLight);
 
         init();
         
-
- 
-      function initmobile() {
-          const container = document.createElement('div');
-          document.body.appendChild(container);
-      
-          camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
-          camera.position.set(-1.8, 0.6, 2.7);
-      
-          scene = new THREE.Scene();
-          scene.background = new THREE.Color(0xFFFFFF); // Set background to white
-      
-          const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
-          loader.load('WholeFile.gltf', function (gltf) {
-              const model = gltf.scene;
-              let boundingBox = new THREE.Box3().setFromObject(model);
-              let center = boundingBox.getCenter(new THREE.Vector3());
-      
-              if (x.matches) {
-                  model.scale.set(5, 5, 5); // scale here
-                  // model.position.x = -0.05 + center.x;
-                  model.position.y = 0.4 + center.y;
-              } else {
-                  model.scale.set(6, 6, 6); // scale here
-                  model.position.x = -0.95 + center.x;
-                  model.position.y = 0.1 + center.y;
-              }
-              model.rotation.y -= 1.01;
-      
-              scene.add(model);
-              render();
-
-// Directional Light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
-directionalLight.position.set(-1, 1, -4); // Position the light source relative to the scene
-scene.add(directionalLight);
-
-
-// Directional Light
-const directionalLight3 = new THREE.DirectionalLight(0xffffff, 3);
-directionalLight3.position.set(-1, 1, 4); // Position the light source relative to the scene
-scene.add(directionalLight3);
-
-
-// const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
-// directionalLight2.position.set(-1,-1, 1); // Position the light source relative to the scene
-// scene.add(directionalLight2);
-
-
-const spotLight = new THREE.SpotLight(0xffffff);
-spotLight.position.set(1, 10, 1);
-spotLight.angle = Math.PI / 4;
-spotLight.penumbra = 0.1;
-spotLight.decay = 2;
-spotLight.distance = 200;
-
-scene.add(spotLight); 
-
-
-
-      
-               // Update controls to focus on model center
-               controls.target.set(center.x, center.y, center.z);
-               controls.update();
-           });
-      
-           renderer = new THREE.WebGLRenderer({ antialias: true });
-           renderer.setPixelRatio(window.devicePixelRatio);
-           renderer.setSize(window.innerWidth, window.innerHeight);
-           renderer.toneMapping = THREE.ACESFilmicToneMapping;
-           renderer.toneMappingExposure = 1;
-           container.appendChild(renderer.domElement);
-      
-           controls = new OrbitControls(camera, renderer.domElement);
-           controls.addEventListener('change', render); // use if there is no animation loop
-           controls.minDistance = 2;
-           controls.maxDistance = 10;
-          
-           // Note: No need to set controls.target here as it will be set when the model is loaded
-      
-           window.addEventListener('resize', onWindowResize);
-       }
         function init() {
           // Select the target container by ID
           container = document.getElementById('red');
@@ -1258,8 +1176,7 @@ scene.add(spotLight);
               hdrTexture = texture; // Save the HDR texture reference
       texture.mapping = THREE.EquirectangularReflectionMapping;
       
-      scene.background = texture;
-      scene.environment = texture;
+
 
               const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
               loader.load('Wholefile.gltf', function(gltf) {
@@ -1270,13 +1187,17 @@ scene.add(spotLight);
       
               if (x.matches) {
                   model.scale.set(8, 8, 8); // scale here
-                  model.position.set(0,0,0);
+                  model.position.set(-1,0,0);
+                  // scene.background = new THREE.Color(0xffffff); // Change to white background
+                  // scene.environment = new THREE.Color(0xffffff);
                   // model.position.x = -0.05 + center.x;
                   // model.position.y = 0.4 + center.y;
               } else {
                   model.scale.set(8, 8, 8); // scale here
                   // model.position.x = -0.95 + center.x;
                   // model.position.y = 0.3 + center.y;
+                  // scene.background = texture;
+                  // scene.environment = texture;
               }
               model.rotation.y -= 1.01;
               model.position.x = 0;
@@ -1310,7 +1231,9 @@ spotLight.decay = 2;
 spotLight.distance = 200;
 
 scene.add(spotLight); 
-// scene.background = new THREE.Color(0xffffff); // Change to white background
+
+scene.background = texture;
+scene.environment = texture;
 
                 // const model = gltf.scene;
                 scene.add(model);
@@ -1743,7 +1666,7 @@ backdrop-filter: blur(8.6px);
   /* top: 18%; */
   left: 10%;
   z-index: 200;
-  height: 550px;
+  height: 55%;
   width: 80%;
   border-radius: 10px;
 
