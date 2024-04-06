@@ -21,6 +21,9 @@
   <link rel="preload" href="https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js" as="fetch" crossorigin="anonymous">
   <link rel="preload" href="https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js" as="fetch" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cantata+One&display=swap" rel="stylesheet">
 
 <style>
   .top{
@@ -88,6 +91,7 @@ left: 0;
 
 .navbar {
 font-family: 'Open Sans', sans-serif;
+font-family: "Cantata One", serif;
 margin: 0;
 padding-top: 70px; 
 /* background-color: white;  */
@@ -123,7 +127,7 @@ margin: 0 15px;
 }
 .navbar .logo {
 /* font-family: 'Courier New', Courier, monospace; */
-font-family: 'Open Sans', sans-serif;
+/* font-family: 'Open Sans', sans-serif; */
 font-size: 40px;
 margin-left: 0.1em;
 margin-top: 0.3em;
@@ -519,7 +523,8 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 
 .login{
 color: rgb(0, 0, 0);
-font-family: 'Open Sans', sans-serif;
+/* font-family: 'Open Sans', sans-serif; */
+font-family: "Cantata One", serif;
 /* font-family: 'Open Sans', sans-serif; */
 margin: 0;
 font-size: 17px;
@@ -849,8 +854,10 @@ backdrop-filter: blur(8.6px);
     display: none;
   }
   .fixed-bottom-middle{
-    left: 70%;
-    font-family: 'Open Sans', sans-serif;
+    left: 69%;
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: "Cantata One", serif;
+    /* font-family: C; */
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -859,7 +866,7 @@ backdrop-filter: blur(8.6px);
     position: fixed;
     /* bottom: 18%;
     left: 70%; */
-    bottom: 28%;
+    bottom: 32%;
     /* left: 50%; */
     transform: translateX(-50%);
     /* transform: translateY(-50%); */
@@ -1030,7 +1037,9 @@ backdrop-filter: blur(8.6px);
         <button id="submit">Submit</button>
       </form>
     </div>  -->
-    <script type="module">
+
+
+    <!-- <script type="module">
       import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
       import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
       import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
@@ -1093,46 +1102,273 @@ spotLight.penumbra = 0.1;
 spotLight.decay = 2;
 spotLight.distance = 200;
 
-scene.add(spotLight);
+scene.add(spotLight); 
 
 
 
       
-              // Update controls to focus on model center
-              controls.target.set(center.x, center.y, center.z);
-              controls.update();
-          });
+               // Update controls to focus on model center
+               controls.target.set(center.x, center.y, center.z);
+               controls.update();
+           });
       
+           renderer = new THREE.WebGLRenderer({ antialias: true });
+           renderer.setPixelRatio(window.devicePixelRatio);
+           renderer.setSize(window.innerWidth, window.innerHeight);
+           renderer.toneMapping = THREE.ACESFilmicToneMapping;
+           renderer.toneMappingExposure = 1;
+           container.appendChild(renderer.domElement);
+      
+           controls = new OrbitControls(camera, renderer.domElement);
+           controls.addEventListener('change', render); // use if there is no animation loop
+           controls.minDistance = 2;
+           controls.maxDistance = 10;
+          
+           // Note: No need to set controls.target here as it will be set when the model is loaded
+      
+           window.addEventListener('resize', onWindowResize);
+       }
+      
+       function onWindowResize() {
+           camera.aspect = window.innerWidth / window.innerHeight;
+           camera.updateProjectionMatrix();
+      
+           renderer.setSize(window.innerWidth, window.innerHeight);
+      
+           render();
+       }
+      
+       function render() {
+           renderer.render(scene, camera);
+       }
+       </script> -->
+
+      <script type="module">
+        import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
+        import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
+        import { RGBELoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js';
+        
+        let camera, scene, renderer, container;
+        var x = window.matchMedia("(max-width: 700px)");
+        let hdrTexture; // Reference to the HDR texture
+
+        init();
+        
+
+ 
+      function initmobile() {
+          const container = document.createElement('div');
+          document.body.appendChild(container);
+      
+          camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
+          camera.position.set(-1.8, 0.6, 2.7);
+      
+          scene = new THREE.Scene();
+          scene.background = new THREE.Color(0xFFFFFF); // Set background to white
+      
+          const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
+          loader.load('WholeFile.gltf', function (gltf) {
+              const model = gltf.scene;
+              let boundingBox = new THREE.Box3().setFromObject(model);
+              let center = boundingBox.getCenter(new THREE.Vector3());
+      
+              if (x.matches) {
+                  model.scale.set(5, 5, 5); // scale here
+                  // model.position.x = -0.05 + center.x;
+                  model.position.y = 0.4 + center.y;
+              } else {
+                  model.scale.set(6, 6, 6); // scale here
+                  model.position.x = -0.95 + center.x;
+                  model.position.y = 0.1 + center.y;
+              }
+              model.rotation.y -= 1.01;
+      
+              scene.add(model);
+              render();
+
+// Directional Light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight.position.set(-1, 1, -4); // Position the light source relative to the scene
+scene.add(directionalLight);
+
+
+// Directional Light
+const directionalLight3 = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight3.position.set(-1, 1, 4); // Position the light source relative to the scene
+scene.add(directionalLight3);
+
+
+// const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
+// directionalLight2.position.set(-1,-1, 1); // Position the light source relative to the scene
+// scene.add(directionalLight2);
+
+
+const spotLight = new THREE.SpotLight(0xffffff);
+spotLight.position.set(1, 10, 1);
+spotLight.angle = Math.PI / 4;
+spotLight.penumbra = 0.1;
+spotLight.decay = 2;
+spotLight.distance = 200;
+
+scene.add(spotLight); 
+
+
+
+      
+               // Update controls to focus on model center
+               controls.target.set(center.x, center.y, center.z);
+               controls.update();
+           });
+      
+           renderer = new THREE.WebGLRenderer({ antialias: true });
+           renderer.setPixelRatio(window.devicePixelRatio);
+           renderer.setSize(window.innerWidth, window.innerHeight);
+           renderer.toneMapping = THREE.ACESFilmicToneMapping;
+           renderer.toneMappingExposure = 1;
+           container.appendChild(renderer.domElement);
+      
+           controls = new OrbitControls(camera, renderer.domElement);
+           controls.addEventListener('change', render); // use if there is no animation loop
+           controls.minDistance = 2;
+           controls.maxDistance = 10;
+          
+           // Note: No need to set controls.target here as it will be set when the model is loaded
+      
+           window.addEventListener('resize', onWindowResize);
+       }
+        function init() {
+          // Select the target container by ID
+          container = document.getElementById('red');
+          if (!container) {
+            console.error('Container element with ID "red" not found.');
+            return;
+          }
+        
+          // Adjust camera and renderer to fit the container size
+          const { width, height } = container.getBoundingClientRect();
+          camera = new THREE.PerspectiveCamera(45, width / height, 0.25, 20);
+          camera.position.set(-1.8, 0.6, 2.7);
+        
+          scene = new THREE.Scene();
+        
+          new RGBELoader()
+            .setPath('textures/equirectangular/')
+            .load('royal_esplanade_1k.hdr', function(texture) {
+              hdrTexture = texture; // Save the HDR texture reference
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      
+      scene.background = texture;
+      scene.environment = texture;
+
+              const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
+              loader.load('Wholefile.gltf', function(gltf) {
+
+              const model = gltf.scene;
+              let boundingBox = new THREE.Box3().setFromObject(model);
+              let center = boundingBox.getCenter(new THREE.Vector3());
+      
+              if (x.matches) {
+                  model.scale.set(8, 8, 8); // scale here
+                  model.position.set(0,0,0);
+                  // model.position.x = -0.05 + center.x;
+                  // model.position.y = 0.4 + center.y;
+              } else {
+                  model.scale.set(8, 8, 8); // scale here
+                  // model.position.x = -0.95 + center.x;
+                  // model.position.y = 0.3 + center.y;
+              }
+              model.rotation.y -= 1.01;
+              model.position.x = 0;
+              model.position.z = 0;
+      
+              scene.add(model);
+              render();
+
+// Directional Light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight.position.set(-1, 1, -4); // Position the light source relative to the scene
+scene.add(directionalLight);
+
+
+// Directional Light
+const directionalLight3 = new THREE.DirectionalLight(0xffffff, 3);
+directionalLight3.position.set(-1, 1, 4); // Position the light source relative to the scene
+scene.add(directionalLight3);
+
+
+// const directionalLight2 = new THREE.DirectionalLight(0xffffff, 3);
+// directionalLight2.position.set(-1,-1, 1); // Position the light source relative to the scene
+// scene.add(directionalLight2);
+
+
+const spotLight = new THREE.SpotLight(0xffffff);
+spotLight.position.set(1, 10, 1);
+spotLight.angle = Math.PI / 4;
+spotLight.penumbra = 0.1;
+spotLight.decay = 2;
+spotLight.distance = 200;
+
+scene.add(spotLight); 
+// scene.background = new THREE.Color(0xffffff); // Change to white background
+
+                // const model = gltf.scene;
+                scene.add(model);
+                render();
+              });
+        
+              texture.mapping = THREE.EquirectangularReflectionMapping;
+              scene.background = texture;
+              scene.environment = texture;
+              render();
+            });
+        
           renderer = new THREE.WebGLRenderer({ antialias: true });
           renderer.setPixelRatio(window.devicePixelRatio);
-          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setSize(width, height);
           renderer.toneMapping = THREE.ACESFilmicToneMapping;
           renderer.toneMappingExposure = 1;
           container.appendChild(renderer.domElement);
-      
-          controls = new OrbitControls(camera, renderer.domElement);
+          renderer.domElement.style.borderRadius = '2px'; // Adjust 20px to your preference
+
+        
+          const controls = new OrbitControls(camera, renderer.domElement);
           controls.addEventListener('change', render); // use if there is no animation loop
           controls.minDistance = 2;
           controls.maxDistance = 10;
-          
-          // Note: No need to set controls.target here as it will be set when the model is loaded
-      
+          controls.target.set(0, 0, -0.2);
+          controls.update();
+        
           window.addEventListener('resize', onWindowResize);
-      }
-      
-      function onWindowResize() {
-          camera.aspect = window.innerWidth / window.innerHeight;
+        }
+        
+        function toggleBackground() {
+  if (scene.background === hdrTexture) {
+    scene.background = new THREE.Color(0xffffff); // Change to white background
+  } else {
+    scene.background = hdrTexture; // Switch back to HDR background
+  }
+}
+
+
+        function onWindowResize() {
+          const { width, height } = container.getBoundingClientRect();
+          camera.aspect = width / height;
           camera.updateProjectionMatrix();
-      
-          renderer.setSize(window.innerWidth, window.innerHeight);
-      
+        
+          renderer.setSize(width, height);
+        
           render();
-      }
-      
-      function render() {
+        }
+        
+        function render() {
           renderer.render(scene, camera);
-      }
-      </script>
+        }
+        </script>
+        
+
+
+
 <script>      
 
 
@@ -1322,14 +1558,14 @@ const form = document.getElementById('payment-form');
         color: #000;
         margin-top: 1em;
         font-size: 35px;
-        font-weight: bolder;
+        /* font-weight: bolder; */
         /* color: #000; */
       }
       .fbmT {
         color: #000;
         margin-top: 1em;
         font-size: medium;
-        font-weight: 600;
+        /* font-weight: 600; */
       }
       .fbmTs {
         color: #000;
@@ -1343,8 +1579,8 @@ const form = document.getElementById('payment-form');
         color: #000;
         font-size: 25px;
         margin-top: 1em;
-        margin-bottom: 1em;
-        font-weight: bolder;
+        margin-bottom: 0.3em;
+        /* font-weight: bolder; */
         /* border-bottom: #e1e1e1 solid 1px; */
       }
       .underline{
@@ -1355,13 +1591,14 @@ const form = document.getElementById('payment-form');
       .fbmBTN{
         background-color: #741515;
         border: #741515 solid 2px;
-        border-radius: 12px;
+        border-radius: 2px;
         padding: 10px 30px;
         color: #ffffff;
         /* color: #000; */
         font-size: medium;
-        font-weight: bold;
-        margin-top: 1em;
+        /* font-weight: bold; */
+        margin-top: 2em;
+        font-family: "Cantata One", serif;
       }
 
       .fbmBTN:hover{
@@ -1395,6 +1632,7 @@ backdrop-filter: blur(8.6px);
 
   .sizes{
     margin-top: 1em;
+    margin-bottom: 1em;
     display: flex;
     flex-direction: row;
     align-items: left;
@@ -1402,8 +1640,9 @@ backdrop-filter: blur(8.6px);
   }
 .sizes div{
   color: #000;
+  font-weight: 00;
   margin-right: 0.5em;
-  border: #000 solid 2px;
+  border: #000 solid 0.2px;
   /* padding: 0.5em; */
   height: 40px;
 width: 40px;
@@ -1425,7 +1664,19 @@ backdrop-filter: blur(8.6px);
 .sizes div:active {
   background-color: red;
 }
-
+@media (min-width: 1000px) {
+  .redd{
+  position: fixed;
+  /* background-color:rgb(255, 0, 0) ; */
+  /* top: 10%; */
+  top: 18%;
+  left: 17%;
+  z-index: 200;
+  height: 550px;
+  width: 650px;
+  border-radius: 10px;
+}
+}
 
 @media (max-width: 1000px) {
 
@@ -1485,6 +1736,18 @@ backdrop-filter: blur(8.6px);
     right: 1em;
     border-radius: 50%;
   }
+  .redd{
+  position: fixed;
+  /* background-color:rgb(255, 0, 0) ; */
+  top: 10%;
+  /* top: 18%; */
+  left: 10%;
+  z-index: 200;
+  height: 550px;
+  width: 80%;
+  border-radius: 10px;
+
+}
 }
 
 .navbar img{
@@ -1493,33 +1756,37 @@ backdrop-filter: blur(8.6px);
 }
 
     </style>
-                <div class="arrow right" onclick="" id="myDiv">&#10095;</div>
+    <div class="redd" id="red"></div>
+                <div class="arrow right" onclick="toggleBackground()" id="myDiv">&#10095;</div>
                 <!-- <div class="arrow right" onclick=""><i class="fa-solid fa-chevron-right"></i></i></div> -->
 
                 <div class="arrow left" onclick="">&#10094;</div>
                 <!-- <div class="arrow left" onclick=""><i class="fa-solid fa-chevron-left"></i></div> -->
 
     <div class="fixed-bottom-middle" onclick="toggleSizeChart()" id="textsizeChart">
-      <div class="fbmt">ORIGINALS T-SHIRT BLACK</div>
-      <div class="fbmT">A VARITY EXCLUSIVE</div>
+      <div class="fbmt">Originals T-Shirt</div>
+      <div class="fbmT">A Varity Eexclusive</div>
       <div class="fbmP">£25.00</div>
       <!-- <div class="underline"></div> -->
-      <div class="fbmT">SIZE : </div>
+      <div class="fbmT">SIZE: </div>
       <div class="sizes">
-        <div class="XS">XS</div>
+
         <div class="S">S</div>
         <div class="M">M</div>
         <div class="L">L</div>
+        <div class="XL">XL</div>
       </div>
 
-      <p class="p">SIZE CHART</p>
+      
+
+      <!-- <p class="p">SIZE CHART</p> -->
       <!-- <div class="underline"></div> -->
 
       <!-- <div class="fbmT">DESCRIPTION</div> -->
       <!-- <div class="fbmTs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex soluta dolores voluptate non recusandae eum consectetur nesciunt molestias, sunt minus.</div> -->
-      <button class="fbmBTN" onclick="buybutton()">BUY NOW</button>
-      <div class="fbmT">UK SHIPPING TIME : 3 - 5 BUISNESS DAYS</div>
-      <p>MORE DETAILS</p>
+      <button class="fbmBTN" onclick="buybutton()">ADD TO BAG</button>
+      <div class="fbmT">Uk Shipping Time : 3 - 5 business days</div>
+      <!-- <p>MORE DETAILS</p> -->
     </div>
     
     <!-- <div class="mobile-icons">
@@ -1529,8 +1796,8 @@ backdrop-filter: blur(8.6px);
       <a ><i class="far fa-shopping-bag" id="show-cart"></i></a>
     </div> -->
     <div class="navbar">
-      <!-- <a  class="logo">VARITY</a> -->
-      <img src="images/man.png" alt="">
+      <a  class="logo">VARITY</a>
+      <!-- <img src="images/man.png" alt=""> -->
 
       <div class="middle">
           <div class="navbar-brand">
@@ -1879,7 +2146,7 @@ switchForm('login');
     <div id="titlebuy"> VARITY ORIGINALS TEE</div>
     <div id="price">£25</div>
     <!-- <p>Lorem ipsum dolor sit amet consectetur <br>Ratione</p> -->
-    <div id="buybtn" onclick="buybutton()">Buy Now</div>
+    <div id="buybtn" onclick="buybutton()">ADD TO BAG</div>
     <div id="os">MORE DETAILS</div>
   </div>
 

@@ -905,7 +905,7 @@ iframe {
 
       /* Style for the fixed text */
   .fixed-bottom-middle {
-
+display: none;
     /* From https://css.glass */
 /* background: rgba(255, 255, 255, 0.1); */
 /* border: white 0.09px solid; */
@@ -1057,9 +1057,9 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
     
         new RGBELoader()
           .setPath( 'textures/equirectangular/' )
-          .load( 'qwe.hdr', function ( texture ) {
+          .load( 'royal_esplanade_1k.hdr', function ( texture ) {
             const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
-            loader.load( 'WholeFile.gltf', async function ( gltf ) {
+            loader.load( 'DamagedHelmet.gltf', async function ( gltf ) {
               const model = gltf.scene;
               
               let isModelVisible = true;
@@ -1077,12 +1077,12 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
               model.position.y = 0.4
               }
               else {
-                model.scale.set(7,7,7) // scale here	
+                // model.scale.set(7,7,7) // scale here	
                 // model.position.x = -0.15
-                model.position.x = -0.95
-                model.position.y = 0.1
+                // model.position.x = -0.95
+                // model.position.y = 0.1
               }
-              model.rotation.y -= 1.01;
+              // model.rotation.y -= 1.01;
 
               scene.add( model );
               render();
