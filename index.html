@@ -523,11 +523,12 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     right: 650px;
 }
 #titlebuy{
-    font-size: 20;
+    font-size: 1.7em;
     text-align: center;
     line-height: normal;
-    color: #000;
+    color: #000000;
     font-family: "Cantata One", serif;
+    font-weight: 550;
 }
 
 .login{
@@ -550,7 +551,7 @@ z-index: 40;
 }
 
 #price{
-    font-size: 27px;
+    font-size: 1.3em;
     margin-top: 0.4em;
     color: #000;
     font-family: "Cantata One", serif;
@@ -576,28 +577,33 @@ z-index: 40;
 
 #buybtn{
     display: flex;
-    /* justify-content:  */
-    /* center; */
-    /* align-items: center; */
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    width: 200px; /* Explicit width */
+    height: 40px; /* Explicit height */
     margin-bottom: 1em;
     margin-top: 1em;
-    padding: 6px 100px;
     font-size: 12px;
     cursor: pointer;
     background-color: #4b0909;
     border: 0.5px solid #e2dcdd; 
     color: white;
-    /* font-family: 'Open Sans', sans-serif; */
     font-family: "Cantata One", serif;
-    /* border: none; */
-    border-radius: 15px;
+    border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    z-index: -10;
-    text-align: center;
-    }
-#titlebuy{
-    font-size: 27px;
+    z-index: 1; /* Adjusted to be positive so it's not behind other elements */
+    text-align: center; /* This is actually redundant because of flex, but left it just in case */
+
+    /* Make button responsive */
+    max-width: 100%; /* Ensures button doesn't overflow its container */
+    box-sizing: border-box; /* Ensures width includes padding and border */
 }
+
+/* #titlebuy{
+    font-size: 3em;
+    font-weight:100;
+
+} */
 #buybutton:hover{
     background-color: #9125254f;
 }
@@ -750,7 +756,7 @@ opacity: 1;
 display: none;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1042px) {
 
   .buy{
     width: 70%;
@@ -874,7 +880,7 @@ backdrop-filter: blur(8.6px);
 }
 
 }
-@media (min-width: 1000px) {
+@media (min-width: 1042px) {
 
   .spinner-container img{
     position: fixed;
@@ -1334,166 +1340,7 @@ scene.add(model);
     spinner.style.display = 'none';
   }
 </script>
-
-        // import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
-        // import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
-        // import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
-        // import { RGBELoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js';
-        // let spinner = document.getElementById('spinner')
-        // let camera, scene, renderer, container;
-        // var x = window.matchMedia("(max-width: 700px)");
-        // let hdrTexture; // Reference to the HDR texture
-
-        // init();
-        
-//         function init() {
-//           // Select the target container by ID
-//           container = document.getElementById('red');
-//           if (!container) {
-//             console.error('Container element with ID "red" not found.');
-//             return;
-//           }
-        
-//           // Adjust camera and renderer to fit the container size
-//           const { width, height } = container.getBoundingClientRect();
-//           camera = new THREE.PerspectiveCamera(45, width / height, 0.25, 20);
-//           camera.position.set(-1.8, 0.6, 2.7);
-        
-//           scene = new THREE.Scene();
-//           showSpinner();
-//           scene.background = new THREE.Color(0xffffff);
-
-//           new RGBELoader()
-//             .setPath('textures/equirectangular/')
-//             .load('royal_esplanade_1k.hdr', function(texture) {
-//               hdrTexture = texture; // Save the HDR texture reference
-//       texture.mapping = THREE.EquirectangularReflectionMapping;
-      
-
-
-//               const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
-//               loader.load('WholeFile.gltf', function(gltf) {
-
-//               const model = gltf.scene;
-//               let boundingBox = new THREE.Box3().setFromObject(model);
-//               let center = boundingBox.getCenter(new THREE.Vector3());
-      
-//               if (x.matches) {
-//                   model.scale.set(8, 8, 8); // scale here
-//                   model.position.set(-1,0,0);
-//                   scene.background = new THREE.Color(0xffffff); // Change to white background
-//                   // scene.environment = new THREE.Color(0xffffff);
-//                   // model.position.x = -0.05 + center.x;
-//                   // model.position.y = 0.4 + center.y;
-//               } else {
-//                   model.scale.set(9, 9, 9); // scale here
-//                   // model.position.x = -0.95 + center.x;
-//                   // model.position.y = 0.3 + center.y;
-//                   // scene.background = texture;
-//                   scene.background = texture;
-//                   // scene.environment = texture;
-//               }
-//               model.rotation.y -= 1.01;
-//               model.position.x = 0;
-//               model.position.z = 0;
-      
-//               scene.add(model);
-//               render();
-//               hideSpinner();
-//               if (x.matches) {
-//                   scene.background = new THREE.Color(0xffffff); // Change to white background
-//               } else {
-//                   scene.background = texture;
-//               }
-
-// // Directional Light
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
-// directionalLight.position.set(-1, 1, -4); // Position the light source relative to the scene
-// scene.add(directionalLight);
-
-
-// // Directional Light
-// const directionalLight3 = new THREE.DirectionalLight(0xffffff, 3);
-// directionalLight3.position.set(-1, 1, 4); // Position the light source relative to the scene
-// scene.add(directionalLight3);
-
-
-
-
-// const spotLight = new THREE.SpotLight(0xffffff);
-// spotLight.position.set(1, 10, 1);
-// spotLight.angle = Math.PI / 4;
-// spotLight.penumbra = 0.1;
-// spotLight.decay = 2;
-// spotLight.distance = 200;
-
-// scene.add(spotLight); 
-
-// // scene.background = texture;
-// // scene.environment = texture;
-
-//                 // const model = gltf.scene;
-//                 scene.add(model);
-//                 render();
-//               });
-        
-//               texture.mapping = THREE.EquirectangularReflectionMapping;
-//               scene.background = texture;
-//               scene.environment = texture;
-//               render();
-//             });
-        
-//           renderer = new THREE.WebGLRenderer({ antialias: true });
-//           renderer.setPixelRatio(window.devicePixelRatio);
-//           renderer.setSize(width, height);
-//           renderer.toneMapping = THREE.ACESFilmicToneMapping;
-//           renderer.toneMappingExposure = 1;
-//           container.appendChild(renderer.domElement);
-//           renderer.domElement.style.borderRadius = '2px'; // Adjust 20px to your preference
-
-        
-//           const controls = new OrbitControls(camera, renderer.domElement);
-//           controls.addEventListener('change', render); // use if there is no animation loop
-//           controls.minDistance = 2;
-//           controls.maxDistance = 10;
-//           controls.target.set(0, 0, -0.2);
-//           controls.update();
-        
-//           window.addEventListener('resize', onWindowResize);
-//         }
-        
-//         function toggleBackground() {
-//   if (scene.background === hdrTexture) {
-//     scene.background = new THREE.Color(0xffffff); // Change to white background
-//   } else {
-//     scene.background = hdrTexture; // Switch back to HDR background
-//   }
-// }
-
-
-//         function onWindowResize() {
-//           const { width, height } = container.getBoundingClientRect();
-//           camera.aspect = width / height;
-//           camera.updateProjectionMatrix();
-        
-//           renderer.setSize(width, height);
-        
-//           render();
-//         }
-        
-//         function render() {
-//           renderer.render(scene, camera);
-//         }
-
-
-//         function showSpinner() {
-//   spinner.style.display = 'block';
-// }
-
-// function hideSpinner() {
-//   spinner.style.display = 'none';
-// }
-        // </script>
+<!-- bb  </script> -->
         
 
 
@@ -1792,30 +1639,41 @@ border: #741515 solid 0.2px;
   cursor: pointer;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1042px) {
   .redd{
   position: fixed;
   /* background-color:rgb(255, 0, 0) ; */
   /* top: 10%; */
   top: 18%;
-  left: 17%;
+  left: 7em;
   z-index: 200;
   height: 550px;
-  width: 650px;
+  width: 40%;
   border-radius: 10px;
 }
+
+#Nav{
+  display: flex;
+}
+#mobileNav{
+  display: none;
 }
 
-@media (max-width: 1000px) {
+}
 
+@media (max-width: 1042px) {
+#mobileNav{
+  display: flex;
+}
+#Nav{
+  display: none;
+}
 .underline{
   display: none;
   
 }
 
-.sizes{
-  display: none;
-}
+
 
 .fbmTs{
   display: none;
@@ -1867,7 +1725,7 @@ border: #741515 solid 0.2px;
   .redd{
   position: fixed;
   /* background-color:rgb(255, 0, 0) ; */
-  top: 10%;
+  top: 4em;
   /* top: 18%; */
   left: 10%;
   z-index: 200;
@@ -1885,10 +1743,10 @@ border: #741515 solid 0.2px;
 
     </style>
     <div class="redd" id="red"></div>
-                <div class="arrow right" onclick="toggleBackground()" id="myDiv">&#10095;</div>
+                <!-- <div class="arrow right" onclick="toggleBackground()" id="myDiv">&#10095;</div> -->
                 <!-- <div class="arrow right" onclick=""><i class="fa-solid fa-chevron-right"></i></i></div> -->
 
-                <div class="arrow left" onclick="">&#10094;</div>
+                <!-- <div class="arrow left" onclick="">&#10094;</div> -->
                 <!-- <div class="arrow left" onclick=""><i class="fa-solid fa-chevron-left"></i></div> -->
 
     <div class="fixed-bottom-middle" onclick="toggleSizeChart()" id="textsizeChart">
@@ -1916,21 +1774,19 @@ border: #741515 solid 0.2px;
       <div class="fbmT">Uk Shipping Time : 3 - 5 business days</div>
       <!-- <p>MORE DETAILS</p> -->
     </div>
-    
+          <!-- <img src="images/man.png" alt=""> -->
+        <!-- <div class="login" id="login" onclick="showOverlay()">LOGIN / SIGN UP</div> -->
     <!-- <div class="mobile-icons">
       <a href="https://www.tiktok.com/@varity.club?is_from_webapp=1&sender_device=pc" target="_blank"><i class="fab fa-tiktok"></i></a>
       <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
       <a id="#show-cart" onclick="showSidebar()"><i class="fa fa-shopping-bag" ></i></a>
       <a ><i class="far fa-shopping-bag" id="show-cart"></i></a>
     </div> -->
-    <div class="navbar">
-      <a  class="logo">VARITY</a>
-      <!-- <img src="images/man.png" alt=""> -->
 
+    <div class="navbar" id="Nav">
+      <a  class="logo">VARITY</a>
       <div class="middle">
           <div class="navbar-brand">
-            
-              
             </div>
           <div class="navbar-links">
           
@@ -1944,7 +1800,6 @@ border: #741515 solid 0.2px;
           </div>
     </div>
 
-    <!-- <div class="login" id="login" onclick="showOverlay()">LOGIN / SIGN UP</div> -->
     <div class="navbar-icons">
       <a onclick="showOverlay()" target="_blank"><i class="fa fa-user"></i></a>
       <a href="https://www.instagram.com/varityclothes?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -1952,7 +1807,91 @@ border: #741515 solid 0.2px;
     </div>
   </div>
 
+<style>
+ /* Styles the entire navbar */
+.navbar {
+  /* width: 100%; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0px;
+  /* background-color: #752222; */
+  height: 60px;
+}
 
+/* Container for the left-aligned items (e.g., Contact Us) */
+.navbar-left {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex: 1;
+  font-size: 20px;
+  margin-left: 0;
+}
+
+.navbar-left a{
+  font-size: 20px;
+  /* position:fixed; */
+  /* top:50%; */
+}
+/* Container for the center-aligned items (e.g., VARITY logo) */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  position: relative;
+}
+
+.logo {
+  font-weight:500;
+  font-size: 24px;
+}
+
+/* Container for the right-aligned items (icons) */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  justify-content:end;
+  gap: 0px; /* Reduced gap for closer icon spacing */
+  flex: 1;
+  /* font-size: 0.1em; */
+}
+
+/* Make the contact link thinner and in line */
+.navbar-left > a {
+  font-size: 1em;
+  font-weight: normal;
+  text-decoration: none;
+  color: #000;
+}
+
+/* Style for icons */
+.navbar-right > a {
+  color: #000;
+  font-size: 1.5em;
+  text-decoration: none;
+}
+#cu {
+  font-size: 0.5em;
+}
+
+</style>
+
+<div class="navbar" id="mobileNav">
+  <div class="navbar-left">
+    <a href="Varity.html#highlights" id="cu">Contact Us</a>
+  </div>
+  <div class="navbar-center">
+    <div class="logo">VARITY</div>
+  </div>
+  <div class="navbar-right">
+    <a onclick="showOverlay()" target="_blank"><i class="far fa-user"></i></a>
+    <!-- <a href="https://www.instagram.com/varityclothes" target="_blank"><i class="fab fa-instagram"></i></a> -->
+    <a id="#show-cart" onclick="showSidebar()"><i class="fa fa-shopping-bag"></i></a>
+  </div>
+</div>
 
 
 
@@ -2271,11 +2210,19 @@ switchForm('login');
 
   <div class="buy" id="sizeChart" >
     <!-- <div id="o">ORIGINALS</div> -->
-    <div id="titlebuy"> VARITY ORIGINALS TEE</div>
-    <div id="price">£25</div>
+    <div id="titlebuy">Originals T-Shirt</div>
+    <div id="price">£25.00</div>
+
+    <div class="sizes">
+      <div id="sizeS" class="S" onclick="selectSize('S')">S</div>
+      <div id="sizeM" class="M" onclick="selectSize('M')">M</div>
+      <div id="sizeL" class="L" onclick="selectSize('L')">L</div>
+      <div id="sizeXL" class="XL" onclick="selectSize('XL')">XL</div>
+    </div>
+
     <!-- <p>Lorem ipsum dolor sit amet consectetur <br>Ratione</p> -->
     <div id="buybtn" onclick="buybutton()">ADD TO BAG</div>
-    <div id="os">MORE DETAILS</div>
+    <!-- <div id="os">MORE DETAILS</div> -->
   </div>
 
   <script>
@@ -2451,7 +2398,7 @@ const priceIdToSize = Object.entries(sizeToPriceId).reduce((acc, [size, priceId]
   <div class="cart-item" id="yourElementId" data-id="${item.id}">
   <img src="images/actual.png" alt="Nice Mini Toiletry Bag" class="cart-item-image">
   <div class="cart-item-details">
-    <p class="item-code">${priceIdToSize[item.id]}</p>
+    <p class="item-code">${priceIdToSize[item.id]}</p>t
     <p class="item-name">${item.name}</p>
     <p class="item-attributes">Colour: Red</p>
     <p class="item-price">£${item.price}</p>
