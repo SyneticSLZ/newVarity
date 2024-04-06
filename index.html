@@ -1351,7 +1351,6 @@ scene.add(model);
 
 // Example usage: Trigger 'ArrowRight' keydown event
 
-
 let stripePromise;
 const getStripe = () => {
   if (!stripePromise) {
@@ -1361,7 +1360,9 @@ const getStripe = () => {
   return stripePromise;
 };
 
+
 const redirectToCheckout = async () => {
+
   console.log("Redirecting to Checkout...");
   const stripe = getStripe();
   
