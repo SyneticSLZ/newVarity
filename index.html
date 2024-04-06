@@ -846,11 +846,36 @@ backdrop-filter: blur(8.6px);
 -webkit-backdrop-filter: blur(8.6px); */
   }
 
-
+  .spinner-container img{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    z-index: 1000;
+    /* display: none;  */
+}
 
 }
 @media (min-width: 1000px) {
 
+  .spinner-container img{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 33%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 50px;
+    z-index: 1000;
+    /* display: none;  */
+}
   .buy{
     display: none;
   }
@@ -879,6 +904,9 @@ backdrop-filter: blur(8.6px);
     border-radius: 5px;
 width: 30%;
   }
+
+
+
 }
 
 #overlay1 {
@@ -929,19 +957,21 @@ backdrop-filter: blur(8.6px);
   }
     /* Style for the loading spinner */
 
-  .spinner-container {
+  /* .spinner-container img{
     position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     top: 50%;
-    left: 25%;
+    left: 35%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
+    width: 500px;
+    height: 500px;
     z-index: 1000;
     display: none; 
-}
+} */
+
+
 /* 
 .spinner {
     position: relative;
@@ -1021,8 +1051,10 @@ backdrop-filter: blur(8.6px);
     <!-- Loading Spinner -->
 <!-- <div class="spinner" id="spinner"></div> -->
 <div class="spinner-container" id="spinner">
-  <div class="spinner"></div>
+  <img id="spinner" src="images/actual.png"></img>
 </div>
+
+<!-- <img src="images/actual.png" alt=""> -->
     <!-- <div id="overlay1">
       <form id="payment-form">
         <div id="express-checkout-element"></div>
@@ -1149,7 +1181,7 @@ scene.add(spotLight);
         import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
         import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
         import { RGBELoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js';
-        
+        let spinner = document.getElementById('spinner')
         let camera, scene, renderer, container;
         var x = window.matchMedia("(max-width: 700px)");
         let hdrTexture; // Reference to the HDR texture
@@ -1170,7 +1202,9 @@ scene.add(spotLight);
           camera.position.set(-1.8, 0.6, 2.7);
         
           scene = new THREE.Scene();
-        
+          showSpinner();
+          scene.background = new THREE.Color(0xffffff);
+
           new RGBELoader()
             .setPath('textures/equirectangular/')
             .load('royal_esplanade_1k.hdr', function(texture) {
@@ -1207,6 +1241,12 @@ scene.add(spotLight);
       
               scene.add(model);
               render();
+              hideSpinner();
+              if (x.matches) {
+                  scene.background = new THREE.Color(0xffffff); // Change to white background
+              } else {
+                  scene.background = texture;
+              }
 
 // Directional Light
 const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
@@ -1289,6 +1329,17 @@ scene.add(spotLight);
         function render() {
           renderer.render(scene, camera);
         }
+
+
+        function showSpinner() {
+  spinner.style.display = 'block';
+}
+
+function hideSpinner() {
+  spinner.style.display = 'none';
+}
+
+
         </script>
         
 
