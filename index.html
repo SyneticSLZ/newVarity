@@ -519,6 +519,7 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     text-align: center;
     line-height: normal;
     color: #000;
+    font-family: "Cantata One", serif;
 }
 
 .login{
@@ -544,6 +545,7 @@ z-index: 40;
     font-size: 27px;
     margin-top: 0.4em;
     color: #000;
+    font-family: "Cantata One", serif;
 }
 #o{
   /* margin-top: 1em; */
@@ -552,6 +554,7 @@ z-index: 40;
     color: #000;
     margin-bottom: 0.2em;
     /* display: none; */
+    font-family: "Cantata One", serif;
 }
 #os{
     font-size: smaller;
@@ -559,6 +562,7 @@ z-index: 40;
     color: #000;
     margin-bottom: 1em;
     text-decoration: underline;
+    font-family: "Cantata One", serif;
 }
 
 
@@ -570,12 +574,13 @@ z-index: 40;
     margin-bottom: 1em;
     margin-top: 1em;
     padding: 6px 100px;
-    font-size: 16px;
+    font-size: 12px;
     cursor: pointer;
     background-color: #4b0909;
     border: 0.5px solid #e2dcdd; 
     color: white;
-    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Open Sans', sans-serif; */
+    font-family: "Cantata One", serif;
     /* border: none; */
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -854,8 +859,8 @@ backdrop-filter: blur(8.6px);
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     z-index: 1000;
     /* display: none;  */
 }
@@ -872,7 +877,7 @@ backdrop-filter: blur(8.6px);
     left: 33%;
     transform: translate(-50%, -50%);
     width: 500px;
-    height: 50px;
+    height: 500px;
     z-index: 1000;
     /* display: none;  */
 }
@@ -1177,76 +1182,97 @@ scene.add(spotLight);
        </script> -->
 
       <script type="module">
-        import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
-        import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
-        import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
-        import { RGBELoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js';
-        let spinner = document.getElementById('spinner')
-        let camera, scene, renderer, container;
-        var x = window.matchMedia("(max-width: 700px)");
-        let hdrTexture; // Reference to the HDR texture
+  import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
+  import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
+  import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
+  import { RGBELoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js';
+  let spinner = document.getElementById('spinner')
+  let camera, scene, renderer, container;
+  var x = window.matchMedia("(max-width: 1000px)"); // Changed to 1000px for desktop check
+  let hdrTexture; // Reference to the HDR texture
 
-        init();
-        
-        function init() {
-          // Select the target container by ID
-          container = document.getElementById('red');
-          if (!container) {
-            console.error('Container element with ID "red" not found.');
-            return;
-          }
-        
-          // Adjust camera and renderer to fit the container size
-          const { width, height } = container.getBoundingClientRect();
-          camera = new THREE.PerspectiveCamera(45, width / height, 0.25, 20);
-          camera.position.set(-1.8, 0.6, 2.7);
-        
-          scene = new THREE.Scene();
-          showSpinner();
-          scene.background = new THREE.Color(0xffffff);
+  init();
 
-          new RGBELoader()
-            .setPath('textures/equirectangular/')
-            .load('royal_esplanade_1k.hdr', function(texture) {
-              hdrTexture = texture; // Save the HDR texture reference
-      texture.mapping = THREE.EquirectangularReflectionMapping;
+  function init() {
+    // Select the target container by ID
+    container = document.getElementById('red');
+    if (!container) {
+      console.error('Container element with ID "red" not found.');
+      return;
+    }
+
+    // Adjust camera and renderer to fit the container size
+    const { width, height } = container.getBoundingClientRect();
+    camera = new THREE.PerspectiveCamera(45, width / height, 0.25, 20);
+    camera.position.set(-1.8, 0.6, 2.7);
+
+    scene = new THREE.Scene();
+    showSpinner();
+    scene.background = new THREE.Color(0xffffff);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(width, height);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1;
+    container.appendChild(renderer.domElement);
+    renderer.domElement.style.borderRadius = '2px'; // Adjust to your preference
+
+    if (!x.matches) { // If it's desktop
+      new RGBELoader()
+        .setPath('textures/equirectangular/')
+        .load('royal_esplanade_1k.hdr', function(texture) {
+          hdrTexture = texture; // Save the HDR texture reference
+          texture.mapping = THREE.EquirectangularReflectionMapping;
+          scene.background = texture;
+          scene.environment = texture;
+          loadModel(); // Load the model in any case
+        });
+    } else {
+      // On mobile, just load the model without HDR texture
+      loadModel();
+    }
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.addEventListener('change', render); // use if there is no animation loop
+    controls.minDistance = 2;
+    controls.maxDistance = 10;
+    controls.target.set(0, 0, -0.2);
+    controls.update();
+
+    window.addEventListener('resize', onWindowResize);
+  }
+
+  function loadModel() {
+    const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
+    loader.load('WholeFile.gltf', function(gltf) {
+      const model = gltf.scene;
+      model.scale.set(9, 9, 9); // Adjust scale if needed
+      model.position.x = 0;
+      model.rotation.y = -1.01;
+
+
+
+      // const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
+      //     loader.load('WholeFile.gltf', function (gltf) {
+      //         const model = gltf.scene;
+      //         let boundingBox = new THREE.Box3().setFromObject(model);
+      //         let center = boundingBox.getCenter(new THREE.Vector3());
       
-
-
-              const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
-              loader.load('WholeFile.gltf', function(gltf) {
-
-              const model = gltf.scene;
-              let boundingBox = new THREE.Box3().setFromObject(model);
-              let center = boundingBox.getCenter(new THREE.Vector3());
+      //         if (x.matches) {
+      //             model.scale.set(5, 5, 5); // scale here
+      //             // model.position.x = -0.05 + center.x;
+      //             model.position.y = 0.4 + center.y;
+      //         } else {
+      //             model.scale.set(6, 6, 6); // scale here
+      //             model.position.x = -0.95 + center.x;
+      //             model.position.y = 0.1 + center.y;
+      //         }
+      //         model.rotation.y -= 1.01;
       
-              if (x.matches) {
-                  model.scale.set(8, 8, 8); // scale here
-                  model.position.set(-1,0,0);
-                  scene.background = new THREE.Color(0xffffff); // Change to white background
-                  // scene.environment = new THREE.Color(0xffffff);
-                  // model.position.x = -0.05 + center.x;
-                  // model.position.y = 0.4 + center.y;
-              } else {
-                  model.scale.set(9, 9, 9); // scale here
-                  // model.position.x = -0.95 + center.x;
-                  // model.position.y = 0.3 + center.y;
-                  // scene.background = texture;
-                  scene.background = texture;
-                  // scene.environment = texture;
-              }
-              model.rotation.y -= 1.01;
-              model.position.x = 0;
-              model.position.z = 0;
-      
-              scene.add(model);
-              render();
-              hideSpinner();
-              if (x.matches) {
-                  scene.background = new THREE.Color(0xffffff); // Change to white background
-              } else {
-                  scene.background = texture;
-              }
+      //         scene.add(model);
+      //         render();
+              // hideSpinner();
 
 // Directional Light
 const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
@@ -1274,73 +1300,192 @@ spotLight.distance = 200;
 
 scene.add(spotLight); 
 
-// scene.background = texture;
-// scene.environment = texture;
-
-                // const model = gltf.scene;
-                scene.add(model);
-                render();
-              });
-        
-              texture.mapping = THREE.EquirectangularReflectionMapping;
-              scene.background = texture;
-              scene.environment = texture;
-              render();
-            });
-        
-          renderer = new THREE.WebGLRenderer({ antialias: true });
-          renderer.setPixelRatio(window.devicePixelRatio);
-          renderer.setSize(width, height);
-          renderer.toneMapping = THREE.ACESFilmicToneMapping;
-          renderer.toneMappingExposure = 1;
-          container.appendChild(renderer.domElement);
-          renderer.domElement.style.borderRadius = '2px'; // Adjust 20px to your preference
-
-        
-          const controls = new OrbitControls(camera, renderer.domElement);
-          controls.addEventListener('change', render); // use if there is no animation loop
-          controls.minDistance = 2;
-          controls.maxDistance = 10;
-          controls.target.set(0, 0, -0.2);
-          controls.update();
-        
-          window.addEventListener('resize', onWindowResize);
-        }
-        
-        function toggleBackground() {
-  if (scene.background === hdrTexture) {
-    scene.background = new THREE.Color(0xffffff); // Change to white background
-  } else {
-    scene.background = hdrTexture; // Switch back to HDR background
+scene.add(model);
+      hideSpinner();
+      render();
+    });
   }
-}
 
+  function onWindowResize() {
+    const { width, height } = container.getBoundingClientRect();
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+    render();
+  }
 
-        function onWindowResize() {
-          const { width, height } = container.getBoundingClientRect();
-          camera.aspect = width / height;
-          camera.updateProjectionMatrix();
+  function render() {
+    renderer.render(scene, camera);
+  }
+
+  function showSpinner() {
+    spinner.style.display = 'block';
+  }
+
+  function hideSpinner() {
+    spinner.style.display = 'none';
+  }
+</script>
+
+        // import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
+        // import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/GLTFLoader.js';
+        // import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/controls/OrbitControls.js';
+        // import { RGBELoader } from 'https://cdn.skypack.dev/three@0.133.0/examples/jsm/loaders/RGBELoader.js';
+        // let spinner = document.getElementById('spinner')
+        // let camera, scene, renderer, container;
+        // var x = window.matchMedia("(max-width: 700px)");
+        // let hdrTexture; // Reference to the HDR texture
+
+        // init();
         
-          renderer.setSize(width, height);
+//         function init() {
+//           // Select the target container by ID
+//           container = document.getElementById('red');
+//           if (!container) {
+//             console.error('Container element with ID "red" not found.');
+//             return;
+//           }
         
-          render();
-        }
+//           // Adjust camera and renderer to fit the container size
+//           const { width, height } = container.getBoundingClientRect();
+//           camera = new THREE.PerspectiveCamera(45, width / height, 0.25, 20);
+//           camera.position.set(-1.8, 0.6, 2.7);
         
-        function render() {
-          renderer.render(scene, camera);
-        }
+//           scene = new THREE.Scene();
+//           showSpinner();
+//           scene.background = new THREE.Color(0xffffff);
+
+//           new RGBELoader()
+//             .setPath('textures/equirectangular/')
+//             .load('royal_esplanade_1k.hdr', function(texture) {
+//               hdrTexture = texture; // Save the HDR texture reference
+//       texture.mapping = THREE.EquirectangularReflectionMapping;
+      
 
 
-        function showSpinner() {
-  spinner.style.display = 'block';
-}
+//               const loader = new GLTFLoader().setPath('models/DamagedHelmet/glTF/');
+//               loader.load('WholeFile.gltf', function(gltf) {
 
-function hideSpinner() {
-  spinner.style.display = 'none';
-}
+//               const model = gltf.scene;
+//               let boundingBox = new THREE.Box3().setFromObject(model);
+//               let center = boundingBox.getCenter(new THREE.Vector3());
+      
+//               if (x.matches) {
+//                   model.scale.set(8, 8, 8); // scale here
+//                   model.position.set(-1,0,0);
+//                   scene.background = new THREE.Color(0xffffff); // Change to white background
+//                   // scene.environment = new THREE.Color(0xffffff);
+//                   // model.position.x = -0.05 + center.x;
+//                   // model.position.y = 0.4 + center.y;
+//               } else {
+//                   model.scale.set(9, 9, 9); // scale here
+//                   // model.position.x = -0.95 + center.x;
+//                   // model.position.y = 0.3 + center.y;
+//                   // scene.background = texture;
+//                   scene.background = texture;
+//                   // scene.environment = texture;
+//               }
+//               model.rotation.y -= 1.01;
+//               model.position.x = 0;
+//               model.position.z = 0;
+      
+//               scene.add(model);
+//               render();
+//               hideSpinner();
+//               if (x.matches) {
+//                   scene.background = new THREE.Color(0xffffff); // Change to white background
+//               } else {
+//                   scene.background = texture;
+//               }
+
+// // Directional Light
+// const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+// directionalLight.position.set(-1, 1, -4); // Position the light source relative to the scene
+// scene.add(directionalLight);
 
 
-        </script>
+// // Directional Light
+// const directionalLight3 = new THREE.DirectionalLight(0xffffff, 3);
+// directionalLight3.position.set(-1, 1, 4); // Position the light source relative to the scene
+// scene.add(directionalLight3);
+
+
+
+
+// const spotLight = new THREE.SpotLight(0xffffff);
+// spotLight.position.set(1, 10, 1);
+// spotLight.angle = Math.PI / 4;
+// spotLight.penumbra = 0.1;
+// spotLight.decay = 2;
+// spotLight.distance = 200;
+
+// scene.add(spotLight); 
+
+// // scene.background = texture;
+// // scene.environment = texture;
+
+//                 // const model = gltf.scene;
+//                 scene.add(model);
+//                 render();
+//               });
+        
+//               texture.mapping = THREE.EquirectangularReflectionMapping;
+//               scene.background = texture;
+//               scene.environment = texture;
+//               render();
+//             });
+        
+//           renderer = new THREE.WebGLRenderer({ antialias: true });
+//           renderer.setPixelRatio(window.devicePixelRatio);
+//           renderer.setSize(width, height);
+//           renderer.toneMapping = THREE.ACESFilmicToneMapping;
+//           renderer.toneMappingExposure = 1;
+//           container.appendChild(renderer.domElement);
+//           renderer.domElement.style.borderRadius = '2px'; // Adjust 20px to your preference
+
+        
+//           const controls = new OrbitControls(camera, renderer.domElement);
+//           controls.addEventListener('change', render); // use if there is no animation loop
+//           controls.minDistance = 2;
+//           controls.maxDistance = 10;
+//           controls.target.set(0, 0, -0.2);
+//           controls.update();
+        
+//           window.addEventListener('resize', onWindowResize);
+//         }
+        
+//         function toggleBackground() {
+//   if (scene.background === hdrTexture) {
+//     scene.background = new THREE.Color(0xffffff); // Change to white background
+//   } else {
+//     scene.background = hdrTexture; // Switch back to HDR background
+//   }
+// }
+
+
+//         function onWindowResize() {
+//           const { width, height } = container.getBoundingClientRect();
+//           camera.aspect = width / height;
+//           camera.updateProjectionMatrix();
+        
+//           renderer.setSize(width, height);
+        
+//           render();
+//         }
+        
+//         function render() {
+//           renderer.render(scene, camera);
+//         }
+
+
+//         function showSpinner() {
+//   spinner.style.display = 'block';
+// }
+
+// function hideSpinner() {
+//   spinner.style.display = 'none';
+// }
+        // </script>
         
 
 
