@@ -564,12 +564,12 @@ z-index: 40;
 
 #buybtn{
     display: flex;
-    justify-content: 
-    center;
-    align-items: center;
+    /* justify-content:  */
+    /* center; */
+    /* align-items: center; */
     margin-bottom: 1em;
     margin-top: 1em;
-    padding: 10px 100px;
+    padding: 6px 100px;
     font-size: 16px;
     cursor: pointer;
     background-color: #4b0909;
@@ -580,6 +580,7 @@ z-index: 40;
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     z-index: -10;
+    text-align: center;
     }
 #titlebuy{
     font-size: 27px;
@@ -1188,15 +1189,16 @@ scene.add(spotLight);
               if (x.matches) {
                   model.scale.set(8, 8, 8); // scale here
                   model.position.set(-1,0,0);
-                  // scene.background = new THREE.Color(0xffffff); // Change to white background
+                  scene.background = new THREE.Color(0xffffff); // Change to white background
                   // scene.environment = new THREE.Color(0xffffff);
                   // model.position.x = -0.05 + center.x;
                   // model.position.y = 0.4 + center.y;
               } else {
-                  model.scale.set(8, 8, 8); // scale here
+                  model.scale.set(9, 9, 9); // scale here
                   // model.position.x = -0.95 + center.x;
                   // model.position.y = 0.3 + center.y;
                   // scene.background = texture;
+                  scene.background = texture;
                   // scene.environment = texture;
               }
               model.rotation.y -= 1.01;
@@ -1232,8 +1234,8 @@ spotLight.distance = 200;
 
 scene.add(spotLight); 
 
-scene.background = texture;
-scene.environment = texture;
+// scene.background = texture;
+// scene.environment = texture;
 
                 // const model = gltf.scene;
                 scene.add(model);
