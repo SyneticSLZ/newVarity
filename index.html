@@ -1637,7 +1637,7 @@ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(8.6px);
 -webkit-backdrop-filter: blur(8.6px);
 color: #741515;
-border: #741515 solid 0.2px;
+border: #9e1111 solid 0.2px;
   cursor: pointer;
 }
 
@@ -2262,10 +2262,10 @@ switchForm('login');
     <div id="price">£25.00</div>
 
     <div class="sizes">
-      <div id="sizeS" class="S" onclick="selectSize('S')">S</div>
-      <div id="sizeM" class="M" onclick="selectSize('M')">M</div>
-      <div id="sizeL" class="L" onclick="selectSize('L')">L</div>
-      <div id="sizeXL" class="XL" onclick="selectSize('XL')">XL</div>
+      <div id="size1S" class="S" onclick="selectSize('S')">S</div>
+      <div id="size1M" class="M" onclick="selectSize('M')">M</div>
+      <div id="size1L" class="L" onclick="selectSize('L')">L</div>
+      <div id="size1XL" class="XL" onclick="selectSize('XL')">XL</div>
     </div>
 
     <!-- <p>Lorem ipsum dolor sit amet consectetur <br>Ratione</p> -->
@@ -2396,11 +2396,24 @@ function selectSize(size) {
   document.getElementById('sizeM').style.color = '#000';
   document.getElementById('sizeL').style.color = '#000';
   document.getElementById('sizeXL').style.color = '#000';
+
+  document.getElementById('size1S').style.backgroundColor = '';
+  document.getElementById('size1M').style.backgroundColor = '';
+  document.getElementById('size1L').style.backgroundColor = '';
+  document.getElementById('size1XL').style.backgroundColor = '';
+  document.getElementById('size1S').style.color = '#000';
+  document.getElementById('size1M').style.color = '#000';
+  document.getElementById('size1L').style.color = '#000';
+  document.getElementById('size1XL').style.color = '#000';
+
   // document.getElementById(`size${size}`).style.color = '#741515';
 
   // Set the background of the selected button to red
   document.getElementById(`size${size}`).style.backgroundColor = '#741515';
   document.getElementById(`size${size}`).style.color = '#fff';
+
+  document.getElementById(`size1${size}`).style.backgroundColor = '#741515';
+  document.getElementById(`size1${size}`).style.color = '#fff';
 }
 
 function buybutton() {
