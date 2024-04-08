@@ -1357,40 +1357,40 @@ scene.add(model);
 
 <script>
 
-const dredirectToCheckout = () => {
-    // Construct the query string with parameters
-    const queryParams = new URLSearchParams({
-        productName: "Varity Originals T-Shirt",
-        price: "25"
-    }).toString();
+// const dredirectToCheckout = () => {
+//     // Construct the query string with parameters
+//     const queryParams = new URLSearchParams({
+//         productName: "Varity Originals T-Shirt",
+//         price: "25"
+//     }).toString();
 
-    fetch(`https://syneticx.com/_functions/createPayment?${queryParams}`, {
-        method: 'GET', // Change the method to GET
-        mode: 'cors', // Ensure CORS is properly handled
-    })
-    .then(response => {
-        if (!response.ok) {
-            // If the response status code is not in the 200-299 range, throw an error
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        // Parse the response body as JSON
-        return response.json();
-    })
-    .then(data => {
-        console.log(data); // Logging the parsed JSON data
-        // Use the paymentUrl from the parsed JSON data for redirection
-        if (data && data.paymentUrl) {
-            window.location.href = data.paymentUrl;
-        } else {
-            // Handle cases where the paymentUrl might not be present in the parsed JSON data
-            console.error('Payment URL not received.');
-        }
-    })
-    .catch(error => {
-        // Handle any errors that occur during the fetch request or its processing
-        console.error('Fetch error:', error);
-    });
-};
+//     fetch(`https://syneticx.com/_functions/createPayment?${queryParams}`, {
+//         method: 'GET', // Change the method to GET
+//         mode: 'cors', // Ensure CORS is properly handled
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             // If the response status code is not in the 200-299 range, throw an error
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         // Parse the response body as JSON
+//         return response.json();
+//     })
+//     .then(data => {
+//         console.log(data); // Logging the parsed JSON data
+//         // Use the paymentUrl from the parsed JSON data for redirection
+//         if (data && data.paymentUrl) {
+//             window.location.href = data.paymentUrl;
+//         } else {
+//             // Handle cases where the paymentUrl might not be present in the parsed JSON data
+//             console.error('Payment URL not received.');
+//         }
+//     })
+//     .catch(error => {
+//         // Handle any errors that occur during the fetch request or its processing
+//         console.error('Fetch error:', error);
+//     });
+// };
 
 
 
