@@ -838,34 +838,29 @@ backdrop-filter: blur(8.6px);
 
 
 }
+
 @media (min-width: 1000px) {
 
   .buy{
     display: none;
   }
-  .fixed-bottom-middle{
-    left: 70%;
-    font-family: 'Open Sans', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: center;
-    /* cursor: pointer; */
-    position: fixed;
-    /* bottom: 18%;
-    left: 70%; */
-    bottom: 18%;
-    /* left: 50%; */
-    transform: translateX(-50%);
-    /* transform: translateY(-50%); */
-    /* background-color: rgba(0, 0, 0, 0.7); */
-    /* text-decoration: underline; */
-    color: white;
-    padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 5px;
-width: 30%;
-  }
+  .fixed-bottom-middle {
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Adjust alignment if needed */
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%; /* Center the element horizontally */
+  transform: translate(-60%, -50%); /* Move it slightly to the left from the center */
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  width: 30%;
+}
+
 }
 
 #overlay1 {
@@ -1057,9 +1052,9 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
     
         new RGBELoader()
           .setPath( 'textures/equirectangular/' )
-          .load( 'royal_esplanade_1k.hdr', function ( texture ) {
+          .load( 'NewTextureRenderTargetCube.HDR', function ( texture ) {
             const loader = new GLTFLoader().setPath( 'models/DamagedHelmet/glTF/' );
-            loader.load( 'DamagedHelmet.gltf', async function ( gltf ) {
+            loader.load( 'Wholefile.gltf', async function ( gltf ) {
               const model = gltf.scene;
               
               let isModelVisible = true;
@@ -1077,10 +1072,10 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.133.0';
               model.position.y = 0.4
               }
               else {
-                // model.scale.set(7,7,7) // scale here	
-                // model.position.x = -0.15
-                // model.position.x = -0.95
-                // model.position.y = 0.1
+                model.scale.set(7,7,7) // scale here	
+                model.position.x = -0.15
+                model.position.x = -0.95
+                model.position.y = 0.1
               }
               // model.rotation.y -= 1.01;
 
