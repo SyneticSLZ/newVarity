@@ -1244,37 +1244,42 @@ scene.add(spotLight);
     container.appendChild(renderer.domElement);
     renderer.domElement.style.borderRadius = '5px'; // Adjust to your preference
 
-    if (!x.matches) { // If it's desktop
-      new RGBELoader()
-        .setPath('textures/equirectangular/')
-        .load('NewTextureRenderTargetCube.HDR', function(texture) {
-          hdrTexture = texture; // Save the HDR texture reference
-          texture.mapping = THREE.EquirectangularReflectionMapping;
-          scene.background = texture;
-          scene.environment = texture;
-          loadModel(); // Load the model in any case
-          // Create a texture loader
-
-// const loader = new THREE.TextureLoader();
-
-// // Load your image
-// loader.load(
-//     'images/ss.png', // Path to your image
-//     function(texture) {
-//         // Create a background for the scene using the texture
-//         scene.background = texture;
-//     },
-//     undefined, // onProgress callback not needed here
-//     function(err) {
-//         console.error('An error occurred loading the texture:', err);
-//     }
-// );
-
-        });
-    } else {
       // On mobile, just load the model without HDR texture
       loadModel();
-    }
+
+//     if (!x.matches) { // If it's desktop
+//       new RGBELoader()
+//         .setPath('textures/equirectangular/')
+//         .load('NewTextureRenderTargetCube.HDR', function(texture) {
+//           hdrTexture = texture; // Save the HDR texture reference
+//           texture.mapping = THREE.EquirectangularReflectionMapping;
+//           scene.background = texture;
+//           scene.environment = texture;
+//           loadModel(); // Load the model in any case
+//           // Create a texture loader
+
+// // const loader = new THREE.TextureLoader();
+
+// // // Load your image
+// // loader.load(
+// //     'images/ss.png', // Path to your image
+// //     function(texture) {
+// //         // Create a background for the scene using the texture
+// //         scene.background = texture;
+// //     },
+// //     undefined, // onProgress callback not needed here
+// //     function(err) {
+// //         console.error('An error occurred loading the texture:', err);
+// //     }
+// // );
+
+//         });
+//     } else {
+//       // On mobile, just load the model without HDR texture
+//       loadModel();
+//     }
+
+
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.addEventListener('change', render); // use if there is no animation loop
